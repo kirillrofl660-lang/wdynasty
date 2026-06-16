@@ -1,0 +1,8 @@
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Круг -->
+  <circle cx="16" cy="16" r="14" fill="none" stroke="#005893" stroke-width="2.5"/>
+  <!-- Точка -->
+  <circle cx="23" cy="9" r="3" fill="#0BBBEF"/>
+  <!-- Плюс -->
+  <path d="M 23 6 L 23 12 M 20 9 L 26 9" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
