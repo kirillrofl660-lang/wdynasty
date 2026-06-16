@@ -40,12 +40,12 @@ import {
   Terminal,
   Calendar,
 } from 'lucide-react'
-import { ScrollReveal } from './components/ScrollReveal'
-import { StaggerContainer } from './components/StaggerContainer'
-import { MagneticButton } from './components/MagneticButton'
-import { CountUp } from './components/CountUp'
-import { FloatingElements } from './components/FloatingElements'
-import { HeroAnimation } from './components/HeroAnimation'
+import { ScrollReveal } from '../components/ScrollReveal'
+import { StaggerContainer } from '../components/StaggerContainer'
+import { MagneticButton } from '../components/MagneticButton'
+import { CountUp } from '../components/CountUp'
+import { FloatingElements } from '../components/FloatingElements'
+import { HeroAnimation } from '../components/HeroAnimation'
 
 // Simple SVG icon components
 const GithubIcon = () => (
@@ -821,6 +821,9 @@ export default function HomePage() {
         <Container maxW="6xl">
           <VStack gap={6}>
             <HStack gap={6}>
+              <Link href="/blog" color="gray.500" _hover={{ color: 'brand.500' }} fontSize="sm">
+                Блог
+              </Link>
               <Link href="https://t.me/evilsleepyowl" color="gray.500" _hover={{ color: 'brand.500' }}>
                 <Box boxSize={5}><TelegramIcon /></Box>
               </Link>

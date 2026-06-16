@@ -1,24 +1,11 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import { Providers } from './providers'
-
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
-  title: 'Developer Portfolio | Next.js + Payload CMS + Chakra UI',
-  description: 'A modern developer portfolio built with Next.js, Payload CMS, and Chakra UI',
-}
+// Root layout - must not render <html> for Payload admin compatibility
+// Site uses (site)/layout.tsx, Admin uses (payload)/layout.tsx
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
-  )
+  // Just pass through - actual layouts handle html/body
+  return children
 }

@@ -1,0 +1,29 @@
+# Simple single-stage build for Next.js with Payload CMS
+FROM node:20-slim
+
+WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json* ./
+
+# Install dependencies
+RUN npm ci --legacy-peer-deps
+
+# Copy all files
+COPY . .
+
+# Build the application
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
+RUN npm run build
+
+# Create data directory for SQLite
+RUN mkdir -p /app/data
+
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+ENV TURSO_DATABASE_URL=file:./data/local.db
+
+EXPOSE 3000
+
+CMD ["npm", "start"]

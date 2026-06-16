@@ -2,6 +2,7 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  output: 'standalone',
   serverExternalPackages: ['@libsql/client', 'libsql', '@payloadcms/db-sqlite'],
   images: {
     remotePatterns: [
