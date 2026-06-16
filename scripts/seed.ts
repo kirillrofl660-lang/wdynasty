@@ -1,4 +1,4 @@
-import { getPayload } from 'payload'
+/*import { getPayload } from 'payload'
 import config from '../payload.config.ts'
 
 async function seed() {
@@ -38,4 +38,4 @@ async function seed() {
 seed().catch((err) => {
   console.error('Seed failed:', err)
   process.exit(1)
-})
+})*/
