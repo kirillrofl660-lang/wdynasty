@@ -1,31 +1,36 @@
-# Dev: билд из исходников, volume для SQLite
-# Запуск: docker compose up --build -d
 version: '3.8'
 
+
+
 services:
+
   web:
+
     build:
+
       context: .
+
       dockerfile: Dockerfile
-      target: runner
-    image: wdynasty:dev
-    container_name: wdynasty-dev
+
+    image: web-dynasty:latest
+
+    container_name: web-dynasty
+
     ports:
+
       - "3000:3000"
+
     environment:
+
       - NODE_ENV=production
+
       - NEXT_PUBLIC_SERVER_URL=http://localhost:3000
-      - PAYLOAD_SECRET=${PAYLOAD_SECRET}
+
       - TURSO_DATABASE_URL=file:./data/local.db
-    env_file:
-      - .env
+
     volumes:
+
       - ./data:/app/data
-      - ./media:/app/media
+
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (r) => r.statusCode === 200 ? process.exit(0) : process.exit(1))"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
+

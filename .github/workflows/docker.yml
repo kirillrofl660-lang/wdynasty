@@ -58,6 +58,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64,linux/arm64
+          build-args: |
+            TURSO_DATABASE_URL=${{ secrets.TURSO_DATABASE_URL }}
+            TURSO_AUTH_TOKEN=${{ secrets.TURSO_AUTH_TOKEN }}
+            PAYLOAD_SECRET=${{ secrets.PAYLOAD_SECRET }}
 
       - name: Generate artifact attestation
         if: github.event_name != 'pull_request'
