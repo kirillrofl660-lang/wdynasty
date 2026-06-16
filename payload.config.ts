@@ -10,6 +10,7 @@ import { Media } from './collections/Media'
 import { Projects } from './collections/Projects'
 import { Skills } from './collections/Skills'
 import { Posts } from './collections/Posts'
+import { Navigation } from './collections/Navigation'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -21,7 +22,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Pages, Media, Projects, Skills, Posts],
+  collections: [Users, Pages, Media, Projects, Skills, Posts, Navigation],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'your-secret-key-here',
   typescript: {
@@ -45,6 +46,32 @@ export default buildConfig({
         data: {
           email: 'admin@example.com',
           password: 'password',
+        },
+      })
+    }
+
+    const existingNav = await payload.find({
+      collection: 'navigation',
+      limit: 1,
+    })
+
+    if (existingNav.docs.length === 0) {
+      await payload.create({
+        collection: 'navigation',
+        data: {
+          label: 'Главная',
+          href: '/',
+          order: 0,
+          isActive: true,
+        },
+      })
+      await payload.create({
+        collection: 'navigation',
+        data: {
+          label: 'Блог',
+          href: '/blog',
+          order: 1,
+          isActive: true,
         },
       })
     }

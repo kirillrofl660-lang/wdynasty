@@ -36,10 +36,11 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-# Payload specific
+# Payload specific (runtime needs config + collections + types)
 COPY --from=builder /app/payload.config.ts ./
 COPY --from=builder /app/collections ./collections
-COPY --from=builder /app/app ./app
+COPY --from=builder /app/payload-types.ts ./
+COPY --from=builder /app/theme.ts ./
 
 # Create data directory for SQLite with proper permissions
 RUN mkdir -p /app/data && chown -R nextjs:nodejs /app/data

@@ -1,22 +1,20 @@
-# Dev: билд из исходников, volume для SQLite
-# Запуск: docker compose up --build -d
+# Production: пулл образа из GitHub Container Registry
+# Перед запуском: заполни .env, замени IMAGE на свой ghcr.io
+# docker compose -f docker-compose.prod.yml up -d
 version: '3.8'
 
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: runner
-    image: wdynasty:dev
-    container_name: wdynasty-dev
+    image: ${GHCR_IMAGE:-ghcr.io/YOUR_USERNAME/wdynasty:latest}
+    container_name: wdynasty-prod
     ports:
-      - "3000:3000"
+      - "${PORT:-3000}:3000"
     environment:
       - NODE_ENV=production
-      - NEXT_PUBLIC_SERVER_URL=http://localhost:3000
+      - NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
       - PAYLOAD_SECRET=${PAYLOAD_SECRET}
-      - TURSO_DATABASE_URL=file:./data/local.db
+      - TURSO_DATABASE_URL=${TURSO_DATABASE_URL}
+      - TURSO_AUTH_TOKEN=${TURSO_AUTH_TOKEN}
     env_file:
       - .env
     volumes:

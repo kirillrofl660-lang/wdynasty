@@ -73,6 +73,7 @@ export interface Config {
     projects: Project;
     skills: Skill;
     posts: Post;
+    navigation: Navigation;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     skills: SkillsSelect<false> | SkillsSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    navigation: NavigationSelect<false> | NavigationSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -340,7 +342,38 @@ export interface Post {
   coverImage?: (number | null) | Media;
   tags?:
     | {
-        tag?: string | null;
+        tag?:
+          | (
+              | 'React'
+              | 'Next.js'
+              | 'TypeScript'
+              | 'JavaScript'
+              | 'CSS'
+              | 'HTML'
+              | 'Tailwind CSS'
+              | 'Chakra UI'
+              | 'Node.js'
+              | 'Express'
+              | 'MongoDB'
+              | 'PostgreSQL'
+              | 'Payload CMS'
+              | '1С-Битрикс'
+              | 'Laravel'
+              | 'PHP'
+              | 'DevOps'
+              | 'Docker'
+              | 'Git'
+              | 'Web Development'
+              | 'Frontend'
+              | 'Backend'
+              | 'Full Stack'
+              | 'UI/UX'
+              | 'Design'
+              | 'Tutorial'
+              | 'Tips'
+              | 'Best Practices'
+            )
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -348,6 +381,34 @@ export interface Post {
   status?: ('draft' | 'published') | null;
   metaTitle?: string | null;
   metaDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Управление пунктами главного меню навигации сайта.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation".
+ */
+export interface Navigation {
+  id: number;
+  /**
+   * Текст, который отображается в меню
+   */
+  label: string;
+  /**
+   * URL или путь, например: /blog, /about, /services
+   */
+  href: string;
+  /**
+   * Меньше = левее в меню
+   */
+  order?: number | null;
+  /**
+   * Открывать в новой вкладке
+   */
+  isExternal?: boolean | null;
+  isActive?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -398,6 +459,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'navigation';
+        value: number | Navigation;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -614,6 +679,19 @@ export interface PostsSelect<T extends boolean = true> {
   status?: T;
   metaTitle?: T;
   metaDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation_select".
+ */
+export interface NavigationSelect<T extends boolean = true> {
+  label?: T;
+  href?: T;
+  order?: T;
+  isExternal?: T;
+  isActive?: T;
   updatedAt?: T;
   createdAt?: T;
 }
