@@ -4,6 +4,8 @@ import { Metadata } from 'next'
 import { Box } from '@chakra-ui/react'
 import { BlogGrid } from '@/src/widgets/blog/ui/BlogGrid'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Блог | Web Dynasty',
   description: 'Статьи о разработке, 1С-Битрикс, Laravel, React и DevOps',

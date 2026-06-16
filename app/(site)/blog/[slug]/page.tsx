@@ -6,6 +6,8 @@ import { RefreshRouteOnSave } from './RefreshRouteOnSave'
 import { Box } from '@chakra-ui/react'
 import { PostContent } from '@/src/widgets/post/ui/PostContent'
 
+export const dynamic = 'force-dynamic'
+
 interface Props {
   params: Promise<{ slug: string }>
 }

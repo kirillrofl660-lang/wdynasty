@@ -4,6 +4,9 @@
 FROM node:20-slim AS deps
 WORKDIR /app
 
+# Install libvips for sharp (native dependencies)
+RUN apt-get update && apt-get install -y libvips-dev && rm -rf /var/lib/apt/lists/*
+
 COPY package.json package-lock.json* ./
 RUN npm ci --legacy-peer-deps
 
@@ -28,7 +31,10 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# Create non-root user (Debian-style)
+# Install libvips runtime for sharp
+RUN apt-get update && apt-get install -y libvips42 && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
 RUN groupadd -r nodejs -g 1001 && useradd -r nextjs -u 1001 -g nodejs
 
 # Copy necessary files
@@ -36,20 +42,25 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-# Payload specific (runtime needs config + collections + types)
+# Payload runtime files
 COPY --from=builder /app/payload.config.ts ./
 COPY --from=builder /app/collections ./collections
 COPY --from=builder /app/payload-types.ts ./
 COPY --from=builder /app/theme.ts ./
+COPY --from=builder /app/tsconfig.json ./
 
-# Create data directory for SQLite with proper permissions
-RUN mkdir -p /app/data && chown -R nextjs:nodejs /app/data
+# Seed script and entrypoint
+COPY --from=builder /app/scripts ./scripts
+COPY --from=builder /app/docker-entrypoint.sh ./
+RUN chmod +x docker-entrypoint.sh
 
-# Set permissions
+# Create data directory
+RUN mkdir -p /app/data /app/media && chown -R nextjs:nodejs /app/data /app/media
+
 RUN chown -R nextjs:nodejs /app
 
 USER nextjs
 
 EXPOSE 3000
 
-CMD ["node", "server.js"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
