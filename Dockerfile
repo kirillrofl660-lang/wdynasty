@@ -8,7 +8,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y libvips-dev && rm -rf /var/lib/apt/lists/*
 
 COPY package.json package-lock.json* ./
-RUN npm ci --legacy-peer-deps
+RUN npm i
 
 # Stage 2: Builder
 FROM node:20-slim AS builder
