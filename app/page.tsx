@@ -358,13 +358,16 @@ export default function HomePage() {
                             </Badge>
                           ))}
                         </HStack>
+                        {/*
                         
-                        <MagneticButton 
+                                                <MagneticButton 
                           variant="ghost"
                           size="md"
                         >
                           Подробнее <Icon as={ArrowRight} boxSize={4} ml={2}/>
                         </MagneticButton>
+                        */}
+
                       </VStack>
                     </CardBody>
                   </Card.Root>
