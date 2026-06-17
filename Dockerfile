@@ -20,10 +20,6 @@ FROM node:20-slim AS builder
 
 WORKDIR /app
 
-ENV TURSO_DATABASE_URL=$TURSO_DATABASE_URL
-ENV TURSO_AUTH_TOKEN=$TURSO_AUTH_TOKEN
-ENV PAYLOAD_SECRET=$PAYLOAD_SECRET
-
 COPY --from=deps /app/node_modules ./node_modules
 
 COPY . .

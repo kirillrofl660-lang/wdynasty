@@ -4,6 +4,8 @@ import config from '@payload-config'
 
 import { notFound } from 'next/navigation'
 
+import { draftMode } from 'next/headers'
+
 import { Metadata } from 'next'
 
 import { RefreshRouteOnSave } from './RefreshRouteOnSave'
@@ -26,6 +28,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const { slug } = await params
 
+  const { isEnabled: isDraft } = await draftMode()
+
   const payload = await getPayload({ config })
 
   
@@ -38,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
       slug: { equals: slug },
 
-      status: { equals: 'published' },
+      ...(isDraft ? {} : { status: { equals: 'published' } }),
 
     },
 
@@ -74,6 +78,8 @@ export default async function PostPage({ params }: Props) {
 
   const { slug } = await params
 
+  const { isEnabled: isDraft } = await draftMode()
+
   const payload = await getPayload({ config })
 
   
@@ -86,7 +92,7 @@ export default async function PostPage({ params }: Props) {
 
       slug: { equals: slug },
 
-      status: { equals: 'published' },
+      ...(isDraft ? {} : { status: { equals: 'published' } }),
 
     },
 
@@ -162,7 +168,7 @@ export default async function PostPage({ params }: Props) {
 
     <>
 
-      <RefreshRouteOnSave />
+      {isDraft && <RefreshRouteOnSave />}
 
       <Box minH="100vh" bg="white">
 

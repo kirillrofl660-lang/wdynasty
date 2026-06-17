@@ -19,6 +19,7 @@ import {
 } from '@chakra-ui/react'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { PostContentProps } from '../model/types'
+import { formatDate } from '@/src/shared/lib/formatDate'
 
 const extractText = (node: any): string => {
   if (!node) return ''
@@ -29,13 +30,7 @@ const extractText = (node: any): string => {
 }
 
 export function PostContent({ post, relatedPosts = [] }: PostContentProps) {
-  const formattedDate = post.publishedAt
-    ? new Date(post.publishedAt).toLocaleDateString('ru-RU', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      })
-    : ''
+  const formattedDate = post.publishedAt ? formatDate(post.publishedAt) : ''
 
   const readingTime = () => {
     const wordsPerMinute = 200
@@ -131,9 +126,7 @@ export function PostContent({ post, relatedPosts = [] }: PostContentProps) {
                     <Heading size="sm" color="gray.900">Похожие статьи</Heading>
                     <VStack align="stretch" gap={4} w="full">
                       {relatedPosts.map((rp) => {
-                        const rpDate = rp.publishedAt
-                          ? new Date(rp.publishedAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' })
-                          : ''
+                        const rpDate = rp.publishedAt ? formatDate(rp.publishedAt, true) : ''
                         return (
                           <Link key={rp.id} href={`/blog/${rp.slug}`} style={{ textDecoration: 'none' }}>
                             <HStack gap={3} p={3} borderRadius="lg" transition="all 0.2s" _hover={{ bg: 'gray.50' }}>

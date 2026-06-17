@@ -16,6 +16,7 @@ import {
   Center,
 } from '@chakra-ui/react'
 import { Post } from '@/src/entities/post/model'
+import { formatDate } from '@/src/shared/lib/formatDate'
 
 interface BlogCardProps {
   post: Post
@@ -23,13 +24,7 @@ interface BlogCardProps {
 }
 
 export function BlogCard({ post }: BlogCardProps) {
-  const formattedDate = post.publishedAt
-    ? new Date(post.publishedAt).toLocaleDateString('ru-RU', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      })
-    : ''
+  const formattedDate = post.publishedAt ? formatDate(post.publishedAt) : ''
 
   return (
     <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', height: '100%' }}>
