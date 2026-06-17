@@ -18,7 +18,6 @@ services:
     env_file:
       - .env
     volumes:
-      - ./data:/app/data
       - ./media:/app/media
     restart: unless-stopped
     healthcheck:
