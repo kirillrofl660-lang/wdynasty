@@ -1,36 +1,19 @@
 version: '3.8'
 
-
-
 services:
-
   web:
-
     build:
-
       context: .
-
       dockerfile: Dockerfile
-
     image: web-dynasty:latest
-
     container_name: web-dynasty
-
     ports:
-
       - "3000:3000"
-
     environment:
-
       - NODE_ENV=production
-
       - NEXT_PUBLIC_SERVER_URL=http://localhost:3000
-
       - TURSO_DATABASE_URL=file:./data/local.db
-
     volumes:
-
       - ./data:/app/data
-
+      - ./media:/app/media
     restart: unless-stopped
-

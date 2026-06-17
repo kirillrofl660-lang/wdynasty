@@ -39,6 +39,9 @@ import {
   FileCode,
   Terminal,
   Calendar,
+  Wallet,
+  Award,
+  Briefcase,
 } from 'lucide-react'
 import { ScrollReveal } from '../components/ScrollReveal'
 import { StaggerContainer } from '../components/StaggerContainer'
@@ -171,6 +174,22 @@ const advantages = [
     icon: Zap,
     title: 'Быстрый старт',
     description: 'Начинаем работу через 2-3 дня после обращения. Не тянем с оценкой и согласованиями.',
+  },
+]
+
+// Менеджеры (фото можно заменить на сгенерированные в ИИ)
+const managers = [
+  {
+    name: 'Виктория',
+    role: 'Менеджер проектов · экспертиза по сайтам',
+    photo: '/managers/vika.png',
+    initials: 'В',
+  },
+  {
+    name: 'Наталья',
+    role: 'Менеджер проектов · экспертиза по 1С',
+    photo: '/managers/natasha.png',
+    initials: 'Н',
   },
 ]
 
@@ -479,6 +498,152 @@ export default function HomePage() {
                     </CardBody>
                   </Card.Root>
                 ))}
+              </SimpleGrid>
+            </StaggerContainer>
+          </VStack>
+        </Container>
+      </Box>
+
+      <Separator />
+
+      {/* Отстройка от конкурентов */}
+      <Box py={24} px={4} bg="gray.50">
+        <Container maxW="6xl">
+          <VStack gap={16}>
+            <ScrollReveal>
+              <VStack gap={4} textAlign="center">
+                <Badge colorPalette="accent" size="md">Отстройка</Badge>
+                <Heading fontSize={{ base: '3xl', md: '4xl' }}>
+                  Чем мы{' '}
+                  <Text as="span" color="accent.500">отличаемся</Text>
+                </Heading>
+                <Text color="gray.600" maxW="2xl">
+                  Берём лучшее из двух миров: цену и гибкость — как у частных
+                  специалистов, экспертизу и ответственность — как у крупной студии.
+                </Text>
+              </VStack>
+            </ScrollReveal>
+
+            <StaggerContainer stagger={0.15}>
+              <SimpleGrid columns={{ base: 1, lg: 2 }} gap={8} w="full" alignItems="stretch">
+                {/* Отстройка от других компаний */}
+                <Card.Root variant="outline" bg="white" h="full">
+                  <CardBody p={{ base: 6, md: 8 }}>
+                    <VStack gap={5} align="start" h="full">
+                      <Flex
+                        w={14}
+                        h={14}
+                        bg="brand.50"
+                        borderRadius="xl"
+                        align="center"
+                        justify="center"
+                      >
+                        <Icon as={Wallet} boxSize={7} color="brand.500" />
+                      </Flex>
+                      <Box>
+                        <Badge colorPalette="brand" size="sm" mb={2}>vs крупные IT-компании</Badge>
+                        <Heading size="lg">Низкая цена часа при сильных специалистах</Heading>
+                      </Box>
+                      <Text color="gray.600">
+                        Мы понимаем, что в текущих условиях ставки крупных IT-компаний
+                        неподъёмны для малого и среднего бизнеса. Поэтому даём вам
+                        специалистов с огромным опытом и экспертизой — по приятной цене.
+                      </Text>
+                      <VStack gap={3} align="start" w="full">
+                        {[
+                          'Часовая ставка ниже, чем у больших студий',
+                          'Тот же уровень экспертизы, что и у senior-команд',
+                          'Без переплаты за «бренд» и лишние согласования',
+                        ].map((point) => (
+                          <HStack key={point} gap={3} align="start">
+                            <Icon as={CheckCircle} boxSize={5} color="brand.500" mt={0.5} flexShrink={0} />
+                            <Text fontSize="sm" color="gray.700">{point}</Text>
+                          </HStack>
+                        ))}
+                      </VStack>
+                    </VStack>
+                  </CardBody>
+                </Card.Root>
+
+                {/* Отстройка от фрилансеров */}
+                <Card.Root variant="outline" bg="white" h="full">
+                  <CardBody p={{ base: 6, md: 8 }}>
+                    <VStack gap={5} align="start" h="full">
+                      <Flex
+                        w={14}
+                        h={14}
+                        bg="accent.50"
+                        borderRadius="xl"
+                        align="center"
+                        justify="center"
+                      >
+                        <Icon as={Briefcase} boxSize={7} color="accent.500" />
+                      </Flex>
+                      <Box>
+                        <Badge colorPalette="accent" size="sm" mb={2}>vs фрилансеры</Badge>
+                        <Heading size="lg">Команда и менеджмент, а не один исполнитель</Heading>
+                      </Box>
+                      <Text color="gray.600">
+                        Ваш проект ведут два опытных менеджера. Они обсудят с вами все
+                        детали и предложат самое грамотное решение на рынке — с экспертизой
+                        и со стороны 1С, и со стороны сайта.
+                      </Text>
+
+                      <HStack gap={6} py={2}>
+                        {managers.map((m) => (
+                          <VStack key={m.name} gap={2}>
+                            <Flex
+                              position="relative"
+                              w={20}
+                              h={20}
+                              borderRadius="full"
+                              overflow="hidden"
+                              bg="accent.500"
+                              align="center"
+                              justify="center"
+                              boxShadow="md"
+                            >
+                              <Text fontSize="2xl" fontWeight="bold" color="white">
+                                {m.initials}
+                              </Text>
+                              <img
+                                src={m.photo}
+                                alt={m.name}
+                                onError={(e) => {
+                                  e.currentTarget.style.display = 'none'
+                                }}
+                                style={{
+                                  position: 'absolute',
+                                  inset: 0,
+                                  width: '100%',
+                                  height: '100%',
+                                  objectFit: 'cover',
+                                }}
+                              />
+                            </Flex>
+                            <Box textAlign="center">
+                              <Text fontWeight="semibold" fontSize="sm">{m.name}</Text>
+                              <Text fontSize="xs" color="gray.500" maxW="36">{m.role}</Text>
+                            </Box>
+                          </VStack>
+                        ))}
+                      </HStack>
+
+                      <VStack gap={3} align="start" w="full">
+                        {[
+                          'Сертифицированные Битрикс-разработчики',
+                          'Экспертиза с двух сторон: 1С и сайт',
+                          'Понимаем реальный бизнес и держим сроки',
+                        ].map((point) => (
+                          <HStack key={point} gap={3} align="start">
+                            <Icon as={Award} boxSize={5} color="accent.500" mt={0.5} flexShrink={0} />
+                            <Text fontSize="sm" color="gray.700">{point}</Text>
+                          </HStack>
+                        ))}
+                      </VStack>
+                    </VStack>
+                  </CardBody>
+                </Card.Root>
               </SimpleGrid>
             </StaggerContainer>
           </VStack>
