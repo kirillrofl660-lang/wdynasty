@@ -74,6 +74,8 @@ export interface Config {
     skills: Skill;
     posts: Post;
     navigation: Navigation;
+    leads: Lead;
+    'tg-subscribers': TgSubscriber;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,6 +90,8 @@ export interface Config {
     skills: SkillsSelect<false> | SkillsSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
+    leads: LeadsSelect<false> | LeadsSelect<true>;
+    'tg-subscribers': TgSubscribersSelect<false> | TgSubscribersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -413,6 +417,39 @@ export interface Navigation {
   createdAt: string;
 }
 /**
+ * Заявки, оставленные через форму на сайте.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads".
+ */
+export interface Lead {
+  id: number;
+  name: string;
+  /**
+   * Email, телефон или Telegram для связи
+   */
+  contact: string;
+  message?: string | null;
+  status?: ('new' | 'processed') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Пользователи, подписанные на уведомления о заявках через Telegram-бота.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tg-subscribers".
+ */
+export interface TgSubscriber {
+  id: number;
+  chatId: string;
+  username?: string | null;
+  firstName?: string | null;
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -463,6 +500,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'navigation';
         value: number | Navigation;
+      } | null)
+    | ({
+        relationTo: 'leads';
+        value: number | Lead;
+      } | null)
+    | ({
+        relationTo: 'tg-subscribers';
+        value: number | TgSubscriber;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -691,6 +736,30 @@ export interface NavigationSelect<T extends boolean = true> {
   href?: T;
   order?: T;
   isExternal?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads_select".
+ */
+export interface LeadsSelect<T extends boolean = true> {
+  name?: T;
+  contact?: T;
+  message?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tg-subscribers_select".
+ */
+export interface TgSubscribersSelect<T extends boolean = true> {
+  chatId?: T;
+  username?: T;
+  firstName?: T;
   isActive?: T;
   updatedAt?: T;
   createdAt?: T;

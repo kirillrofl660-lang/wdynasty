@@ -49,6 +49,7 @@ import { MagneticButton } from '../components/MagneticButton'
 import { CountUp } from '../components/CountUp'
 import { FloatingElements } from '../components/FloatingElements'
 import { HeroAnimation } from '../components/HeroAnimation'
+import { LeadForm } from '@/src/widgets/lead/ui/LeadForm'
 
 // Simple SVG icon components
 const GithubIcon = () => (
@@ -954,26 +955,11 @@ export default function HomePage() {
                   </Heading>
                   <Text fontSize="lg" color="gray.300" maxW="2xl">
                     Бесплатная консультация. Расскажем, как решить вашу задачу 
-                    и сколько это будет стоить. Никакого спама и навязчивых продаж.
+                    и сколько это будет стоить. Оставьте заявку — мы свяжемся с вами.
                   </Text>
-                  <HStack gap={4} pt={4} wrap="wrap" justify="center">
-                    <MagneticButton
-                      size="lg"
-                      colorPalette="brand"
-                      onClick={() => window.open('https://t.me/evilsleepyowl', '_blank', 'noopener,noreferrer')}
-                    >
-                      Написать нам
-                    </MagneticButton>
-                    <MagneticButton
-                      size="lg"
-                      variant="outline"
-                      colorPalette="gray"
-                      color="brand.400"
-                      onClick={() => window.open('https://t.me/evilsleepyowl', '_blank', 'noopener,noreferrer')}
-                    >
-                      Telegram
-                    </MagneticButton>
-                  </HStack>
+                  <Box w="full" pt={4}>
+                    <LeadForm />
+                  </Box>
                 </VStack>
               </CardBody>
             </Card.Root>
