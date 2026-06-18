@@ -18,14 +18,14 @@ export async function POST(req: NextRequest) {
   try {
     update = await req.json()
   } catch {
-    return NextResponse.json({ ok: true })
+    return NextResponse.json({ error: 'not_body' })
   }
 
   const message = update?.message
   const chat = message?.chat
   const text: string = typeof message?.text === 'string' ? message.text.trim() : ''
 
-  if (!chat?.id || !text) return NextResponse.json({ ok: true })
+  if (!chat?.id || !text) return NextResponse.json({ error: "not chat.id or text message" })
 
   const chatId = String(chat.id)
   const command = text.split(/\s+/)[0].toLowerCase().replace(/@.*$/, '')
@@ -78,6 +78,7 @@ export async function POST(req: NextRequest) {
         '🔕 Вы отписались от уведомлений.\nЧтобы снова подписаться — отправьте /start',
       )
     } else {
+      console.log('test');
       await sendTelegramMessage(
         chatId,
         'Команды:\n/start — подписаться на заявки\n/stop — отписаться',

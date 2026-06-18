@@ -12,7 +12,7 @@ import { BlogGrid } from '@/src/widgets/blog/ui/BlogGrid'
 
 export const metadata: Metadata = {
 
-  title: 'Блог | Web Dynasty',
+  title: 'Блог | Династия Разработчиков',
 
   description: 'Статьи о разработке, 1С-Битрикс, Laravel, React и DevOps',
 
