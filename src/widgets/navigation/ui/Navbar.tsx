@@ -128,6 +128,8 @@ export function Navbar({ items }: NavbarProps) {
             display={{ base: 'flex', md: 'none' }}
             onClick={() => setMobileOpen((o) => !o)}
             px={2}
+            aria-label={mobileOpen ? 'Закрыть меню' : 'Открыть меню'}
+            aria-expanded={mobileOpen}
           >
             <Icon as={mobileOpen ? X : Menu} w={5} h={5} />
           </Button>

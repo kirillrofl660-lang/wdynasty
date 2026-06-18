@@ -16,8 +16,10 @@ import {
   Icon,
   Image,
   Link,
-  Separator, Wrap
+  Separator,
+  Wrap,
 } from '@chakra-ui/react'
+import { Avatar } from '@chakra-ui/react/avatar'
 import {
   Code,
   Server,
@@ -678,35 +680,17 @@ export default function HomePage() {
                       <HStack gap={6} py={2}>
                         {managers.map((m) => (
                           <VStack key={m.name} gap={2}>
-                            <Flex
-                              position="relative"
-                              w={20}
-                              h={20}
-                              borderRadius="full"
-                              overflow="hidden"
-                              bg="accent.500"
-                              align="center"
-                              justify="center"
-                              boxShadow="md"
-                            >
-                              <Text fontSize="2xl" fontWeight="bold" color="white">
+                            <Avatar.Root size="xl" boxShadow="md">
+                              <Avatar.Fallback
+                                bg="accent.500"
+                                color="white"
+                                fontSize="2xl"
+                                fontWeight="bold"
+                              >
                                 {m.initials}
-                              </Text>
-                              <img
-                                src={m.photo}
-                                alt={m.name}
-                                onError={(e) => {
-                                  e.currentTarget.style.display = 'none'
-                                }}
-                                style={{
-                                  position: 'absolute',
-                                  inset: 0,
-                                  width: '100%',
-                                  height: '100%',
-                                  objectFit: 'cover',
-                                }}
-                              />
-                            </Flex>
+                              </Avatar.Fallback>
+                              <Avatar.Image src={m.photo} alt={m.name} />
+                            </Avatar.Root>
                             <Box textAlign="center">
                               <Text fontWeight="semibold" fontSize="sm">{m.name}</Text>
                               <Text fontSize="xs" color="gray.500" maxW="36">{m.role}</Text>

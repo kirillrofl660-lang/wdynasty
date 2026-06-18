@@ -14,7 +14,7 @@ import './globals.css'
 
 
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
 
 
@@ -27,12 +27,12 @@ export const metadata: Metadata = {
   publisher: 'Династия Разработчиков',
   robots: 'index, follow',
   alternates: {
-    canonical: '/',
+    canonical: 'https://wdynasty.ru',
   },
   openGraph: {
     type: 'website',
     locale: 'ru_RU',
-    url: 'https://webdynasty.ru',
+    url: 'https://wdynasty.ru',
     siteName: 'Династия Разработчиков',
     title: 'Династия Разработчиков — Корпоративная разработка и веб-решения',
     description: 'Разработка на 1С-Битрикс, Laravel, React, Next.js. Highload проекты, E-commerce, DevOps.',
@@ -90,18 +90,16 @@ export default async function RootLayout({
   return (
 
     <html lang="ru">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body className={inter.className}>
-
         <Providers>
-
           <Navbar items={navResult.docs as any} />
-
-          {children}
-
+          <main>{children}</main>
         </Providers>
-
       </body>
-
     </html>
 
   )
