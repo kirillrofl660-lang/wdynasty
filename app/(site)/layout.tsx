@@ -53,8 +53,7 @@ export const metadata: Metadata = {
     creator: '@webdynasty',
   },
   verification: {
-    google: 'your-google-verification-code',
-    yandex: 'your-yandex-verification-code',
+    yandex: '2d6b1c0472164d16',
   },
 }
 
