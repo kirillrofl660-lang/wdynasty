@@ -29,14 +29,61 @@ export function Navbar({ items }: NavbarProps) {
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
 
   return (
-    <Box as="header" bg="brand.950" borderBottomWidth="1px" borderColor="whiteAlpha.200" position="sticky" top={0} zIndex="sticky">
-      <Container maxW="6xl" px={4}>
+    <Box
+      as="header"
+      bg="brand.950"
+      position="sticky"
+      top={0}
+      zIndex="sticky"
+      suppressHydrationWarning
+      overflow="hidden"
+    >
+      {/* Голубое свечение справа как в Hero */}
+      <Box
+        position="absolute"
+        top="0"
+        right="0"
+        w="50%"
+        h="full"
+        bg="brand.500"
+        opacity="0.15"
+        style={{ filter: 'blur(80px)' }}
+        pointerEvents="none"
+      />
+      <Box
+        position="absolute"
+        top="-50%"
+        right="10%"
+        w="300px"
+        h="300px"
+        bg="brand.400"
+        opacity="0.1"
+        borderRadius="full"
+        style={{ filter: 'blur(60px)' }}
+        pointerEvents="none"
+      />
+      <Container maxW="6xl" px={4} position="relative">
         <HStack justify="space-between" h={14}>
-          {/* Лого */}
+          {/* Лого как в Hero */}
           <Link href="/" style={{ textDecoration: 'none' }}>
-            <Text fontSize="xl" fontWeight="bold" color="white" letterSpacing="tight">
-              Web Dynasty
-            </Text>
+            <HStack gap={1} align="baseline">
+              <Text
+                fontSize="xl"
+                fontWeight="bold"
+                color="white"
+                letterSpacing="tight"
+              >
+                Династия
+              </Text>
+              <Text
+                fontSize="xl"
+                fontWeight="bold"
+                color="brand.500"
+                letterSpacing="tight"
+              >
+                Разработчиков
+              </Text>
+            </HStack>
           </Link>
 
           {/* Десктоп-меню */}
