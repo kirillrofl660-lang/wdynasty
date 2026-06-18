@@ -73,6 +73,9 @@ export interface Config {
     projects: Project;
     skills: Skill;
     posts: Post;
+    navigation: Navigation;
+    leads: Lead;
+    'tg-subscribers': TgSubscriber;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +89,9 @@ export interface Config {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     skills: SkillsSelect<false> | SkillsSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    navigation: NavigationSelect<false> | NavigationSelect<true>;
+    leads: LeadsSelect<false> | LeadsSelect<true>;
+    'tg-subscribers': TgSubscribersSelect<false> | TgSubscribersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -340,7 +346,38 @@ export interface Post {
   coverImage?: (number | null) | Media;
   tags?:
     | {
-        tag?: string | null;
+        tag?:
+          | (
+              | 'React'
+              | 'Next.js'
+              | 'TypeScript'
+              | 'JavaScript'
+              | 'CSS'
+              | 'HTML'
+              | 'Tailwind CSS'
+              | 'Chakra UI'
+              | 'Node.js'
+              | 'Express'
+              | 'MongoDB'
+              | 'PostgreSQL'
+              | 'Payload CMS'
+              | '1С-Битрикс'
+              | 'Laravel'
+              | 'PHP'
+              | 'DevOps'
+              | 'Docker'
+              | 'Git'
+              | 'Web Development'
+              | 'Frontend'
+              | 'Backend'
+              | 'Full Stack'
+              | 'UI/UX'
+              | 'Design'
+              | 'Tutorial'
+              | 'Tips'
+              | 'Best Practices'
+            )
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -348,6 +385,67 @@ export interface Post {
   status?: ('draft' | 'published') | null;
   metaTitle?: string | null;
   metaDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Управление пунктами главного меню навигации сайта.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation".
+ */
+export interface Navigation {
+  id: number;
+  /**
+   * Текст, который отображается в меню
+   */
+  label: string;
+  /**
+   * URL или путь, например: /blog, /about, /services
+   */
+  href: string;
+  /**
+   * Меньше = левее в меню
+   */
+  order?: number | null;
+  /**
+   * Открывать в новой вкладке
+   */
+  isExternal?: boolean | null;
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Заявки, оставленные через форму на сайте.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads".
+ */
+export interface Lead {
+  id: number;
+  name: string;
+  /**
+   * Email, телефон или Telegram для связи
+   */
+  contact: string;
+  message?: string | null;
+  status?: ('new' | 'processed') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Пользователи, подписанные на уведомления о заявках через Telegram-бота.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tg-subscribers".
+ */
+export interface TgSubscriber {
+  id: number;
+  chatId: string;
+  username?: string | null;
+  firstName?: string | null;
+  isActive?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -398,6 +496,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'navigation';
+        value: number | Navigation;
+      } | null)
+    | ({
+        relationTo: 'leads';
+        value: number | Lead;
+      } | null)
+    | ({
+        relationTo: 'tg-subscribers';
+        value: number | TgSubscriber;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -614,6 +724,43 @@ export interface PostsSelect<T extends boolean = true> {
   status?: T;
   metaTitle?: T;
   metaDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation_select".
+ */
+export interface NavigationSelect<T extends boolean = true> {
+  label?: T;
+  href?: T;
+  order?: T;
+  isExternal?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads_select".
+ */
+export interface LeadsSelect<T extends boolean = true> {
+  name?: T;
+  contact?: T;
+  message?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tg-subscribers_select".
+ */
+export interface TgSubscribersSelect<T extends boolean = true> {
+  chatId?: T;
+  username?: T;
+  firstName?: T;
+  isActive?: T;
   updatedAt?: T;
   createdAt?: T;
 }

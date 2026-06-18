@@ -15,4 +15,5 @@ services:
       - TURSO_DATABASE_URL=file:./data/local.db
     volumes:
       - ./data:/app/data
+      - ./media:/app/media
     restart: unless-stopped

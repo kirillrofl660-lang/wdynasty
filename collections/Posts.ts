@@ -1,3 +1,4 @@
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 
 export const Posts: CollectionConfig = {
@@ -5,6 +6,12 @@ export const Posts: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'publishedAt', 'status'],
+    livePreview: {
+      url: ({ data }) => {
+        const isHomePage = data.slug === 'home'
+        return `${process.env.NEXT_PUBLIC_SERVER_URL}${!isHomePage ? `/blog/${data.slug}` : ''}`
+      },
+    },
   },
   access: {
     read: () => true,
@@ -36,6 +43,7 @@ export const Posts: CollectionConfig = {
       type: 'richText',
       label: 'Содержание',
       required: true,
+      editor: lexicalEditor({}),
     },
     {
       name: 'coverImage',
@@ -50,7 +58,38 @@ export const Posts: CollectionConfig = {
       fields: [
         {
           name: 'tag',
-          type: 'text',
+          type: 'select',
+          options: [
+            'React',
+            'Next.js',
+            'TypeScript',
+            'JavaScript',
+            'CSS',
+            'HTML',
+            'Tailwind CSS',
+            'Chakra UI',
+            'Node.js',
+            'Express',
+            'MongoDB',
+            'PostgreSQL',
+            'Payload CMS',
+            '1С-Битрикс',
+            'Laravel',
+            'PHP',
+            'DevOps',
+            'Docker',
+            'Git',
+            'Web Development',
+            'Frontend',
+            'Backend',
+            'Full Stack',
+            'UI/UX',
+            'Design',
+            'Tutorial',
+            'Tips',
+            'Best Practices',
+          ],
+          defaultValue: 'Web Development',
         },
       ],
     },

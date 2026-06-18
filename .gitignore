@@ -1,5 +1,11 @@
+.env
 .env.local
-.next
+
 local.db
+data
 node_modules
-studio-landing
+
+.next
+node_modules
+.idea
+CLAUDE.md
