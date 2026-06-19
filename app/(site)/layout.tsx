@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     canonical: 'https://wdynasty.ru',
   },
   icons: {
-    icon: '/favicon.png',
+    icon: '/favicon.ico',
   },
   openGraph: {
     type: 'website',
