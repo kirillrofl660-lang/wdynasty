@@ -82,7 +82,7 @@ interface CmsService {
   title: string
   slug: string
   excerpt?: string
-  tags?: Array<string | { tag: string }>
+  tags?: Array<string | { text?: string; tag?: string }>
 }
 
 interface HomePageV2ClientProps {
@@ -127,7 +127,9 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
         num: String(i + 1).padStart(2, '0'),
         name: s.title,
         desc: s.excerpt ?? '',
-        tags: (s.tags ?? []).map((t) => (typeof t === 'string' ? t : (t as { tag: string }).tag)),
+        tags: (s.tags ?? [])
+          .map((t) => (typeof t === 'string' ? t : (t.text ?? t.tag ?? '')))
+          .filter(Boolean),
         slug: s.slug,
       }))
     : defaultServices.map((s, i) => ({ ...s, num: String(i + 1).padStart(2, '0') }))

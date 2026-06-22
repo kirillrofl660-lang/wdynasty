@@ -13,6 +13,7 @@ export default async function Page() {
       payload.find({
         collection: 'services',
         where: { status: { equals: 'published' } },
+        sort: 'order',
         limit: 20,
       }),
       payload.findGlobal({ slug: 'home-page' }).catch(() => null),
