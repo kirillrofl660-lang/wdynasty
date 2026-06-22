@@ -1,8 +1,9 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { Navbar } from '@/src/widgets/navigation/ui/Navbar'
-import { SiteFooter } from './SiteFooter'
+import { Box } from '@chakra-ui/react'
+import { V2Header } from '../(site)/V2Header'
+import { V2Footer } from '../(site)/V2Footer'
 import type { NavItem } from '@/src/widgets/navigation/model/types'
 
 interface SiteChromeProps {
@@ -11,8 +12,10 @@ interface SiteChromeProps {
   children: React.ReactNode
 }
 
-// Оборачивает контент сайта общими шапкой/подвалом.
-// На главной (/) общий «народный» хром скрыт — у неё своя шапка/подвал (V2Header/V2Footer).
+// Единый каркас сайта в новом стиле (WebDynasty): шапка V2Header + подвал V2Footer.
+// Главная (/) рендерит свою шапку/подвал сама (там hero на всю высоту под фикс-шапкой),
+// поэтому на ней общий хром не дублируем. На остальных страницах добавляем отступ сверху
+// под фиксированную шапку (72px).
 export function SiteChrome({ navItems, footerSettings, children }: SiteChromeProps) {
   const pathname = usePathname()
   const bare = pathname === '/'
@@ -22,10 +25,10 @@ export function SiteChrome({ navItems, footerSettings, children }: SiteChromePro
   }
 
   return (
-    <>
-      <Navbar items={navItems} />
-      <main>{children}</main>
-      <SiteFooter settings={footerSettings} />
-    </>
+    <Box className="wd-root" bg="#fafafa">
+      <V2Header items={navItems} />
+      <Box as="main" pt="72px">{children}</Box>
+      <V2Footer settings={footerSettings} />
+    </Box>
   )
 }

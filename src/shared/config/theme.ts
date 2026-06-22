@@ -42,15 +42,15 @@ const customConfig = defineConfig({
         },
       },
       fonts: {
-        heading: { value: "'Philosopher', Georgia, serif" },
+        heading: { value: "'Manrope', system-ui, sans-serif" },
         body:    { value: "'Manrope', system-ui, sans-serif" },
-        display: { value: "'Yeseva One', Georgia, serif" },
+        display: { value: "'Manrope', system-ui, sans-serif" },
       },
     },
     semanticTokens: {
       colors: {
-        'chakra-body-bg':   { value: '#f5f0e6' },
-        'chakra-body-text': { value: '#1a0f0a' },
+        'chakra-body-bg':   { value: '#fafafa' },
+        'chakra-body-text': { value: '#111111' },
       },
     },
   },

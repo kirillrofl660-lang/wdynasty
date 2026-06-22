@@ -14,7 +14,7 @@ import { BlogGrid } from '@/src/widgets/blog/ui/BlogGrid'
 
 export const metadata: Metadata = {
 
-  title: 'Блог | Династия Разработчиков',
+  title: 'Блог | WebDynasty',
 
   description: 'Статьи о разработке, 1С-Битрикс, Laravel, React и DevOps',
 
@@ -54,7 +54,7 @@ export default async function BlogPage() {
 
   return (
 
-    <Box minH="100vh" bg="white">
+    <Box minH="100vh" bg="#fafafa">
 
       <BlogGrid initialPosts={result.docs} initialTotalPages={result.totalPages} />
 
