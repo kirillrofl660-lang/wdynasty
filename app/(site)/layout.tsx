@@ -43,9 +43,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://wdynasty.ru',
   },
-  icons: {
-    icon: '/favicon.ico',
-  },
   openGraph: {
     type: 'website',
     locale: 'ru_RU',
