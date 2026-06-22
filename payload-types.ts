@@ -76,6 +76,7 @@ export interface Config {
     navigation: Navigation;
     leads: Lead;
     'tg-subscribers': TgSubscriber;
+    services: Service;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -92,6 +93,7 @@ export interface Config {
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     leads: LeadsSelect<false> | LeadsSelect<true>;
     'tg-subscribers': TgSubscribersSelect<false> | TgSubscribersSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -451,6 +453,92 @@ export interface TgSubscriber {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  title: string;
+  /**
+   * например: ecommerce-1c-bitrix
+   */
+  slug: string;
+  /**
+   * Определяет какой компонент отрендерит страницу
+   */
+  template: 'ecommerce-bitrix' | 'bitrix24-portal' | 'laravel' | 'devops';
+  status?: ('published' | 'draft') | null;
+  hero?: {
+    badge?: string | null;
+    title?: string | null;
+    titleHighlight?: string | null;
+    description?: string | null;
+    stats?:
+      | {
+          value?: string | null;
+          label?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  features?:
+    | {
+        title?: string | null;
+        description?: string | null;
+        icon?:
+          | (
+              | 'ShoppingCart'
+              | 'CreditCard'
+              | 'Truck'
+              | 'Package'
+              | 'BarChart'
+              | 'Zap'
+              | 'Shield'
+              | 'Users'
+              | 'Settings'
+              | 'Server'
+              | 'Code'
+              | 'Database'
+            )
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  workStages?:
+    | {
+        num?: string | null;
+        title?: string | null;
+        desc?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  prices?:
+    | {
+        name?: string | null;
+        price?: string | null;
+        term?: string | null;
+        popular?: boolean | null;
+        features?:
+          | {
+              text?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  includedInPrice?:
+    | {
+        text?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -508,6 +596,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tg-subscribers';
         value: number | TgSubscriber;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -761,6 +853,72 @@ export interface TgSubscribersSelect<T extends boolean = true> {
   username?: T;
   firstName?: T;
   isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  template?: T;
+  status?: T;
+  hero?:
+    | T
+    | {
+        badge?: T;
+        title?: T;
+        titleHighlight?: T;
+        description?: T;
+        stats?:
+          | T
+          | {
+              value?: T;
+              label?: T;
+              id?: T;
+            };
+      };
+  features?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        icon?: T;
+        id?: T;
+      };
+  workStages?:
+    | T
+    | {
+        num?: T;
+        title?: T;
+        desc?: T;
+        id?: T;
+      };
+  prices?:
+    | T
+    | {
+        name?: T;
+        price?: T;
+        term?: T;
+        popular?: T;
+        features?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  includedInPrice?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  metaTitle?: T;
+  metaDescription?: T;
   updatedAt?: T;
   createdAt?: T;
 }
