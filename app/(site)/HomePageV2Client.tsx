@@ -65,9 +65,9 @@ const whyUs = [
 const whyIcons = ['🎯', '📋', '⚡', '🛡️', '🔍', '📡']
 
 const pricing = [
-  { name: 'Изба',   desc: 'Лендинг или сайт-визитка',          price: 'от 90 000 ₽',  featured: false, features: ['До 5 экранов', 'Адаптив под все устройства', 'Запуск за 2–3 недели', 'Базовая SEO-настройка'] },
-  { name: 'Терем',  desc: 'Корпоративный сайт · выбор мастеров', price: 'от 250 000 ₽', featured: true,  features: ['До 20 страниц + CMS', 'Индивидуальный дизайн', 'Интеграции и формы', 'Аналитика и поддержка'] },
-  { name: 'Палаты', desc: 'Веб-сервис под ключ',               price: 'от 600 000 ₽', featured: false, features: ['Сложная бизнес-логика', 'Личные кабинеты, API', 'Выделенная команда', 'SLA и развитие продукта'] },
+  { name: 'Сайт',                desc: 'Лендинг или корпоративный сайт', price: 'от 150 000 руб.', featured: false, features: ['Индивидуальный дизайн под бренд', 'Адаптив под все устройства', 'CMS для самостоятельного редактирования', 'Базовая SEO-настройка', 'Запуск за 3-4 недели'] },
+  { name: 'Интернет-магазин',    desc: 'E-commerce на 1С-Битрикс',       price: 'от 450 000 руб.', featured: true,  features: ['Каталог, корзина, оформление заказа', 'Интеграция с 1С и онлайн-оплатой', 'Личный кабинет покупателя', 'Связка с CRM и службами доставки', 'Поддержка и развитие после запуска'] },
+  { name: 'Веб-сервис под ключ', desc: 'CRM, SaaS и личные кабинеты',    price: 'от 900 000 руб.', featured: false, features: ['Сложная бизнес-логика под задачу', 'Backend на Laravel + REST API', 'Frontend на React / Next.js', 'DevOps: Docker, CI/CD, мониторинг', 'Выделенная команда и SLA'] },
 ]
 
 const faqData = [
@@ -339,7 +339,7 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
           <ScrollReveal>
             <SectionLabel>Тарифы</SectionLabel>
             <Heading fontSize={{ base: '40px', md: '60px' }} fontWeight="800" letterSpacing="-2px" lineHeight={1} mb={5}>
-              От избы до палат
+              Стоимость разработки
             </Heading>
             <Text color={C.muted} maxW="760px" fontSize="18px" lineHeight="1.6">
               Прозрачная смета фиксируется до старта и не меняется без вашего согласия.
