@@ -8,8 +8,7 @@ import config from '@payload-config'
 
 import { Providers } from '../providers'
 
-import { Navbar } from '@/src/widgets/navigation/ui/Navbar'
-import { SiteFooter } from '../components/SiteFooter'
+import { SiteChrome } from '../components/SiteChrome'
 
 import './globals.css'
 
@@ -112,9 +111,9 @@ export default async function RootLayout({
           ym(109964523,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
         `}</Script>
         <Providers>
-          <Navbar items={navResult.docs as any} />
-          <main>{children}</main>
-          <SiteFooter settings={footerSettings} />
+          <SiteChrome navItems={navResult.docs as any} footerSettings={footerSettings}>
+            {children}
+          </SiteChrome>
         </Providers>
       </body>
     </html>
