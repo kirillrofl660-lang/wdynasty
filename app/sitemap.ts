@@ -5,33 +5,23 @@ import config from '@payload-config'
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://wdynasty.ru'
 
-  // Статичные страницы
   const staticPages: MetadataRoute.Sitemap = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
+    { url: baseUrl,               lastModified: new Date(), changeFrequency: 'weekly',  priority: 1.0 },
+    { url: `${baseUrl}/blog`,     lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.8 },
+    { url: `${baseUrl}/team`,     lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/uslugi`,   lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
   ]
 
-  // Посты блога
   let blogPosts: MetadataRoute.Sitemap = []
+  let servicePages: MetadataRoute.Sitemap = []
+
   try {
     const payload = await getPayload({ config })
-    const posts = await payload.find({
-      collection: 'posts',
-      where: {
-        status: { equals: 'published' },
-      },
-      limit: 1000,
-    })
+
+    const [posts, services] = await Promise.all([
+      payload.find({ collection: 'posts',    where: { status: { equals: 'published' } }, limit: 1000 }),
+      payload.find({ collection: 'services', where: { status: { equals: 'published' } }, limit: 200  }),
+    ])
 
     blogPosts = posts.docs.map((post: any) => ({
       url: `${baseUrl}/blog/${post.slug}`,
@@ -39,9 +29,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     }))
+
+    servicePages = services.docs.map((s: any) => ({
+      url: `${baseUrl}/uslugi/${s.slug}`,
+      lastModified: s.updatedAt ? new Date(s.updatedAt) : new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }))
   } catch {
-    // Если Payload недоступен — возвращаем только статичные
+    // Payload недоступен при сборке без БД — возвращаем только статику
   }
 
-  return [...staticPages, ...blogPosts]
+  return [...staticPages, ...blogPosts, ...servicePages]
 }

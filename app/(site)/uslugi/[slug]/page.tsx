@@ -33,13 +33,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config })
-  const result = await payload.find({
-    collection: 'services',
-    where: { status: { equals: 'published' } },
-    limit: 100,
-  })
-  return result.docs.map((s: any) => ({ slug: s.slug }))
+  try {
+    const payload = await getPayload({ config })
+    const result = await payload.find({
+      collection: 'services',
+      where: { status: { equals: 'published' } },
+      limit: 100,
+    })
+    return result.docs.map((s: any) => ({ slug: s.slug }))
+  } catch {
+    return []
+  }
 }
 
 export default async function ServicePage({ params }: Props) {
