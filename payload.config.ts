@@ -28,6 +28,8 @@ import { Leads } from './collections/Leads'
 
 import { TelegramSubscribers } from './collections/TelegramSubscribers'
 
+import { Services } from './collections/Services'
+
 
 
 const filename = fileURLToPath(import.meta.url)
@@ -50,7 +52,7 @@ export default buildConfig({
 
   },
 
-  collections: [Users, Pages, Media, Projects, Skills, Posts, Navigation, Leads, TelegramSubscribers],
+  collections: [Users, Pages, Media, Projects, Skills, Posts, Navigation, Leads, TelegramSubscribers, Services],
 
   editor: lexicalEditor(),
 

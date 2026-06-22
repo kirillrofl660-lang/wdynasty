@@ -12,6 +12,7 @@ interface MagneticButtonProps {
   colorPalette?: string
   onClick?: () => void
   color?: string
+  w?: string
 }
 
 export function MagneticButton({
@@ -21,7 +22,8 @@ export function MagneticButton({
   size = 'lg',
   colorPalette = 'brand',
   onClick,
-  color=""
+  color = '',
+  w,
 }: MagneticButtonProps) {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const [isHovered, setIsHovered] = useState(false)
@@ -67,6 +69,7 @@ export function MagneticButton({
       size={size as any}
       colorPalette={colorPalette as any}
       color={color}
+      w={w}
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
