@@ -72,7 +72,7 @@ export function V2Header({ items }: { items: NavItem[] }) {
       }}
     >
       {/* Логотип */}
-      <Link href="/v2" style={{ textDecoration: 'none' }}>
+      <Link href="/" style={{ textDecoration: 'none' }}>
         <Text fontWeight="900" fontSize="22px" letterSpacing="-1px" style={gradText}>
           WebDynasty
         </Text>

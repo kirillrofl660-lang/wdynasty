@@ -26,14 +26,14 @@ interface V2FooterProps {
 }
 
 const DEFAULT_SERVICES: FooterLink[] = [
-  { label: '1С-Битрикс',      href: '/v2#services' },
-  { label: 'Laravel + React', href: '/v2#services' },
-  { label: 'Битрикс24',       href: '/v2#services' },
-  { label: 'DevOps',          href: '/v2#services' },
+  { label: '1С-Битрикс',      href: '/#services' },
+  { label: 'Laravel + React', href: '/#services' },
+  { label: 'Битрикс24',       href: '/#services' },
+  { label: 'DevOps',          href: '/#services' },
 ]
 
 const DEFAULT_COMPANY: FooterLink[] = [
-  { label: 'О нас',     href: '/v2#whyus' },
+  { label: 'О нас',     href: '/#whyus' },
   { label: 'Команда',   href: '/team' },
   { label: 'Портфолио', href: '/uslugi' },
   { label: 'Блог',      href: '/blog' },

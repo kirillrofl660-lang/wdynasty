@@ -29,12 +29,12 @@ html {
   color: #f5f0e6;
 }
 
-/* Страница /v2 — выделение в цветах нового дизайна (фиолетовый), а не кримсон */
-.v2-root ::selection {
+/* Главная — выделение в цветах нового дизайна (фиолетовый), а не кримсон */
+.wd-root ::selection {
   background: #8b5cf6;
   color: #fff;
 }
-.v2-root ::-moz-selection {
+.wd-root ::-moz-selection {
   background: #8b5cf6;
   color: #fff;
 }

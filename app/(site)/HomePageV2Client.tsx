@@ -6,8 +6,8 @@ import {
   Button, SimpleGrid, Flex,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
-import { ScrollReveal } from '../../components/ScrollReveal'
-import { CountUp } from '../../components/CountUp'
+import { ScrollReveal } from '../components/ScrollReveal'
+import { CountUp } from '../components/CountUp'
 import { LeadForm } from '@/src/widgets/lead/ui/LeadForm'
 
 // ── Палитра нового дизайна (index_dinasty_final.html) ────────────────────────
@@ -167,7 +167,7 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
                 fontWeight: 800,
                 fontSize: '24px',
                 boxShadow: '0 20px 50px rgba(0,0,0,.06)',
-                animation: `v2float 6s ease-in-out infinite`,
+                animation: `wdfloat 6s ease-in-out infinite`,
                 animationDelay: `${i * 0.6}s`,
               }}
             >
@@ -253,14 +253,14 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
                   gap={{ base: 4, md: 8 }}
                   py={9}
                   borderBottom="1px solid #e8e8ee"
-                  className="v2-service"
+                  className="wd-service"
                   cursor={sv.slug ? 'pointer' : 'default'}
                 >
                   <Text fontSize={{ base: '36px', md: '56px' }} color="#e0e0e8" fontWeight="900" lineHeight={1} flexShrink={0} w={{ base: '60px', md: '80px' }}>
                     {sv.num}
                   </Text>
                   <Box flex={1}>
-                    <Text className="v2-service-title" fontSize={{ base: '26px', md: '38px' }} fontWeight="800" mb={2} transition="color .3s">
+                    <Text className="wd-service-title" fontSize={{ base: '26px', md: '38px' }} fontWeight="800" mb={2} transition="color .3s">
                       {sv.name}
                     </Text>
                     <Text color={C.muted2} fontSize="16px" maxW="560px">{sv.desc}</Text>
@@ -447,8 +447,8 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
       </Box>
 
       <style>{`
-        @keyframes v2float { 50% { transform: translateY(-12px); } }
-        .v2-service:hover .v2-service-title {
+        @keyframes wdfloat { 50% { transform: translateY(-12px); } }
+        .wd-service:hover .wd-service-title {
           background: ${GRAD};
           -webkit-background-clip: text;
           background-clip: text;

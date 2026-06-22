@@ -12,10 +12,10 @@ interface SiteChromeProps {
 }
 
 // Оборачивает контент сайта общими шапкой/подвалом.
-// На /v2 общий «народный» хром скрыт — у этой страницы своя шапка/подвал (V2Header/V2Footer).
+// На главной (/) общий «народный» хром скрыт — у неё своя шапка/подвал (V2Header/V2Footer).
 export function SiteChrome({ navItems, footerSettings, children }: SiteChromeProps) {
   const pathname = usePathname()
-  const bare = pathname === '/v2' || pathname?.startsWith('/v2/')
+  const bare = pathname === '/'
 
   if (bare) {
     return <main>{children}</main>
