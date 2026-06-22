@@ -24,19 +24,19 @@ export default async function Page() {
       payload.findGlobal({ slug: 'footer' }).catch(() => null),
     ])
     return (
-      <>
+      <div className="v2-root">
         <V2Header items={navResult.docs as any} />
         <HomePageV2Client cmsServices={servicesResult.docs as any} cmsPage={cmsPage} />
         <V2Footer settings={footerSettings} />
-      </>
+      </div>
     )
   } catch {
     return (
-      <>
+      <div className="v2-root">
         <V2Header items={[]} />
         <HomePageV2Client />
         <V2Footer />
-      </>
+      </div>
     )
   }
 }
