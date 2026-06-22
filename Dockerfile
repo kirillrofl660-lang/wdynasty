@@ -85,9 +85,11 @@ COPY --from=builder /app/app ./app
 
 
 
-# Create data directory for SQLite with proper permissions
+# Create data and media directories with proper permissions
 
-RUN mkdir -p /app/data && chown -R nextjs:nodejs /app/data
+RUN mkdir -p /app/data /app/media && chown -R nextjs:nodejs /app/data /app/media
+
+VOLUME ["/app/media"]
 
 
 
