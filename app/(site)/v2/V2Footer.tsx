@@ -54,7 +54,7 @@ export function V2Footer({ settings }: V2FooterProps) {
   const companyLinks  = settings?.companyLinks?.length  ? settings.companyLinks  : DEFAULT_COMPANY
   const contactEmail  = settings?.contactEmail  ?? 'hello@wdynasty.ru'
   const contactHours  = settings?.contactHours  ?? 'Пн–Пт: 9:00–19:00'
-  const copyrightText = settings?.copyrightText ?? '© 2026 wdynasty'
+  const copyrightText = settings?.copyrightText ?? '© 2026 WebDynasty'
   const copyrightNote = settings?.copyrightNote ?? 'Политика конфиденциальности'
 
   return (
@@ -64,7 +64,7 @@ export function V2Footer({ settings }: V2FooterProps) {
           {/* Brand */}
           <VStack align="start" gap={3}>
             <Text fontSize="24px" fontWeight="900" letterSpacing="-1px" style={gradText}>
-              wdynasty
+              WebDynasty
             </Text>
             <Text fontSize="14px" lineHeight="1.7" color="#666" whiteSpace="pre-line">
               {brandDescription}
