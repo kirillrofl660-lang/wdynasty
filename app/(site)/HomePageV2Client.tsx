@@ -183,10 +183,9 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
           <Heading
             as="h1"
             fontWeight="800"
-            lineHeight="0.9"
+            lineHeight="1"
             letterSpacing="-0.03em"
-            fontSize={{ base: '64px', md: '120px', lg: '160px' }}
-            style={gradText3}
+            style={{ ...gradText3, whiteSpace: 'nowrap', fontSize: 'clamp(40px, 11vw, 150px)' }}
           >
             WebDynasty
           </Heading>
