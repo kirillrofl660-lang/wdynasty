@@ -80,7 +80,7 @@ export default buildConfig({
 
     },
 
-    push: process.env.NODE_ENV === 'development',
+    push: true,
 
   }),
 
