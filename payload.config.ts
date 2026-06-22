@@ -30,6 +30,10 @@ import { TelegramSubscribers } from './collections/TelegramSubscribers'
 
 import { Services } from './collections/Services'
 
+import { TeamPageSettings } from './globals/TeamPageSettings'
+import { HomePageSettings } from './globals/HomePageSettings'
+import { FooterSettings } from './globals/FooterSettings'
+
 
 
 const filename = fileURLToPath(import.meta.url)
@@ -54,6 +58,8 @@ export default buildConfig({
 
   collections: [Users, Pages, Media, Projects, Skills, Posts, Navigation, Leads, TelegramSubscribers, Services],
 
+  globals: [TeamPageSettings, HomePageSettings, FooterSettings],
+
   editor: lexicalEditor(),
 
   secret: process.env.PAYLOAD_SECRET || 'your-secret-key-here',
@@ -74,9 +80,13 @@ export default buildConfig({
 
     },
 
+    push: process.env.NODE_ENV === 'development',
+
   }),
 
   async onInit(payload) {
+
+    try {
 
     const existingUsers = await payload.find({
 
@@ -99,6 +109,8 @@ export default buildConfig({
           email: 'admin@example.com',
 
           password: 'password',
+
+          name: 'Администратор',
 
         },
 
@@ -155,6 +167,12 @@ export default buildConfig({
         },
 
       })
+
+    }
+
+    } catch (e) {
+
+      payload.logger.warn({ msg: 'onInit seed skipped — schema not yet synced', err: e })
 
     }
 

@@ -1,14 +1,19 @@
 /*
-  Цветовые переменные синхронизированы с токенами темы Chakra (theme.ts).
-  Меняйте значения здесь И в theme.ts, чтобы цвета совпадали во всём проекте.
-  brand = sky blue, accent = fuchsia.
+  Folk-craft дизайн. Цвета синхронизированы с theme.ts.
+  brand = crimson #8b1c2c, accent = gold #b8852a, bg = cream #f5f0e6
 */
 :root {
-  --color-brand-500: #0ea5e9; /* brand.500 */
-  --color-brand-600: #0284c7; /* brand.600 */
-  --color-brand-700: #0369a1; /* brand.700 */
-  --color-accent-500: #d946ef; /* accent.500 */
-  --color-code: #e53e3e;
+  --color-brand-500: #8b1c2c;
+  --color-brand-600: #7a1827;
+  --color-brand-700: #6e1420;
+  --color-accent-500: #b8852a;
+  --color-cream-100: #f5f0e6;
+  --color-cream-200: #ede7d6;
+  --color-text: #1a0f0a;
+  --color-text-muted: #7a6050;
+  --font-display: var(--font-yeseva, 'Yeseva One', Georgia, serif);
+  --font-heading: var(--font-philosopher, 'Philosopher', Georgia, serif);
+  --font-body: var(--font-manrope, 'Manrope', system-ui, sans-serif);
 }
 
 * {
@@ -19,14 +24,19 @@ html {
   scroll-behavior: smooth;
 }
 
+::selection {
+  background: #8b1c2c;
+  color: #f5f0e6;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #ffffff;
-  color: #1a202c;
+  background-color: #f5f0e6;
+  color: #1a0f0a;
   line-height: 1.6;
 }
 

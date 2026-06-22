@@ -103,8 +103,16 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'team-page': TeamPage;
+    'home-page': HomePage;
+    footer: Footer;
+  };
+  globalsSelect: {
+    'team-page': TeamPageSelect<false> | TeamPageSelect<true>;
+    'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -139,8 +147,49 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  /**
+   * Полное имя, отображается на сайте
+   */
   name?: string | null;
+  /**
+   * Часть адреса страницы: /team/ivan-orlov. Латиница, цифры, дефисы.
+   */
+  slug?: string | null;
+  isPublic?: boolean | null;
   role?: ('admin' | 'editor') | null;
+  /**
+   * Например: Ведущий Битрикс-разработчик
+   */
+  position?: string | null;
+  craft?: ('dev' | 'design' | 'devops' | 'management' | 'analytics' | 'qa') | null;
+  /**
+   * Фото мастера. Рекомендуется квадратное, минимум 400×400 px.
+   */
+  avatar?: (number | null) | Media;
+  /**
+   * Краткое описание специалиста для страницы профиля (2–5 предложений).
+   */
+  bio?: string | null;
+  /**
+   * Короткая фраза или профессиональный принцип, отображается в Folk-стиле.
+   */
+  quote?: string | null;
+  /**
+   * Технологии и инструменты специалиста
+   */
+  skills?:
+    | {
+        skill?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  yearsExperience?: number | null;
+  projectsDone?: number | null;
+  /**
+   * Без @, например: ivan_orlov
+   */
+  telegram?: string | null;
+  github?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -159,41 +208,6 @@ export interface User {
     | null;
   password?: string | null;
   collection: 'users';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
- */
-export interface Page {
-  id: number;
-  title: string;
-  slug: string;
-  hero: {
-    headline: string;
-    subheadline?: string | null;
-    description?: string | null;
-  };
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-  };
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -254,6 +268,41 @@ export interface Media {
       filename?: string | null;
     };
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  slug: string;
+  hero: {
+    headline: string;
+    subheadline?: string | null;
+    description?: string | null;
+  };
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -466,6 +515,22 @@ export interface Service {
    * Определяет какой компонент отрендерит страницу
    */
   template: 'ecommerce-bitrix' | 'bitrix24-portal' | 'laravel' | 'devops';
+  excerpt?: string | null;
+  /**
+   * Отображается на карточке главной страницы
+   */
+  startingPrice?: string | null;
+  /**
+   * Отображается на карточке главной страницы
+   */
+  timeframe?: string | null;
+  tags?:
+    | {
+        text?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  content?: string | null;
   status?: ('published' | 'draft') | null;
   hero?: {
     badge?: string | null;
@@ -505,7 +570,6 @@ export interface Service {
     | null;
   workStages?:
     | {
-        num?: string | null;
         title?: string | null;
         desc?: string | null;
         id?: string | null;
@@ -649,7 +713,24 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  slug?: T;
+  isPublic?: T;
   role?: T;
+  position?: T;
+  craft?: T;
+  avatar?: T;
+  bio?: T;
+  quote?: T;
+  skills?:
+    | T
+    | {
+        skill?: T;
+        id?: T;
+      };
+  yearsExperience?: T;
+  projectsDone?: T;
+  telegram?: T;
+  github?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -864,6 +945,16 @@ export interface ServicesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   template?: T;
+  excerpt?: T;
+  startingPrice?: T;
+  timeframe?: T;
+  tags?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  content?: T;
   status?: T;
   hero?:
     | T
@@ -891,7 +982,6 @@ export interface ServicesSelect<T extends boolean = true> {
   workStages?:
     | T
     | {
-        num?: T;
         title?: T;
         desc?: T;
         id?: T;
@@ -961,6 +1051,290 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Управление контентом страницы /team
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team-page".
+ */
+export interface TeamPage {
+  id: number;
+  /**
+   * Первая часть заголовка (обычный текст)
+   */
+  heroHeading?: string | null;
+  /**
+   * Курсив crimson-цветом
+   */
+  heroHeadingAccent?: string | null;
+  heroDescription?: string | null;
+  stats?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  historyHeading?: string | null;
+  historyParagraphs?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  timeline?:
+    | {
+        year: string;
+        event: string;
+        id?: string | null;
+      }[]
+    | null;
+  valuesHeading?: string | null;
+  valuesSubtitle?: string | null;
+  values?:
+    | {
+        title: string;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  showCta?: boolean | null;
+  ctaHeading?: string | null;
+  ctaDescription?: string | null;
+  ctaEmail?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Управление контентом главной страницы /
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page".
+ */
+export interface HomePage {
+  id: number;
+  /**
+   * Например: «Студия цифрового мастерства · с 2012 года»
+   */
+  heroSupTitle?: string | null;
+  heroDescription?: string | null;
+  /**
+   * Строка «12 лет ремесла • 240+ проектов • 38 мастеров»
+   */
+  heroStats?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  stats?:
+    | {
+        target: number;
+        suffix?: string | null;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  manifestoQuote?: string | null;
+  manifestoAuthor?: string | null;
+  whyUs?:
+    | {
+        title: string;
+        desc: string;
+        id?: string | null;
+      }[]
+    | null;
+  pricing?:
+    | {
+        name: string;
+        desc: string;
+        price: string;
+        featured?: boolean | null;
+        features?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  faq?:
+    | {
+        q: string;
+        a: string;
+        id?: string | null;
+      }[]
+    | null;
+  ctaHeading?: string | null;
+  ctaDescription?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Управление содержимым подвала сайта
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  brandDescription?: string | null;
+  servicesLinks?:
+    | {
+        label: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  companyLinks?:
+    | {
+        label: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  contactEmail?: string | null;
+  contactHours?: string | null;
+  copyrightText?: string | null;
+  copyrightNote?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team-page_select".
+ */
+export interface TeamPageSelect<T extends boolean = true> {
+  heroHeading?: T;
+  heroHeadingAccent?: T;
+  heroDescription?: T;
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  historyHeading?: T;
+  historyParagraphs?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  timeline?:
+    | T
+    | {
+        year?: T;
+        event?: T;
+        id?: T;
+      };
+  valuesHeading?: T;
+  valuesSubtitle?: T;
+  values?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        id?: T;
+      };
+  showCta?: T;
+  ctaHeading?: T;
+  ctaDescription?: T;
+  ctaEmail?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  heroSupTitle?: T;
+  heroDescription?: T;
+  heroStats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  stats?:
+    | T
+    | {
+        target?: T;
+        suffix?: T;
+        label?: T;
+        id?: T;
+      };
+  manifestoQuote?: T;
+  manifestoAuthor?: T;
+  whyUs?:
+    | T
+    | {
+        title?: T;
+        desc?: T;
+        id?: T;
+      };
+  pricing?:
+    | T
+    | {
+        name?: T;
+        desc?: T;
+        price?: T;
+        featured?: T;
+        features?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  faq?:
+    | T
+    | {
+        q?: T;
+        a?: T;
+        id?: T;
+      };
+  ctaHeading?: T;
+  ctaDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  brandDescription?: T;
+  servicesLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
+  companyLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
+  contactEmail?: T;
+  contactHours?: T;
+  copyrightText?: T;
+  copyrightNote?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

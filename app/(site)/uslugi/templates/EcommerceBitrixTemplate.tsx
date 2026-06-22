@@ -154,29 +154,77 @@ export function EcommerceBitrixTemplate({ service }: Props) {
       {workStages.length > 0 && (
         <>
           <Separator />
-          <Box py={20} px={4} bg="gray.50">
-            <Container maxW="5xl">
+          <Box py={20} px={4} bg="brand.950" color="white" position="relative" overflow="hidden">
+            <Box position="absolute" bottom="-20%" left="-10%" w="500px" h="500px" bg="brand.500" opacity="0.05" borderRadius="full" style={{ filter: 'blur(80px)' }} pointerEvents="none" />
+            <Container maxW="6xl" position="relative">
               <ScrollReveal>
-                <VStack gap={12}>
+                <VStack gap={14}>
                   <VStack gap={3} textAlign="center">
-                    <Heading as="h2" fontSize={{ base: '2xl', md: '4xl' }}>Как мы работаем</Heading>
-                    <Text color="gray.600" maxW="2xl">Прозрачный процесс без сюрпризов</Text>
+                    <Text fontSize="sm" fontWeight="semibold" color="brand.400" textTransform="uppercase" letterSpacing="wider">
+                      Процесс работы
+                    </Text>
+                    <Heading as="h2" fontSize={{ base: '2xl', md: '4xl' }} color="white">
+                      Как мы работаем
+                    </Heading>
+                    <Text color="whiteAlpha.700" maxW="xl">
+                      Прозрачный процесс без сюрпризов — вы знаете что происходит на каждом шаге
+                    </Text>
                   </VStack>
-                  <VStack gap={0} w="full">
-                    {workStages.map((s, i) => (
-                      <ScrollReveal key={s.num}>
-                        <HStack gap={6} align="start" py={6} borderBottomWidth={i < workStages.length - 1 ? '1px' : '0'} borderColor="gray.200" w="full">
-                          <Flex minW={12} h={12} borderRadius="full" bg="brand.950" color="brand.400" align="center" justify="center" fontWeight="bold" fontSize="sm">
-                            {s.num}
-                          </Flex>
-                          <VStack align="start" gap={1}>
-                            <Text fontWeight="semibold" fontSize="lg">{s.title}</Text>
-                            <Text color="gray.600">{s.desc}</Text>
+
+                  <SimpleGrid columns={{ base: 1, sm: 2, lg: workStages.length > 4 ? 4 : workStages.length }} gap={4} w="full">
+                    {workStages.map((s, i) => {
+                      const stepNum = (i + 1).toString().padStart(2, '0')
+                      return (
+                      <ScrollReveal key={i}>
+                        <Box
+                          bg="whiteAlpha.50"
+                          border="1px solid"
+                          borderColor="whiteAlpha.100"
+                          borderRadius="2xl"
+                          p={6}
+                          position="relative"
+                          overflow="hidden"
+                          h="full"
+                          _hover={{ bg: 'whiteAlpha.100', borderColor: 'brand.700' }}
+                          transition="all 0.2s"
+                        >
+                          {/* Декоративный большой номер */}
+                          <Text
+                            position="absolute"
+                            bottom="-10px"
+                            right="12px"
+                            fontSize="8xl"
+                            fontWeight="black"
+                            color="whiteAlpha.50"
+                            lineHeight={1}
+                            userSelect="none"
+                            pointerEvents="none"
+                          >
+                            {stepNum}
+                          </Text>
+                          <VStack align="start" gap={3} position="relative" zIndex={1}>
+                            <Flex
+                              w={9} h={9} borderRadius="lg"
+                              bg="brand.500"
+                              align="center" justify="center"
+                              fontWeight="bold" fontSize="xs"
+                              color="white"
+                              flexShrink={0}
+                            >
+                              {stepNum}
+                            </Flex>
+                            <Text fontWeight="bold" fontSize="md" color="white" lineHeight="short">
+                              {s.title}
+                            </Text>
+                            <Text color="whiteAlpha.600" fontSize="sm" lineHeight="tall">
+                              {s.desc}
+                            </Text>
                           </VStack>
-                        </HStack>
+                        </Box>
                       </ScrollReveal>
-                    ))}
-                  </VStack>
+                      )
+                    })}
+                  </SimpleGrid>
                 </VStack>
               </ScrollReveal>
             </Container>

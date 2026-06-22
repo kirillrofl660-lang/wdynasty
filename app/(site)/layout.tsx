@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { Manrope, Philosopher, Yeseva_One } from 'next/font/google'
 
 import { getPayload } from 'payload'
 
@@ -8,8 +9,28 @@ import config from '@payload-config'
 import { Providers } from '../providers'
 
 import { Navbar } from '@/src/widgets/navigation/ui/Navbar'
+import { SiteFooter } from '../components/SiteFooter'
 
 import './globals.css'
+
+const manrope = Manrope({
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-manrope',
+  display: 'swap',
+})
+const philosopher = Philosopher({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-philosopher',
+  display: 'swap',
+})
+const yesevaOne = Yeseva_One({
+  subsets: ['latin', 'cyrillic'],
+  weight: '400',
+  variable: '--font-yeseva',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'Династия Разработчиков — Корпоративная разработка и веб-решения',
@@ -67,21 +88,33 @@ export default async function RootLayout({
 
   const payload = await getPayload({ config })
 
-  const navResult = await payload.find({
-    collection: 'navigation',
-    sort: 'order',
-    where: {
-      isActive: { equals: true },
-    },
-  })
+  const [navResult, footerSettings] = await Promise.all([
+    payload.find({
+      collection: 'navigation',
+      sort: 'order',
+      where: { isActive: { equals: true } },
+    }),
+    payload.findGlobal({ slug: 'footer' }).catch(() => null),
+  ])
 
   return (
 
-    <html lang="ru">
-      <body>
+    <html lang="ru" className={`${manrope.variable} ${philosopher.variable} ${yesevaOne.variable}`}>
+      <body className={manrope.className}>
+        <Script
+          id="yandex-metrika"
+          strategy="afterInteractive"
+        >{`
+          (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();
+          for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+          })(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
+          ym(109964523,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+        `}</Script>
         <Providers>
           <Navbar items={navResult.docs as any} />
           <main>{children}</main>
+          <SiteFooter settings={footerSettings} />
         </Providers>
       </body>
     </html>

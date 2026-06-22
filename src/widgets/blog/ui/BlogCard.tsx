@@ -9,10 +9,7 @@ import {
   Text,
   Heading,
   Image,
-  Badge,
   Icon,
-  Card,
-  CardBody,
   Center,
 } from '@chakra-ui/react'
 import { Post } from '@/src/entities/post/model'
@@ -28,19 +25,13 @@ export function BlogCard({ post }: BlogCardProps) {
 
   return (
     <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', height: '100%' }}>
-      <Card.Root
-        variant="outline"
-        overflow="hidden"
-        h="full"
-        transition="all 0.3s ease"
-        _hover={{
-          borderColor: 'brand.500',
-          shadow: 'lg',
-          transform: 'translateY(-4px)',
-        }}
+      <Box
+        bg="white"
+        style={{ border: '1.5px solid rgba(139,28,44,0.12)', borderRadius: '4px', overflow: 'hidden', height: '100%', transition: 'transform 0.25s, box-shadow 0.25s' }}
+        _hover={{ transform: 'translateY(-4px)', boxShadow: '0 16px 40px rgba(139,28,44,0.15)' }}
         css={{ '&:hover .blog-card-img': { transform: 'scale(1.05)' } }}
       >
-        <Box position="relative" h={48} overflow="hidden" bg="gray.100">
+        <Box position="relative" h={48} overflow="hidden" bg="#ede7d6">
           {post.coverImage && post.coverImage.url ? (
             <Image
               className="blog-card-img"
@@ -56,25 +47,25 @@ export function BlogCard({ post }: BlogCardProps) {
               className="blog-card-img"
               w="full"
               h="full"
-              bg="brand.950"
+              style={{ background: 'linear-gradient(150deg, #8b1c2c, #6e1420)' }}
               transition="transform 0.5s ease"
             >
-              <Text fontSize="6xl" fontWeight="bold" color="whiteAlpha.300">
+              <Text fontSize="6xl" style={{ fontFamily: 'var(--font-yeseva, serif)' }} color="rgba(245,240,230,0.25)">
                 {post.title.charAt(0)}
               </Text>
             </Center>
           )}
         </Box>
 
-        <CardBody p={6}>
+        <Box p={6}>
           <VStack align="start" gap={3} h="full">
             {post.tags && post.tags.length > 0 && (
               <HStack gap={2} wrap="wrap">
                 {post.tags.slice(0, 3).map((tag, i) =>
                   tag.tag ? (
-                    <Badge key={i} size="sm" colorPalette="brand" variant="subtle">
+                    <Text key={i} fontSize="xs" fontWeight="700" letterSpacing="0.06em" textTransform="uppercase" color="#b8852a">
                       {tag.tag}
-                    </Badge>
+                    </Text>
                   ) : null,
                 )}
               </HStack>
@@ -82,19 +73,19 @@ export function BlogCard({ post }: BlogCardProps) {
 
             <Heading
               as="h3"
-              size="md"
-              color="gray.900"
-              fontWeight="semibold"
+              style={{ fontFamily: 'var(--font-philosopher, serif)' }}
+              fontSize="xl"
+              fontWeight="700"
+              color="#1a0f0a"
               lineHeight="short"
               transition="color 0.2s"
-              _groupHover={{ color: 'brand.600' }}
             >
               {post.title}
             </Heading>
 
             {post.excerpt && (
               <Text
-                color="gray.600"
+                color="#7a6050"
                 fontSize="sm"
                 lineHeight="relaxed"
                 style={{
@@ -108,21 +99,21 @@ export function BlogCard({ post }: BlogCardProps) {
               </Text>
             )}
 
-            <HStack justify="space-between" w="full" pt={2} mt="auto">
+            <HStack justify="space-between" w="full" pt={3} mt="auto" style={{ borderTop: '1px solid rgba(139,28,44,0.1)' }}>
               {post.publishedAt && (
-                <HStack gap={1} fontSize="xs" color="gray.500">
+                <HStack gap={1} fontSize="xs" color="#7a6050">
                   <Icon as={Calendar} w={3.5} h={3.5} />
                   <Text suppressHydrationWarning>{formattedDate}</Text>
                 </HStack>
               )}
-              <HStack gap={1} fontSize="sm" fontWeight="medium" color="brand.600">
-                <Text>Читать</Text>
+              <HStack gap={1} fontSize="sm" fontWeight="700" color="#8b1c2c">
+                <Text>Смотреть</Text>
                 <Icon as={ArrowRight} w={4} h={4} />
               </HStack>
             </HStack>
           </VStack>
-        </CardBody>
-      </Card.Root>
+        </Box>
+      </Box>
     </Link>
   )
 }

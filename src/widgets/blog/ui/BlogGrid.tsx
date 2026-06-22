@@ -16,7 +16,6 @@ import {
   Icon,
   Flex,
   Center,
-  Badge,
 } from '@chakra-ui/react'
 import { BlogCard } from './BlogCard'
 import { ScrollReveal, StaggerContainer } from '@/src/shared/ui'
@@ -66,21 +65,23 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
 
   return (
     <Box>
-      <Box bg="brand.950" color="white" py={{ base: 20, md: 28 }} px={4}>
+      <Box bg="#f5f0e6" py={{ base: 20, md: 28 }} px={4} style={{ borderBottom: '1px solid rgba(139,28,44,0.12)' }}>
         <Container maxW="4xl">
           <ScrollReveal>
             <VStack gap={5} textAlign="center">
-              <Badge colorPalette="accent" size="md">Блог</Badge>
+              <Text fontSize="xs" fontWeight="700" letterSpacing="0.2em" textTransform="uppercase" color="#8b1c2c">Блог</Text>
               <Heading
                 as="h1"
+                style={{ fontFamily: 'var(--font-philosopher, "Philosopher", serif)' }}
                 fontSize={{ base: '4xl', md: '6xl' }}
-                fontWeight="bold"
+                fontWeight="700"
                 lineHeight="shorter"
+                color="#1a0f0a"
               >
                 Статьи и{' '}
-                <Text as="span" color="accent.400">инсайты</Text>
+                <Text as="span" color="#8b1c2c" fontStyle="italic">инсайты</Text>
               </Heading>
-              <Text fontSize={{ base: 'lg', md: 'xl' }} color="whiteAlpha.800" maxW="2xl">
+              <Text fontSize={{ base: 'lg', md: 'xl' }} color="#7a6050" maxW="2xl">
                 Разбираем 1С-Битрикс, Laravel, React и DevOps. Делимся опытом
                 и практическими решениями из реальных проектов.
               </Text>
@@ -96,13 +97,13 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
               align="center"
               gap={3}
               bg="white"
-              border="1px solid"
-              borderColor="gray.200"
-              borderRadius="lg"
+              border="1.5px solid"
+              borderColor="rgba(139,28,44,0.2)"
+              borderRadius="2px"
               px={4}
               py={1}
               transition="border-color 0.2s"
-              _focusWithin={{ borderColor: 'brand.500' }}
+              _focusWithin={{ borderColor: '#8b1c2c' }}
             >
               <Icon as={Search} color="gray.400" />
               <Input

@@ -28,6 +28,7 @@ export const Services: CollectionConfig = {
       name: 'template',
       type: 'select',
       required: true,
+      defaultValue: 'ecommerce-bitrix',
       label: 'Шаблон страницы',
       options: [
         { label: 'E-commerce на 1С-Битрикс', value: 'ecommerce-bitrix' },
@@ -36,6 +37,35 @@ export const Services: CollectionConfig = {
         { label: 'DevOps и инфраструктура', value: 'devops' },
       ],
       admin: { description: 'Определяет какой компонент отрендерит страницу' },
+    },
+    {
+      name: 'excerpt',
+      type: 'textarea',
+      label: 'Краткое описание (для карточки на главной)',
+    },
+    {
+      name: 'startingPrice',
+      type: 'text',
+      label: 'Стартовая цена (от 150 000 ₽)',
+      admin: { description: 'Отображается на карточке главной страницы' },
+    },
+    {
+      name: 'timeframe',
+      type: 'text',
+      label: 'Сроки (2-8 недель)',
+      admin: { description: 'Отображается на карточке главной страницы' },
+    },
+    {
+      name: 'tags',
+      type: 'array',
+      label: 'Теги технологий (для карточки)',
+      fields: [{ name: 'text', type: 'text', label: 'Тег' }],
+    },
+    {
+      name: 'content',
+      type: 'textarea',
+      label: 'Контент (устаревшее)',
+      admin: { condition: () => false },
     },
     {
       name: 'status',
@@ -100,7 +130,6 @@ export const Services: CollectionConfig = {
       type: 'array',
       label: 'Этапы работы',
       fields: [
-        { name: 'num', type: 'text', label: 'Номер (01, 02...)' },
         { name: 'title', type: 'text', label: 'Название этапа' },
         { name: 'desc', type: 'textarea', label: 'Описание' },
       ],
