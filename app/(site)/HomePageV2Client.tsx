@@ -9,6 +9,7 @@ import NextLink from 'next/link'
 import { ScrollReveal } from '../components/ScrollReveal'
 import { CountUp } from '../components/CountUp'
 import { LeadForm } from '@/src/widgets/lead/ui/LeadForm'
+import { ShieldCheck, Clock, Layers, FileText, LifeBuoy, Server } from 'lucide-react'
 
 // ── Палитра нового дизайна (index_dinasty_final.html) ────────────────────────
 const C = {
@@ -62,7 +63,8 @@ const whyUs = [
   { title: 'Признанная экспертиза', desc: 'Золотой партнёр 1С-Битрикс, Platinum Битрикс24. Авторы открытых решений и спикеры конференций.' },
 ]
 
-const whyIcons = ['🎯', '📋', '⚡', '🛡️', '🔍', '📡']
+// Векторные иконки по порядку пунктов «Почему выбирают нас»
+const whyIcons = [ShieldCheck, Clock, Layers, FileText, LifeBuoy, Server]
 
 const pricing = [
   { name: 'Сайт',                desc: 'Лендинг или корпоративный сайт', price: 'от 150 000 руб.', featured: false, features: ['Индивидуальный дизайн под бренд', 'Адаптив под все устройства', 'CMS для самостоятельного редактирования', 'Базовая SEO-настройка', 'Запуск за 3-4 недели'] },
@@ -318,8 +320,11 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
                   transition="transform .25s"
                   _hover={{ transform: 'translateY(-4px)' }}
                 >
-                  <Flex w="56px" h="56px" borderRadius="16px" align="center" justify="center" fontSize="26px" flexShrink={0} style={{ background: GRAD }}>
-                    {whyIcons[i % whyIcons.length]}
+                  <Flex w="56px" h="56px" borderRadius="16px" align="center" justify="center" flexShrink={0} style={{ background: GRAD }}>
+                    {(() => {
+                      const Ic = whyIcons[i % whyIcons.length]
+                      return <Ic size={26} color="#ffffff" strokeWidth={2} />
+                    })()}
                   </Flex>
                   <Box>
                     <Text fontSize="22px" fontWeight="800" mb={2}>{w.title}</Text>
