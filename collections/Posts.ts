@@ -94,15 +94,6 @@ export const Posts: CollectionConfig = {
       ],
     },
     {
-      name: 'author',
-      type: 'relationship',
-      relationTo: 'users',
-      label: 'Автор',
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
       name: 'publishedAt',
       type: 'date',
       label: 'Дата публикации',
