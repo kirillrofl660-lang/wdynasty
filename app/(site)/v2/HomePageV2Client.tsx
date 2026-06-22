@@ -199,7 +199,7 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
             </NextLink>
             <NextLink href="#services">
               <Button px="30px" py="26px" borderRadius="999px" fontWeight="700" bg="white" color={C.ink} border="1px solid #ddd" _hover={{ opacity: 0.88, transform: 'translateY(-1px)' }}>
-                Смотреть работы
+                Наши услуги
               </Button>
             </NextLink>
           </HStack>
