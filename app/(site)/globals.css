@@ -1,6 +1,3 @@
-/* Глобальные стили для Chakra UI */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 /*
   Цветовые переменные синхронизированы с токенами темы Chakra (theme.ts).
   Меняйте значения здесь И в theme.ts, чтобы цвета совпадали во всём проекте.
@@ -18,12 +15,14 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #ffffff;

@@ -16,8 +16,10 @@ import {
   Icon,
   Image,
   Link,
-  Separator, Wrap
+  Separator,
+  Wrap,
 } from '@chakra-ui/react'
+import { Avatar } from '@chakra-ui/react/avatar'
 import {
   Code,
   Server,
@@ -51,26 +53,84 @@ import { FloatingElements } from '../components/FloatingElements'
 import { HeroAnimation } from '../components/HeroAnimation'
 import { LeadForm } from '@/src/widgets/lead/ui/LeadForm'
 
-// Simple SVG icon components
-const GithubIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="24" height="24">
-    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-  </svg>
-)
+// Schema.org JSON-LD для SEO
+const SchemaOrg = () => {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': 'https://wdynasty.ru',
+        name: 'Династия Разработчиков',
+        url: 'https://wdynasty.ru',
+        sameAs: [
+          'https://t.me/evilsleepyowl',
+        ],
+        contactPoint: {
+          '@type': 'ContactPoint',
+          contactType: 'sales',
+          availableLanguage: ['Russian', 'English'],
+        },
+      },
+      {
+        '@type': 'WebSite',
+        url: 'https://wdynasty.ru',
+        name: 'Династия Разработчиков — Корпоративная разработка',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: 'https://wdynasty.ru',
+          },
+          'query-input': 'required name=search_term_string',
+        },
+      },
+      {
+        '@type': 'WebPage',
+        url: 'https://wdynasty.ru',
+        name: 'Династия Разработчиков — Корпоративная разработка и веб-решения',
+        description: 'Разработка на 1С-Битрикс, Laravel, React, Next.js. Highload проекты, E-commerce, DevOps.',
+        inLanguage: 'ru-RU',
+      },
+      {
+        '@type': 'LocalBusiness',
+        name: 'Династия Разработчиков',
+        description: 'Корпоративная веб-разработка, 1С-Битрикс, Laravel, React, DevOps',
+        url: 'https://wdynasty.ru',
+        telephone: '+7 920 778 2802',
+        areaServed: 'RU',
+        serviceType: [
+          'Веб-разработка',
+          'Корпоративные порталы',
+          'E-commerce',
+          'Highload системы',
+          'DevOps',
+        ],
+      },
+    ],
+  }
 
-const LinkedinIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="24" height="24">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect x="2" y="9" width="4" height="12" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-)
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  )
+}
+
 
 const TelegramIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="24" height="24">
     <path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.54a2.25 2.25 0 0 0 .124 4.238l4.078 1.2 1.65 5.193a1.5 1.5 0 0 0 2.634.59l2.35-3.13 4.612 3.41a2.25 2.25 0 0 0 3.535-1.234l2.287-14.985a2.242 2.242 0 0 0-1.048-2.664z"/>
     <path d="m9.5 13.5 8-5.5"/>
     <path d="m9.5 13.5 2.5 7"/>
+  </svg>
+)
+
+const MaxIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="20" height="20">
+    <rect width="1000" height="1000" fill="currentColor" ry="250"/>
+    <path fill="white" fillRule="evenodd" d="M508.211 878.328c-75.007 0-109.864-10.95-170.453-54.75-38.325 49.275-159.686 87.783-164.979 21.9 0-49.456-10.95-91.248-23.36-136.873-14.782-56.21-31.572-118.807-31.572-209.508 0-216.626 177.754-379.597 388.357-379.597 210.785 0 375.947 171.001 375.947 381.604.707 207.346-166.595 376.118-373.94 377.224m3.103-571.585c-102.564-5.292-182.499 65.7-200.201 177.024-14.6 92.162 11.315 204.398 33.397 210.238 10.585 2.555 37.23-18.98 53.837-35.587a189.8 189.8 0 0 0 92.71 33.032c106.273 5.112 197.08-75.794 204.215-181.95 4.154-106.382-77.67-196.486-183.958-202.574Z" clipRule="evenodd"/>
   </svg>
 )
 
@@ -215,8 +275,10 @@ const faqItems = [
 
 export default function HomePage() {
   return (
-    <Box minH="100vh">
-      {/* Hero Section */}
+    <>
+      <SchemaOrg />
+      <Box minH="100vh">
+        {/* Hero Section */}
       <Box
         bg="brand.950"
         color="white"
@@ -276,7 +338,33 @@ export default function HomePage() {
                 <MagneticButton
                   size="lg"
                   colorPalette="brand"
-                  onClick={() => window.open('https://t.me/evilsleepyowl', '_blank', 'noopener,noreferrer')}
+                  onClick={() => {
+                    const target = document.getElementById('contact')
+                    if (!target) return
+                    
+                    const startY = window.scrollY
+                    const targetY = target.getBoundingClientRect().top + startY
+                    const diff = targetY - startY
+                    const duration = 1200
+                    let startTime: number | null = null
+                    
+                    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
+                    
+                    const animate = (currentTime: number) => {
+                      if (startTime === null) startTime = currentTime
+                      const elapsed = currentTime - startTime
+                      const progress = Math.min(elapsed / duration, 1)
+                      const eased = easeOutCubic(progress)
+                      
+                      window.scrollTo(0, startY + diff * eased)
+                      
+                      if (progress < 1) {
+                        requestAnimationFrame(animate)
+                      }
+                    }
+                    
+                    requestAnimationFrame(animate)
+                  }}
                 >
                   Обсудить проект
                 </MagneticButton>
@@ -592,35 +680,17 @@ export default function HomePage() {
                       <HStack gap={6} py={2}>
                         {managers.map((m) => (
                           <VStack key={m.name} gap={2}>
-                            <Flex
-                              position="relative"
-                              w={20}
-                              h={20}
-                              borderRadius="full"
-                              overflow="hidden"
-                              bg="accent.500"
-                              align="center"
-                              justify="center"
-                              boxShadow="md"
-                            >
-                              <Text fontSize="2xl" fontWeight="bold" color="white">
+                            <Avatar.Root size="xl" boxShadow="md">
+                              <Avatar.Fallback
+                                bg="accent.500"
+                                color="white"
+                                fontSize="2xl"
+                                fontWeight="bold"
+                              >
                                 {m.initials}
-                              </Text>
-                              <img
-                                src={m.photo}
-                                alt={m.name}
-                                onError={(e) => {
-                                  e.currentTarget.style.display = 'none'
-                                }}
-                                style={{
-                                  position: 'absolute',
-                                  inset: 0,
-                                  width: '100%',
-                                  height: '100%',
-                                  objectFit: 'cover',
-                                }}
-                              />
-                            </Flex>
+                              </Avatar.Fallback>
+                              <Avatar.Image src={m.photo} alt={m.name} />
+                            </Avatar.Root>
                             <Box textAlign="center">
                               <Text fontWeight="semibold" fontSize="sm">{m.name}</Text>
                               <Text fontSize="xs" color="gray.500" maxW="36">{m.role}</Text>
@@ -944,7 +1014,7 @@ export default function HomePage() {
       <Separator />
 
       {/* CTA Section */}
-      <Box py={24} px={4}>
+      <Box id="contact" py={24} px={4}>
         <Container maxW="4xl">
           <ScrollReveal>
             <Card.Root bg="brand.950" color="white" borderRadius="2xl" overflow="hidden">
@@ -975,8 +1045,11 @@ export default function HomePage() {
               <Link href="/blog" color="gray.500" _hover={{ color: 'brand.500' }} fontSize="sm">
                 Блог
               </Link>
-              <Link href="https://t.me/evilsleepyowl" color="gray.500" _hover={{ color: 'brand.500' }}>
+              <Link href="https://t.me/evilsleepyowl" color="gray.500" _hover={{ color: 'brand.500' }} title="Telegram">
                 <Box boxSize={5}><TelegramIcon /></Box>
+              </Link>
+              <Link href="https://max.ru/u/f9LHodD0cOKvZae-UdwDApDXZn986jd6zyx6gn9NxQSXf0qZxHwQ5tz_2w4" color="gray.500" _hover={{ color: 'brand.500' }} title="Max мессенджер">
+                <Box boxSize={5}><MaxIcon /></Box>
               </Link>
             </HStack>
             <Text color="gray.500" fontSize="sm" textAlign="center">
@@ -988,5 +1061,6 @@ export default function HomePage() {
         </Container>
       </Box>
     </Box>
+    </>
   )
 }

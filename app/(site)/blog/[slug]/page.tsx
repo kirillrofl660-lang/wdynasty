@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
 
   })
-
+  console.log('posts', posts, isDraft);
   
 
   const post = posts.docs[0]
