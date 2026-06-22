@@ -432,7 +432,6 @@ export interface Post {
         id?: string | null;
       }[]
     | null;
-  author?: (number | null) | User;
   publishedAt?: string | null;
   status?: ('draft' | 'published') | null;
   metaTitle?: string | null;
@@ -894,7 +893,6 @@ export interface PostsSelect<T extends boolean = true> {
         tag?: T;
         id?: T;
       };
-  author?: T;
   publishedAt?: T;
   status?: T;
   metaTitle?: T;
