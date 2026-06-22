@@ -7,6 +7,14 @@ import config from '@payload-config'
 import Link from 'next/link'
 import { Box, Container, Heading, Text, VStack, HStack, Flex, SimpleGrid } from '@chakra-ui/react'
 
+function plural(n: number, one: string, few: string, many: string) {
+  const mod10 = n % 10
+  const mod100 = n % 100
+  if (mod10 === 1 && mod100 !== 11) return one
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few
+  return many
+}
+
 const craftLabel: Record<string, string> = {
   dev: 'Разработка',
   design: 'Дизайн',
@@ -149,7 +157,7 @@ export default async function MemberPage({ params }: Props) {
                 {m.yearsExperience && (
                   <VStack gap={0} textAlign="center">
                     <Text style={{ fontFamily: 'var(--font-philosopher, serif)' }} fontSize="2xl" fontWeight="700" color="#8b1c2c" lineHeight={1}>{m.yearsExperience}</Text>
-                    <Text fontSize="xs" fontWeight="700" letterSpacing="0.1em" textTransform="uppercase" color="#7a6050">лет опыта</Text>
+                    <Text fontSize="xs" fontWeight="700" letterSpacing="0.1em" textTransform="uppercase" color="#7a6050">{plural(m.yearsExperience, 'год опыта', 'года опыта', 'лет опыта')}</Text>
                   </VStack>
                 )}
                 {m.yearsExperience && m.projectsDone && (
@@ -158,7 +166,7 @@ export default async function MemberPage({ params }: Props) {
                 {m.projectsDone && (
                   <VStack gap={0} textAlign="center">
                     <Text style={{ fontFamily: 'var(--font-philosopher, serif)' }} fontSize="2xl" fontWeight="700" color="#8b1c2c" lineHeight={1}>{m.projectsDone}</Text>
-                    <Text fontSize="xs" fontWeight="700" letterSpacing="0.1em" textTransform="uppercase" color="#7a6050">проектов</Text>
+                    <Text fontSize="xs" fontWeight="700" letterSpacing="0.1em" textTransform="uppercase" color="#7a6050">{plural(m.projectsDone, 'проект', 'проекта', 'проектов')}</Text>
                   </VStack>
                 )}
               </HStack>
