@@ -54,7 +54,7 @@ export function V2Footer({ settings }: V2FooterProps) {
   const companyLinks  = settings?.companyLinks?.length  ? settings.companyLinks  : DEFAULT_COMPANY
   const contactEmail  = settings?.contactEmail  ?? 'hello@wdynasty.ru'
   const contactHours  = settings?.contactHours  ?? 'Пн–Пт: 9:00–19:00'
-  const copyrightText = settings?.copyrightText ?? '© 2026 Династия Разработчиков'
+  const copyrightText = settings?.copyrightText ?? '© 2026 wdynasty'
   const copyrightNote = settings?.copyrightNote ?? 'Политика конфиденциальности'
 
   return (
@@ -63,8 +63,8 @@ export function V2Footer({ settings }: V2FooterProps) {
         <SimpleGrid columns={{ base: 1, sm: 2, lg: 4 }} gap={{ base: 10, lg: 12 }} mb="60px">
           {/* Brand */}
           <VStack align="start" gap={3}>
-            <Text fontSize="22px" fontWeight="900" letterSpacing="-1px" color="#fff">
-              ДИН<Text as="span" style={gradText}>АСТИЯ</Text> РАЗРАБОТЧИКОВ
+            <Text fontSize="24px" fontWeight="900" letterSpacing="-1px" style={gradText}>
+              wdynasty
             </Text>
             <Text fontSize="14px" lineHeight="1.7" color="#666" whiteSpace="pre-line">
               {brandDescription}

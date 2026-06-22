@@ -73,8 +73,8 @@ export function V2Header({ items }: { items: NavItem[] }) {
     >
       {/* Логотип */}
       <Link href="/v2" style={{ textDecoration: 'none' }}>
-        <Text fontWeight="900" fontSize="20px" letterSpacing="-1px" color="#111">
-          ДИН<Text as="span" style={gradText}>АСТИЯ</Text>
+        <Text fontWeight="900" fontSize="22px" letterSpacing="-1px" style={gradText}>
+          wdynasty
         </Text>
       </Link>
 

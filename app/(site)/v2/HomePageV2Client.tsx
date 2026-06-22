@@ -178,9 +178,15 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
           <Text mb={6} color="#888" fontSize="14px" letterSpacing="3px" textTransform="uppercase">
             {heroSupTitle}
           </Text>
-          <Heading as="h1" fontWeight="800" lineHeight="0.88" letterSpacing="-6px">
-            <Box fontSize={{ base: '58px', md: '90px', lg: '118px' }}>ДИНАСТИЯ</Box>
-            <Box as="span" fontSize={{ base: '58px', md: '90px', lg: '118px' }} style={gradText3}>РАЗРАБОТЧИКОВ</Box>
+          <Heading
+            as="h1"
+            fontWeight="800"
+            lineHeight="0.9"
+            letterSpacing="-0.03em"
+            fontSize={{ base: '64px', md: '120px', lg: '160px' }}
+            style={gradText3}
+          >
+            wdynasty
           </Heading>
           <Text mt={7} fontSize={{ base: '18px', md: '22px' }} color={C.muted} lineHeight="1.6" maxW="760px" mx="auto">
             {heroDescription}
