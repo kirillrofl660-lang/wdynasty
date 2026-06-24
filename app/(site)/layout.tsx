@@ -85,14 +85,19 @@ export default async function RootLayout({
 
   const payload = await getPayload({ config })
 
-  const [navResult, footerSettings] = await Promise.all([
+  const [navResult, footerSettings, servicesResult] = await Promise.all([
     payload.find({
       collection: 'navigation',
       sort: 'order',
       where: { isActive: { equals: true } },
     }),
     payload.findGlobal({ slug: 'footer' }).catch(() => null),
+    payload
+      .find({ collection: 'services', where: { status: { equals: 'published' } }, sort: 'order', limit: 8 })
+      .catch(() => ({ docs: [] as any[] })),
   ])
+
+  const footerServices = (servicesResult.docs as any[]).map((s) => ({ title: s.title, slug: s.slug }))
 
   return (
 
@@ -109,7 +114,7 @@ export default async function RootLayout({
           ym(109964523,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
         `}</Script>
         <Providers>
-          <SiteChrome navItems={navResult.docs as any} footerSettings={footerSettings}>
+          <SiteChrome navItems={navResult.docs as any} footerSettings={footerSettings} services={footerServices}>
             {children}
           </SiteChrome>
         </Providers>

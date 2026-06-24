@@ -23,6 +23,8 @@ interface V2FooterProps {
     copyrightText?: string | null
     copyrightNote?: string | null
   } | null
+  /** Услуги из коллекции `services` — динамически в колонку «Услуги» */
+  services?: { title: string; slug: string }[]
 }
 
 const DEFAULT_SERVICES: FooterLink[] = [
@@ -47,10 +49,12 @@ const linkStyle = {
   _hover: { color: '#fff' },
 } as const
 
-export function V2Footer({ settings }: V2FooterProps) {
+export function V2Footer({ settings, services }: V2FooterProps) {
   const brandDescription = settings?.brandDescription
     ?? 'Создаём цифровые продукты для бизнеса. Bitrix, Laravel, React, DevOps.'
-  const servicesLinks = settings?.servicesLinks?.length ? settings.servicesLinks : DEFAULT_SERVICES
+  const servicesLinks: FooterLink[] = (services && services.length > 0)
+    ? services.map((s) => ({ label: s.title, href: `/uslugi/${s.slug}` }))
+    : (settings?.servicesLinks?.length ? settings.servicesLinks : DEFAULT_SERVICES)
   const companyLinks  = settings?.companyLinks?.length  ? settings.companyLinks  : DEFAULT_COMPANY
   const contactEmail  = settings?.contactEmail  ?? 'hello@wdynasty.ru'
   const contactHours  = settings?.contactHours  ?? 'Пн–Пт: 9:00–19:00'

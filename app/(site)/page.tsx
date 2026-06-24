@@ -28,7 +28,7 @@ export default async function Page() {
       <div className="wd-root">
         <V2Header items={navResult.docs as any} />
         <HomePageV2Client cmsServices={servicesResult.docs as any} cmsPage={cmsPage} />
-        <V2Footer settings={footerSettings} />
+        <V2Footer settings={footerSettings} services={(servicesResult.docs as any[]).map((s) => ({ title: s.title, slug: s.slug }))} />
       </div>
     )
   } catch {

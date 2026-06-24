@@ -9,6 +9,7 @@ import type { NavItem } from '@/src/widgets/navigation/model/types'
 interface SiteChromeProps {
   navItems: NavItem[]
   footerSettings: any
+  services?: { title: string; slug: string }[]
   children: React.ReactNode
 }
 
@@ -16,7 +17,7 @@ interface SiteChromeProps {
 // Главная (/) рендерит свою шапку/подвал сама (там hero на всю высоту под фикс-шапкой),
 // поэтому на ней общий хром не дублируем. На остальных страницах добавляем отступ сверху
 // под фиксированную шапку (72px).
-export function SiteChrome({ navItems, footerSettings, children }: SiteChromeProps) {
+export function SiteChrome({ navItems, footerSettings, services, children }: SiteChromeProps) {
   const pathname = usePathname()
   const bare = pathname === '/'
 
@@ -28,7 +29,7 @@ export function SiteChrome({ navItems, footerSettings, children }: SiteChromePro
     <Box className="wd-root" bg="#fafafa">
       <V2Header items={navItems} />
       <Box as="main" pt="72px">{children}</Box>
-      <V2Footer settings={footerSettings} />
+      <V2Footer settings={footerSettings} services={services} />
     </Box>
   )
 }
