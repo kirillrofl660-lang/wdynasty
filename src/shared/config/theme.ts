@@ -6,17 +6,17 @@ const customConfig = defineConfig({
       colors: {
         // Crimson — основной бренд (глубокий тёмно-красный #8b1c2c)
         brand: {
-          50:  { value: '#fff0f1' },
-          100: { value: '#fce4e7' },
-          200: { value: '#f9c1c9' },
-          300: { value: '#f39aa7' },
-          400: { value: '#e86078' },
-          500: { value: '#8b1c2c' }, // PRIMARY — кнопки, акценты
-          600: { value: '#7a1827' },
-          700: { value: '#6e1420' }, // footer, тёмные секции
-          800: { value: '#5a1019' },
-          900: { value: '#450c14' },
-          950: { value: '#2a070c' },
+          50:  { value: '#f5f3ff' },
+          100: { value: '#ede9fe' },
+          200: { value: '#ddd6fe' },
+          300: { value: '#c4b5fd' },
+          400: { value: '#a78bfa' },
+          500: { value: '#8b5cf6' }, // PRIMARY — фиолетовый бренда сайта
+          600: { value: '#7c3aed' },
+          700: { value: '#6d28d9' },
+          800: { value: '#5b21b6' },
+          900: { value: '#4c1d95' },
+          950: { value: '#2e1065' }, // тёмные секции (тёмно-фиолетовый)
         },
         // Gold — дополнительный акцент (#b8852a)
         accent: {

@@ -294,7 +294,7 @@ export function EcommerceBitrixTemplate({ service }: Props) {
                   <SimpleGrid columns={{ base: 1, md: 2 }} gap={3} w="full" textAlign="left">
                     {included.map((item) => (
                       <HStack key={item.text} gap={3}>
-                        <CheckCircle size={18} color="#0ea5e9" style={{ flexShrink: 0 }} />
+                        <CheckCircle size={18} color="#a78bfa" style={{ flexShrink: 0 }} />
                         <Text color="whiteAlpha.900">{item.text}</Text>
                       </HStack>
                     ))}
