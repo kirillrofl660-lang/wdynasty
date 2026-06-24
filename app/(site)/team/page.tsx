@@ -24,9 +24,9 @@ const craftLabel: Record<string, string> = {
 }
 
 const stats = [
-  { value: '7+', label: 'Лет на рынке' },
-  { value: '120+', label: 'Проектов сдано' },
-  { value: '40+', label: 'Специалистов в команде' },
+  { value: '5+', label: 'Лет на рынке' },
+  { value: '80+', label: 'Проектов сдано' },
+  { value: '6', label: 'Специалистов в команде' },
   { value: '98%', label: 'Клиентов возвращается' },
 ]
 
