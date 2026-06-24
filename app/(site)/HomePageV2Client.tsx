@@ -42,7 +42,7 @@ const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII']
 // ── Дефолтные данные (используются, если CMS пустой) ─────────────────────────
 const stats = [
   { target: 5, suffix: '+', label: 'Лет на рынке' },
-  { target: 80, suffix: '+', label: 'Проектов сдано' },
+  { target: 100, suffix: '+', label: 'Проектов сдано' },
   { target: 98, suffix: '%', label: 'Клиентов рекомендуют' },
   { target: 6, suffix: '', label: 'Специалистов в команде' },
 ]
@@ -133,7 +133,7 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
   const ctaDesc         = cmsPage?.ctaDescription  ?? 'Бесплатно оценим задачу и предложим решение в течение 24 часов.'
   const heroMiniStats   = (cmsPage?.heroStats?.length > 0)
     ? cmsPage.heroStats as { value: string; label: string }[]
-    : [{ value: '80+', label: 'проектов' }, { value: '5', label: 'лет' }, { value: '6', label: 'в команде' }]
+    : [{ value: '100+', label: 'проектов' }, { value: '5', label: 'лет' }, { value: '6', label: 'в команде' }]
 
   const displayServices = (cmsServices && cmsServices.length > 0)
     ? cmsServices.map((s, i) => ({
