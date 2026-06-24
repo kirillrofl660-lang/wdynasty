@@ -68,7 +68,42 @@ export const HomePageSettings: GlobalConfig = {
       ],
     },
 
+    // ── Почему не фрилансер (отстройка) ────────────────────────────────────────
+    {
+      name: 'freelancerLabel',
+      type: 'text',
+      label: 'Отстройка: надпись-метка',
+      admin: { description: 'Маленький заголовок над секцией, например «В чём разница»' },
+    },
+    {
+      name: 'freelancerHeading',
+      type: 'text',
+      label: 'Отстройка: заголовок секции',
+      admin: { description: 'Например «Почему не фрилансер»' },
+    },
+    {
+      name: 'freelancerPoints',
+      type: 'array',
+      label: 'Отстройка: пункты',
+      maxRows: 6,
+      fields: [
+        { name: 'title', type: 'text',     label: 'Заголовок', required: true },
+        { name: 'desc',  type: 'textarea', label: 'Описание',  required: true },
+      ],
+    },
+
     // ── Pricing ───────────────────────────────────────────────────────────────
+    {
+      name: 'pricingLeadTitle',
+      type: 'text',
+      label: 'Тарифы: заголовок плашки о цене',
+      admin: { description: 'Плашка над тарифами, например «Почему наша ставка ниже рынка»' },
+    },
+    {
+      name: 'pricingLeadText',
+      type: 'textarea',
+      label: 'Тарифы: текст плашки о цене',
+    },
     {
       name: 'pricing',
       type: 'array',

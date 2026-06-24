@@ -72,6 +72,12 @@ const pricing = [
   { name: 'Веб-сервис под ключ', desc: 'CRM, SaaS и личные кабинеты',    price: 'от 1 050 000 ₽', featured: false, features: ['Сложная бизнес-логика под задачу', 'Backend на Laravel + REST API', 'Frontend на React / Next.js', 'DevOps: Docker, CI/CD, мониторинг', 'Выделенная команда и SLA'] },
 ]
 
+const freelancerPointsDefault = [
+  { title: 'Вас ведут опытные менеджеры',          desc: 'Два менеджера обсудят все детали проекта и предложат грамотное решение. Экспертиза с двух сторон — 1С и веб-разработка.' },
+  { title: 'Сертифицированные Битрикс-разработчики', desc: 'Команда с большим опытом и официальной сертификацией 1С-Битрикс. Не «человек-оркестр», а профильные специалисты.' },
+  { title: 'Знаем реальный бизнес и сроки',         desc: 'Закладываем сроки, которые реально выполнить, и говорим о рисках заранее — без сюрпризов в день сдачи.' },
+]
+
 const faqData = [
   { q: 'Сколько стоит разработка?',              a: 'Лендинг — от 70 000 ₽, корпоративный сайт — от 175 000 ₽, сложный веб-сервис — от 1 050 000 ₽. Работаем по фиксированной смете или почасово — ставка 2 500 ₽/час; смета фиксируется до старта работ.' },
   { q: 'Каковы типичные сроки?',                 a: 'Лендинг — 2–3 недели. Корпоративный сайт — 2–3 месяца. Маркетплейс или SaaS — 4–9 месяцев. Сроки фиксируются в договоре и соблюдаются в 94% проектов.' },
@@ -118,6 +124,11 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
       }))
     : pricing
   const pageFaq         = (cmsPage?.faq?.length > 0)     ? cmsPage.faq     : faqData
+  const freelancerLabel   = cmsPage?.freelancerLabel   ?? 'В чём разница'
+  const freelancerHeading = cmsPage?.freelancerHeading ?? 'Почему не фрилансер'
+  const pageFreelancer    = (cmsPage?.freelancerPoints?.length > 0) ? cmsPage.freelancerPoints : freelancerPointsDefault
+  const pricingLeadTitle  = cmsPage?.pricingLeadTitle  ?? 'Почему наша ставка ниже рынка'
+  const pricingLeadText   = cmsPage?.pricingLeadText   ?? 'Мы понимаем: ставки крупных IT-компаний сегодня неподъёмны для малого и среднего бизнеса. Поэтому держим стоимость часа ниже рынка — но это не «дёшево и сердито». Вы получаете специалистов с большим опытом и экспертизой по приятной цене.'
   const ctaHeading      = cmsPage?.ctaHeading      ?? 'Есть проект?'
   const ctaDesc         = cmsPage?.ctaDescription  ?? 'Бесплатно оценим задачу и предложим решение в течение 24 часов.'
   const heroMiniStats   = (cmsPage?.heroStats?.length > 0)
@@ -337,8 +348,38 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
         </Container>
       </Box>
 
+      {/* ===== ПОЧЕМУ НЕ ФРИЛАНСЕР ===== */}
+      <Box id="why-not-freelancer" as="section" bg={C.alt} py="110px">
+        <Container maxW="1320px" px={{ base: 4, md: 6 }}>
+          <ScrollReveal>
+            <SectionLabel>{freelancerLabel}</SectionLabel>
+            <Heading fontSize={{ base: '40px', md: '60px' }} fontWeight="800" letterSpacing="-2px" lineHeight={1}>
+              {freelancerHeading}
+            </Heading>
+          </ScrollReveal>
+          <SimpleGrid columns={{ base: 1, md: 3 }} gap={6} mt={12}>
+            {pageFreelancer.map((p: typeof freelancerPointsDefault[0], i: number) => (
+              <ScrollReveal key={i}>
+                <Box
+                  bg="white" p={10} borderRadius="28px" h="full"
+                  style={{ boxShadow: '0 6px 30px rgba(0,0,0,.05)' }}
+                  transition="transform .25s"
+                  _hover={{ transform: 'translateY(-4px)' }}
+                >
+                  <Flex w="48px" h="48px" mb={6} borderRadius="14px" align="center" justify="center" style={{ background: GRAD }}>
+                    <Text fontSize="20px" fontWeight="900" color="white" lineHeight={1}>{String(i + 1).padStart(2, '0')}</Text>
+                  </Flex>
+                  <Text fontSize="22px" fontWeight="800" mb={2}>{p.title}</Text>
+                  <Text color={C.muted2} fontSize="15px" lineHeight="1.6">{p.desc}</Text>
+                </Box>
+              </ScrollReveal>
+            ))}
+          </SimpleGrid>
+        </Container>
+      </Box>
+
       {/* ===== PRICING ===== */}
-      <Box id="pricing" as="section" bg={C.alt} py="110px">
+      <Box id="pricing" as="section" py="110px">
         <Container maxW="1320px" px={{ base: 4, md: 6 }}>
           <ScrollReveal>
             <SectionLabel>Тарифы</SectionLabel>
@@ -349,6 +390,32 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
               Прозрачная смета фиксируется до старта и не меняется без вашего согласия.
             </Text>
           </ScrollReveal>
+
+          {(pricingLeadTitle || pricingLeadText) && (
+            <ScrollReveal>
+              <Box
+                mt={10}
+                p={{ base: 7, md: 9 }}
+                borderRadius="24px"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(139,92,246,.09), rgba(236,72,153,.09))',
+                  border: '1px solid rgba(139,92,246,.22)',
+                }}
+              >
+                {pricingLeadTitle && (
+                  <Text fontSize={{ base: '22px', md: '26px' }} fontWeight="800" mb={3} style={gradText}>
+                    {pricingLeadTitle}
+                  </Text>
+                )}
+                {pricingLeadText && (
+                  <Text color="#444" fontSize={{ base: '15px', md: '17px' }} lineHeight="1.7" maxW="900px">
+                    {pricingLeadText}
+                  </Text>
+                )}
+              </Box>
+            </ScrollReveal>
+          )}
+
           <SimpleGrid columns={{ base: 1, md: 3 }} gap={6} mt={12} alignItems="start">
             {pagePricing.map((p: typeof pricing[0], i: number) => (
               <ScrollReveal key={i}>
