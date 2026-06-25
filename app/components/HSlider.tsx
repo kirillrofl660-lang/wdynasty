@@ -1,14 +1,61 @@
 'use client'
 
-import { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Box } from '@chakra-ui/react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const P = '#8b5cf6'
 
-/** Горизонтальный слайдер со стрелками по бокам. Дочерние элементы задают свою ширину. */
+/**
+ * Бесконечный горизонтальный слайдер со стрелками по бокам.
+ * Дочерние элементы задают свою ширину (flex-basis).
+ * Контент рендерится в 3 копиях; при скролле к краю позиция незаметно
+ * переносится на одну «копию» назад/вперёд — получается зацикливание.
+ */
 export function HSlider({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null)
+  const adjusting = useRef(false)
+  const items = React.Children.toArray(children)
+  const count = items.length
+
+  // Ширина одной копии набора (включая gap) — расстояние между одинаковыми
+  // элементами соседних копий.
+  const period = () => {
+    const el = ref.current
+    if (!el || count === 0) return 0
+    const first = el.children[0] as HTMLElement | undefined
+    const mid = el.children[count] as HTMLElement | undefined
+    if (!first || !mid) return 0
+    return mid.offsetLeft - first.offsetLeft
+  }
+
+  // Стартуем в середине (вторая копия), чтобы был запас в обе стороны.
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const id = requestAnimationFrame(() => {
+      const p = period()
+      if (p > 0) el.scrollLeft = p
+    })
+    return () => cancelAnimationFrame(id)
+  }, [count])
+
+  const onScroll = () => {
+    const el = ref.current
+    if (!el || adjusting.current) return
+    const p = period()
+    if (p <= 0) return
+    if (el.scrollLeft < p * 0.5) {
+      adjusting.current = true
+      el.scrollLeft += p
+      adjusting.current = false
+    } else if (el.scrollLeft > p * 1.5) {
+      adjusting.current = true
+      el.scrollLeft -= p
+      adjusting.current = false
+    }
+  }
+
   const scroll = (dir: number) => {
     const el = ref.current
     if (!el) return
@@ -50,6 +97,7 @@ export function HSlider({ children }: { children: React.ReactNode }) {
 
       <Box
         ref={ref}
+        onScroll={onScroll}
         className="wd-slider"
         display="flex"
         alignItems="stretch"
@@ -58,7 +106,11 @@ export function HSlider({ children }: { children: React.ReactNode }) {
         py={3}
         style={{ scrollSnapType: 'x mandatory' }}
       >
-        {children}
+        {count > 0
+          ? [0, 1, 2].map((c) =>
+              items.map((child, i) => <React.Fragment key={`${c}-${i}`}>{child}</React.Fragment>),
+            )
+          : children}
       </Box>
     </Box>
   )

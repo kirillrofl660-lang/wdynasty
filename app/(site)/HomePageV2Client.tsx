@@ -326,7 +326,7 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
                 return (
                   <Box
                     key={sv.num}
-                    flex={{ base: '0 0 86%', sm: '0 0 60%', md: '0 0 calc(50% - 12px)' }}
+                    flex={{ base: '0 0 86%', sm: '0 0 60%', md: '0 0 calc(45% - 12px)' }}
                     display="flex"
                     style={{ scrollSnapAlign: 'start' }}
                   >
