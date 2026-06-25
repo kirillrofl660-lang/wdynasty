@@ -244,7 +244,7 @@ export function EcommerceBitrixTemplate({ service }: Props) {
                     <Heading as="h2" fontSize={{ base: '2xl', md: '4xl' }}>Стоимость разработки</Heading>
                     <Text color="gray.600" maxW="2xl">Фиксированная цена. Никаких скрытых платежей</Text>
                   </VStack>
-                  <SimpleGrid columns={{ base: 1, md: 3 }} gap={6} w="full" alignItems="start">
+                  <SimpleGrid columns={{ base: 1, md: 2, lg: prices.length >= 4 ? 4 : 3 }} gap={6} w="full" alignItems="start">
                     {prices.map((p) => (
                       <Card.Root key={p.name} border="2px solid" borderColor={p.popular ? 'brand.500' : 'gray.100'} position="relative" _hover={{ shadow: 'lg' }} transition="all 0.2s">
                         {p.popular && (
