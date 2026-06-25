@@ -59,7 +59,11 @@ export function HSlider({ children }: { children: React.ReactNode }) {
   const scroll = (dir: number) => {
     const el = ref.current
     if (!el) return
-    el.scrollBy({ left: dir * el.clientWidth * 0.7, behavior: 'smooth' })
+    // Шаг = ширина одного элемента + gap (расстояние между соседними).
+    const a = el.children[0] as HTMLElement | undefined
+    const b = el.children[1] as HTMLElement | undefined
+    const step = a && b ? b.offsetLeft - a.offsetLeft : el.clientWidth * 0.7
+    el.scrollBy({ left: dir * step, behavior: 'smooth' })
   }
 
   return (
