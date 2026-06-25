@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import {
   Box, Container, Heading, Text, VStack, HStack,
   Button, SimpleGrid, Flex,
@@ -9,7 +9,7 @@ import NextLink from 'next/link'
 import { ScrollReveal } from '../components/ScrollReveal'
 import { CountUp } from '../components/CountUp'
 import { LeadForm } from '@/src/widgets/lead/ui/LeadForm'
-import { ShieldCheck, Clock, Layers, FileText, LifeBuoy, Server } from 'lucide-react'
+import { ShieldCheck, Clock, Layers, FileText, LifeBuoy, Server, ChevronLeft, ChevronRight } from 'lucide-react'
 
 // ── Палитра нового дизайна (index_dinasty_final.html) ────────────────────────
 const C = {
@@ -67,9 +67,10 @@ const whyUs = [
 const whyIcons = [ShieldCheck, Clock, Layers, FileText, LifeBuoy, Server]
 
 const pricing = [
-  { name: 'Сайт',                desc: 'Лендинг или корпоративный сайт', price: 'от 70 000 ₽', featured: false, features: ['Индивидуальный дизайн под бренд', 'Адаптив под все устройства', 'CMS для самостоятельного редактирования', 'Базовая SEO-настройка', 'Запуск за 1–2 недели'] },
+  { name: 'Сайт',                desc: 'Лендинг или корпоративный сайт', price: 'от 70 000 ₽', featured: false, features: ['Индивидуальный дизайн под бренд', 'Адаптив под все устройства', 'CMS для самостоятельного редактирования', 'Базовая SEO-настройка'] },
   { name: 'Интернет-магазин',    desc: 'E-commerce на 1С-Битрикс',       price: 'от 315 000 ₽', featured: true,  features: ['Каталог, корзина, оформление заказа', 'Интеграция с 1С и онлайн-оплатой', 'Личный кабинет покупателя', 'Связка с CRM и службами доставки', 'Поддержка и развитие после запуска'] },
   { name: 'Веб-сервис под ключ', desc: 'CRM, SaaS и личные кабинеты',    price: 'от 1 050 000 ₽', featured: false, features: ['Сложная бизнес-логика под задачу', 'Backend на Laravel + REST API', 'Frontend на React / Next.js', 'DevOps: Docker, CI/CD, мониторинг', 'Выделенная команда и SLA'] },
+  { name: 'Поддержка сайтов',    desc: 'Сопровождение и доработка по часам', price: '2 500 ₽/час', featured: false, features: ['Исправление ошибок и доработки', 'Обновление CMS, модулей и зависимостей', 'Мониторинг доступности и резервные копии', 'Без абонплаты — оплата по затраченным часам', 'Реакция на срочные задачи в тот же день'] },
 ]
 
 const freelancerPointsDefault = [
@@ -109,6 +110,12 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(0)
+  const servicesRef = useRef<HTMLDivElement>(null)
+  const scrollServices = (dir: number) => {
+    const el = servicesRef.current
+    if (!el) return
+    el.scrollBy({ left: dir * Math.min(el.clientWidth * 0.9, 380), behavior: 'smooth' })
+  }
 
   // ── Те же CMS-поля, что и на текущей главной, с дефолтами ──────────────────
   const heroSupTitle    = cmsPage?.heroSupTitle    ?? 'Digital Engineering Company'
@@ -248,52 +255,74 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
       <Box id="services" as="section" py="110px">
         <Container maxW="1320px" px={{ base: 4, md: 6 }}>
           <ScrollReveal>
-            <SectionLabel>Что мы делаем</SectionLabel>
-            <Heading fontSize={{ base: '40px', md: '60px' }} fontWeight="800" letterSpacing="-2px" lineHeight={1} mb={5}>
-              Наши услуги
-            </Heading>
-            <Text color={C.muted} maxW="760px" fontSize="18px" lineHeight="1.6">
-              Полный цикл разработки — от идеи до поддержки в продакшене.
-            </Text>
+            <Flex justify="space-between" align="flex-end" gap={4} wrap="wrap">
+              <Box>
+                <SectionLabel>Что мы делаем</SectionLabel>
+                <Heading fontSize={{ base: '40px', md: '60px' }} fontWeight="800" letterSpacing="-2px" lineHeight={1} mb={5}>
+                  Наши услуги
+                </Heading>
+                <Text color={C.muted} maxW="760px" fontSize="18px" lineHeight="1.6">
+                  Полный цикл разработки — от идеи до поддержки в продакшене.
+                </Text>
+              </Box>
+              <HStack gap={3} display={{ base: 'none', md: 'flex' }} flexShrink={0}>
+                {[{ d: -1, Icon: ChevronLeft, l: 'Назад' }, { d: 1, Icon: ChevronRight, l: 'Вперёд' }].map(({ d, Icon, l }) => (
+                  <Box
+                    key={l} as="button" aria-label={l} onClick={() => scrollServices(d)}
+                    w="52px" h="52px" borderRadius="999px" bg="white" border="1px solid #ddd"
+                    display="flex" alignItems="center" justifyContent="center" color={C.ink}
+                    transition="all .2s" _hover={{ borderColor: C.p, color: C.p, transform: 'translateY(-2px)' }}
+                  >
+                    <Icon size={22} />
+                  </Box>
+                ))}
+              </HStack>
+            </Flex>
           </ScrollReveal>
 
-          <Box mt={12}>
+          <Box
+            ref={servicesRef}
+            className="wd-slider"
+            mt={12}
+            display="flex"
+            alignItems="stretch"
+            gap={6}
+            overflowX="auto"
+            pb={4}
+            style={{ scrollSnapType: 'x mandatory' }}
+          >
             {displayServices.map((sv) => {
-              const row = (
-                <Flex
-                  align="center"
-                  gap={{ base: 4, md: 8 }}
-                  py={9}
-                  borderBottom="1px solid #e8e8ee"
-                  className="wd-service"
-                  cursor={sv.slug ? 'pointer' : 'default'}
+              const card = (
+                <Box
+                  w="full" h="full" bg="white" borderRadius="28px" p={9}
+                  style={{ boxShadow: '0 6px 30px rgba(0,0,0,.05)' }}
+                  transition="transform .25s, box-shadow .25s"
+                  _hover={{ transform: 'translateY(-6px)', boxShadow: '0 20px 50px rgba(0,0,0,.1)' }}
                 >
-                  <Text fontSize={{ base: '36px', md: '56px' }} color="#e0e0e8" fontWeight="900" lineHeight={1} flexShrink={0} w={{ base: '60px', md: '80px' }}>
-                    {sv.num}
-                  </Text>
-                  <Box flex={1}>
-                    <Text className="wd-service-title" fontSize={{ base: '26px', md: '38px' }} fontWeight="800" mb={2} transition="color .3s">
-                      {sv.name}
-                    </Text>
-                    <Text color={C.muted2} fontSize="16px" maxW="560px">{sv.desc}</Text>
-                  </Box>
+                  <Text fontSize="44px" fontWeight="900" lineHeight={1} mb={5} style={gradText}>{sv.num}</Text>
+                  <Text fontSize="24px" fontWeight="800" mb={3}>{sv.name}</Text>
+                  <Text color={C.muted2} fontSize="15px" lineHeight="1.6" mb={6}>{sv.desc}</Text>
                   {sv.tags.length > 0 && (
-                    <HStack gap={2} wrap="wrap" display={{ base: 'none', md: 'flex' }} flexShrink={0}>
+                    <HStack gap={2} wrap="wrap">
                       {sv.tags.slice(0, 3).map((tag) => (
-                        <Text key={tag} px="14px" py="6px" borderRadius="999px" bg="#f0effe" color={C.p} fontSize="13px" fontWeight="700">
+                        <Text key={tag} px="12px" py="5px" borderRadius="999px" bg="#f0effe" color={C.p} fontSize="12px" fontWeight="700">
                           {tag}
                         </Text>
                       ))}
                     </HStack>
                   )}
-                </Flex>
+                  {sv.slug && (
+                    <Text mt={6} fontSize="14px" fontWeight="800" style={gradText}>Подробнее →</Text>
+                  )}
+                </Box>
               )
+              const outer = { minWidth: 'clamp(280px, 80vw, 340px)', flexShrink: 0, display: 'flex', scrollSnapAlign: 'start' as const }
               return sv.slug ? (
-                <NextLink key={sv.num} href={`/uslugi/${sv.slug}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-                  {row}
+                <NextLink key={sv.num} href={`/uslugi/${sv.slug}`} style={{ ...outer, textDecoration: 'none', color: 'inherit' }}>
+                  {card}
                 </NextLink>
               ) : (
-                <Box key={sv.num}>{row}</Box>
+                <Box key={sv.num} style={outer}>{card}</Box>
               )
             })}
           </Box>
@@ -416,7 +445,7 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
             </ScrollReveal>
           )}
 
-          <SimpleGrid columns={{ base: 1, md: 3 }} gap={6} mt={12} alignItems="start">
+          <SimpleGrid columns={{ base: 1, md: 2, lg: pagePricing.length >= 4 ? 4 : 3 }} gap={6} mt={12} alignItems="start">
             {pagePricing.map((p: typeof pricing[0], i: number) => (
               <ScrollReveal key={i}>
                 <Box
@@ -519,12 +548,8 @@ export function HomePageV2Client({ cmsServices, cmsPage }: HomePageV2ClientProps
 
       <style>{`
         @keyframes wdfloat { 50% { transform: translateY(-12px); } }
-        .wd-service:hover .wd-service-title {
-          background: ${GRAD};
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-        }
+        .wd-slider { -ms-overflow-style: none; scrollbar-width: none; }
+        .wd-slider::-webkit-scrollbar { display: none; }
       `}</style>
     </Box>
   )
