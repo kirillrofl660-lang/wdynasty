@@ -14,7 +14,8 @@ const P = '#8b5cf6'
  */
 export function HSlider({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null)
-  const adjusting = useRef(false)
+  const guard = useRef(false)
+  const settleTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const items = React.Children.toArray(children)
   const count = items.length
 
@@ -37,23 +38,33 @@ export function HSlider({ children }: { children: React.ReactNode }) {
       const p = period()
       if (p > 0) el.scrollLeft = p
     })
-    return () => cancelAnimationFrame(id)
+    return () => {
+      cancelAnimationFrame(id)
+      if (settleTimer.current) clearTimeout(settleTimer.current)
+    }
   }, [count])
 
-  const onScroll = () => {
+  // Перенос на одну копию делаем ТОЛЬКО когда скролл остановился, иначе
+  // мгновенный сдвиг scrollLeft дерётся с плавной анимацией (вправо ломалось).
+  const normalize = () => {
     const el = ref.current
-    if (!el || adjusting.current) return
+    if (!el) return
     const p = period()
     if (p <= 0) return
-    if (el.scrollLeft < p * 0.5) {
-      adjusting.current = true
-      el.scrollLeft += p
-      adjusting.current = false
-    } else if (el.scrollLeft > p * 1.5) {
-      adjusting.current = true
-      el.scrollLeft -= p
-      adjusting.current = false
+    let x = el.scrollLeft
+    if (x < p * 0.5) x += p
+    else if (x > p * 1.5) x -= p
+    if (x !== el.scrollLeft) {
+      guard.current = true
+      el.scrollLeft = x
+      guard.current = false
     }
+  }
+
+  const onScroll = () => {
+    if (guard.current) return
+    if (settleTimer.current) clearTimeout(settleTimer.current)
+    settleTimer.current = setTimeout(normalize, 120)
   }
 
   const scroll = (dir: number) => {
