@@ -21,6 +21,7 @@ import {
 } from 'lucide-react'
 import { ScrollReveal } from '../../../components/ScrollReveal'
 import { MagneticButton } from '../../../components/MagneticButton'
+import { HSlider } from '../../../components/HSlider'
 import { LeadForm } from '@/src/widgets/lead/ui/LeadForm'
 
 const ICONS: Record<string, React.ElementType> = {
@@ -62,6 +63,36 @@ export function EcommerceBitrixTemplate({ service }: Props) {
 
   const scrollToContact = () =>
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+
+  const priceCard = (p: NonNullable<Props['service']['prices']>[number]) => (
+    <Card.Root h="full" w="full" border="2px solid" borderColor={p.popular ? 'brand.500' : 'gray.100'} position="relative" _hover={{ shadow: 'lg' }} transition="all 0.2s">
+      {p.popular && (
+        <Badge colorPalette="brand" position="absolute" top="-3" left="50%" transform="translateX(-50%)" px={4} borderRadius="full">
+          Популярный
+        </Badge>
+      )}
+      <CardBody p={8}>
+        <VStack align="start" gap={6}>
+          <VStack align="start" gap={1}>
+            <Text fontWeight="bold" fontSize="xl">{p.name}</Text>
+            <Text fontSize="2xl" fontWeight="bold" color="brand.500">{p.price}</Text>
+            <Text fontSize="sm" color="gray.500">{p.term}</Text>
+          </VStack>
+          <VStack align="start" gap={2} w="full">
+            {(p.features ?? []).map((f) => (
+              <HStack key={f.text} gap={2}>
+                <CheckCircle size={16} color="var(--color-brand-500)" />
+                <Text fontSize="sm">{f.text}</Text>
+              </HStack>
+            ))}
+          </VStack>
+          <MagneticButton w="full" colorPalette={p.popular ? 'brand' : 'gray'} variant={p.popular ? 'solid' : 'outline'} onClick={scrollToContact}>
+            Обсудить <ArrowRight size={16} />
+          </MagneticButton>
+        </VStack>
+      </CardBody>
+    </Card.Root>
+  )
 
   return (
     <>
@@ -244,37 +275,29 @@ export function EcommerceBitrixTemplate({ service }: Props) {
                     <Heading as="h2" fontSize={{ base: '2xl', md: '4xl' }}>Стоимость разработки</Heading>
                     <Text color="gray.600" maxW="2xl">Фиксированная цена. Никаких скрытых платежей</Text>
                   </VStack>
-                  <SimpleGrid columns={{ base: 1, md: 2, lg: prices.length >= 4 ? 4 : 3 }} gap={6} w="full" alignItems="start">
-                    {prices.map((p) => (
-                      <Card.Root key={p.name} border="2px solid" borderColor={p.popular ? 'brand.500' : 'gray.100'} position="relative" _hover={{ shadow: 'lg' }} transition="all 0.2s">
-                        {p.popular && (
-                          <Badge colorPalette="brand" position="absolute" top="-3" left="50%" transform="translateX(-50%)" px={4} borderRadius="full">
-                            Популярный
-                          </Badge>
-                        )}
-                        <CardBody p={8}>
-                          <VStack align="start" gap={6}>
-                            <VStack align="start" gap={1}>
-                              <Text fontWeight="bold" fontSize="xl">{p.name}</Text>
-                              <Text fontSize="2xl" fontWeight="bold" color="brand.500">{p.price}</Text>
-                              <Text fontSize="sm" color="gray.500">{p.term}</Text>
-                            </VStack>
-                            <VStack align="start" gap={2} w="full">
-                              {(p.features ?? []).map((f) => (
-                                <HStack key={f.text} gap={2}>
-                                  <CheckCircle size={16} color="var(--color-brand-500)" />
-                                  <Text fontSize="sm">{f.text}</Text>
-                                </HStack>
-                              ))}
-                            </VStack>
-                            <MagneticButton w="full" colorPalette={p.popular ? 'brand' : 'gray'} variant={p.popular ? 'solid' : 'outline'} onClick={scrollToContact}>
-                              Обсудить <ArrowRight size={16} />
-                            </MagneticButton>
-                          </VStack>
-                        </CardBody>
-                      </Card.Root>
-                    ))}
-                  </SimpleGrid>
+                  {prices.length >= 4 ? (
+                    <Box w="full">
+                      <HSlider>
+                        {prices.map((p) => (
+                          <Box
+                            key={p.name}
+                            flex={{ base: '0 0 86%', sm: '0 0 60%', md: '0 0 calc(50% - 12px)', lg: '0 0 calc(33.333% - 16px)' }}
+                            display="flex"
+                            pt={2}
+                            style={{ scrollSnapAlign: 'start' }}
+                          >
+                            {priceCard(p)}
+                          </Box>
+                        ))}
+                      </HSlider>
+                    </Box>
+                  ) : (
+                    <SimpleGrid columns={{ base: 1, md: 3 }} gap={6} w="full" alignItems="start">
+                      {prices.map((p) => (
+                        <Box key={p.name}>{priceCard(p)}</Box>
+                      ))}
+                    </SimpleGrid>
+                  )}
                 </VStack>
               </ScrollReveal>
             </Container>

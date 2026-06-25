@@ -39,6 +39,16 @@ html {
   color: #fff;
 }
 
+/* Горизонтальный слайдер — прячем скроллбар */
+.wd-slider {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-padding-inline: 4px;
+}
+.wd-slider::-webkit-scrollbar {
+  display: none;
+}
+
 html,
 body {
   padding: 0;
