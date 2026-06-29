@@ -10,19 +10,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl,               lastModified: new Date(), changeFrequency: 'weekly',  priority: 1.0 },
     { url: `${baseUrl}/blog`,     lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.8 },
+    { url: `${baseUrl}/cases`,    lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.9 },
     { url: `${baseUrl}/team`,     lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/uslugi`,   lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
   ]
 
   let blogPosts: MetadataRoute.Sitemap = []
   let servicePages: MetadataRoute.Sitemap = []
+  let casePages: MetadataRoute.Sitemap = []
 
   try {
     const payload = await getPayload({ config })
 
-    const [posts, services] = await Promise.all([
+    const [posts, services, cases] = await Promise.all([
       payload.find({ collection: 'posts',    where: { status: { equals: 'published' } }, limit: 1000 }),
       payload.find({ collection: 'services', where: { status: { equals: 'published' } }, limit: 200  }),
+      payload.find({ collection: 'cases',    where: { status: { equals: 'published' } }, limit: 200  }),
     ])
 
     blogPosts = posts.docs.map((post: any) => ({
@@ -38,9 +41,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     }))
+
+    casePages = cases.docs.map((c: any) => ({
+      url: `${baseUrl}/cases/${c.slug}`,
+      lastModified: c.updatedAt ? new Date(c.updatedAt) : new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.75,
+    }))
   } catch {
     // Payload недоступен при сборке без БД — возвращаем только статику
   }
 
-  return [...staticPages, ...blogPosts, ...servicePages]
+  return [...staticPages, ...blogPosts, ...servicePages, ...casePages]
 }
