@@ -9,6 +9,7 @@ import config from '@payload-config'
 import { Providers } from '../providers'
 
 import { SiteChrome } from '../components/SiteChrome'
+import { CookieConsent } from '../components/CookieConsent'
 
 import './globals.css'
 
@@ -118,6 +119,7 @@ export default async function RootLayout({
             {children}
           </SiteChrome>
         </Providers>
+        <CookieConsent />
       </body>
     </html>
 

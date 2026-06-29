@@ -166,14 +166,14 @@ export function LeadForm() {
           loadingText="Отправка..."
         >
           <HStack gap={2}>
-            <Text>Отправить заявку</Text>
+            <Text>Оставить заявку</Text>
             <Icon as={Send} w={4} h={4} />
           </HStack>
         </Button>
 
-        <Text color="gray.400" fontSize="xs" textAlign="center">
-          Нажимая кнопку, вы соглашаетесь на обработку данных.
-          Никакого спама и навязчивых продаж.
+        <Text color="gray.400" fontSize="xs" textAlign="center" lineHeight="1.6">
+          Нажимая кнопку «Оставить заявку», вы соглашаетесь на передачу и обработку
+          персональных данных. Никакого спама и навязчивых продаж.
         </Text>
       </VStack>
     </Box>
