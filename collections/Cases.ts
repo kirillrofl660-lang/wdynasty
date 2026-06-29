@@ -111,9 +111,16 @@ export const Cases: CollectionConfig = {
         { name: 'minHours', type: 'number', label: 'Минимум часов' },
         { name: 'maxHours', type: 'number', label: 'Максимум часов' },
         { name: 'hourlyRate', type: 'number', label: 'Ставка за час, ₽' },
-        { name: 'existingSolutionMultiplier', type: 'number', label: 'Множитель за готовое решение', defaultValue: 1.1 },
-        { name: 'urgentMultiplier', type: 'number', label: 'Множитель за срочность', defaultValue: 1.2 },
-        { name: 'designMultiplier', type: 'number', label: 'Множитель за сложный дизайн', defaultValue: 1.15 },
+        {
+          name: 'multipliers',
+          type: 'array',
+          label: 'Множители стоимости',
+          admin: { description: 'Добавляйте факторы, влияющие на цену. Каждый множитель — это title и число.' },
+          fields: [
+            { name: 'title', type: 'text', label: 'Название фактора', required: true },
+            { name: 'coefficient', type: 'number', label: 'Коэффициент', required: true },
+          ],
+        },
       ],
     },
     {

@@ -644,7 +644,29 @@ export interface Case {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Текстовое поле для красивого вывода. Для расчётов калькулятора используйте группу ниже.
+   */
   basePrice?: string | null;
+  /**
+   * Калькулятор будет считать стоимость по этим полям
+   */
+  calculator?: {
+    basePrice?: number | null;
+    minHours?: number | null;
+    maxHours?: number | null;
+    hourlyRate?: number | null;
+    /**
+     * Добавляйте факторы, влияющие на цену. Каждый множитель — это title и число.
+     */
+    multipliers?:
+      | {
+          title: string;
+          coefficient: number;
+          id?: string | null;
+        }[]
+      | null;
+  };
   /**
    * Например: «Цена зависит от объёма правок и состояния текущего кода»
    */
@@ -1089,6 +1111,21 @@ export interface CasesSelect<T extends boolean = true> {
   solution?: T;
   result?: T;
   basePrice?: T;
+  calculator?:
+    | T
+    | {
+        basePrice?: T;
+        minHours?: T;
+        maxHours?: T;
+        hourlyRate?: T;
+        multipliers?:
+          | T
+          | {
+              title?: T;
+              coefficient?: T;
+              id?: T;
+            };
+      };
   priceNote?: T;
   priceFactors?:
     | T
