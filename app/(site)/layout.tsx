@@ -118,8 +118,8 @@ export default async function RootLayout({
           <SiteChrome navItems={navResult.docs as any} footerSettings={footerSettings} services={footerServices}>
             {children}
           </SiteChrome>
+          <CookieConsent />
         </Providers>
-        <CookieConsent />
       </body>
     </html>
 

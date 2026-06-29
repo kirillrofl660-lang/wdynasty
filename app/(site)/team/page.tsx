@@ -97,7 +97,7 @@ export default async function TeamPage() {
   const showCta        = page?.showCta !== false
   const ctaHeading     = page?.ctaHeading     ?? 'Ищем сильных специалистов'
   const ctaDescription = page?.ctaDescription ?? 'Нам важна не только экспертиза, но и отношение к работе. Если вы пишете аккуратный код, умеете говорить «нет» нереальным срокам и хотите работать в команде с культурой — напишите нам.'
-  const ctaEmail       = page?.ctaEmail       ?? 'hello@wdynasty.ru'
+  const ctaEmail       = page?.ctaEmail       ?? 'company@wdynasty.ru'
 
   return (
     <Box bg={C.bg} minH="100vh" style={{ fontFamily: 'var(--font-manrope, Manrope, sans-serif)' }}>
