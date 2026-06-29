@@ -65,23 +65,23 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
 
   return (
     <Box>
-      <Box bg="#f5f0e6" py={{ base: 20, md: 28 }} px={4} style={{ borderBottom: '1px solid rgba(139,28,44,0.12)' }}>
+      <Box bg="#fafafa" py={{ base: 20, md: 28 }} px={4} style={{ borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
         <Container maxW="4xl">
           <ScrollReveal>
             <VStack gap={5} textAlign="center">
-              <Text fontSize="xs" fontWeight="700" letterSpacing="0.2em" textTransform="uppercase" color="#8b1c2c">Блог</Text>
+              <Text fontSize="13px" fontWeight="700" letterSpacing="3px" textTransform="uppercase" color="#8b5cf6">Блог</Text>
               <Heading
                 as="h1"
-                style={{ fontFamily: 'var(--font-philosopher, "Philosopher", serif)' }}
                 fontSize={{ base: '4xl', md: '6xl' }}
-                fontWeight="700"
+                fontWeight="800"
+                letterSpacing="-0.02em"
                 lineHeight="shorter"
-                color="#1a0f0a"
+                color="#111"
               >
                 Статьи и{' '}
-                <Text as="span" color="#8b1c2c" fontStyle="italic">инсайты</Text>
+                <Text as="span" style={{ background: 'linear-gradient(90deg,#8b5cf6,#ec4899)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>инсайты</Text>
               </Heading>
-              <Text fontSize={{ base: 'lg', md: 'xl' }} color="#7a6050" maxW="2xl">
+              <Text fontSize={{ base: 'lg', md: 'xl' }} color="#666" maxW="2xl">
                 Разбираем 1С-Битрикс, Laravel, React и DevOps. Делимся опытом
                 и практическими решениями из реальных проектов.
               </Text>
@@ -98,12 +98,12 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
               gap={3}
               bg="white"
               border="1.5px solid"
-              borderColor="rgba(139,28,44,0.2)"
-              borderRadius="2px"
+              borderColor="rgba(0,0,0,0.15)"
+              borderRadius="999px"
               px={4}
               py={1}
               transition="border-color 0.2s"
-              _focusWithin={{ borderColor: '#8b1c2c' }}
+              _focusWithin={{ borderColor: '#8b5cf6' }}
             >
               <Icon as={Search} color="gray.400" />
               <Input
@@ -123,7 +123,7 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
                 onClick={() => handleTagChange('all')}
                 size="sm"
                 borderRadius="full"
-                colorPalette="brand"
+                colorPalette="purple"
                 variant={selectedTag === 'all' ? 'solid' : 'outline'}
               >
                 Все статьи
@@ -135,7 +135,7 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
                   onClick={() => handleTagChange(tag)}
                   size="sm"
                   borderRadius="full"
-                  colorPalette="brand"
+                  colorPalette="purple"
                   variant={selectedTag === tag ? 'solid' : 'outline'}
                 >
                   {tag}
@@ -179,7 +179,7 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
               borderRadius="full"
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page <= 1}
-              colorPalette="brand"
+              colorPalette="purple"
             >
               Назад
             </Button>
@@ -189,7 +189,7 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
                 key={p}
                 size="sm"
                 borderRadius="full"
-                colorPalette="brand"
+                colorPalette="purple"
                 variant={p === page ? 'solid' : 'outline'}
                 onClick={() => setPage(p)}
               >
@@ -203,7 +203,7 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
               borderRadius="full"
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages}
-              colorPalette="brand"
+              colorPalette="purple"
             >
               Вперёд
             </Button>

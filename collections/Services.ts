@@ -4,7 +4,7 @@ export const Services: CollectionConfig = {
   slug: 'services',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'template', 'status'],
+    defaultColumns: ['title', 'slug', 'template', 'order', 'status'],
   },
   access: {
     read: () => true,
@@ -23,6 +23,17 @@ export const Services: CollectionConfig = {
       unique: true,
       label: 'URL slug',
       admin: { description: 'например: ecommerce-1c-bitrix' },
+    },
+    {
+      name: 'order',
+      type: 'number',
+      label: 'Порядок сортировки',
+      defaultValue: 0,
+      admin: {
+        position: 'sidebar',
+        step: 1,
+        description: 'Чем меньше число, тем выше услуга в списке на сайте',
+      },
     },
     {
       name: 'template',

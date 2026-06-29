@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
@@ -29,20 +31,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `https://wdynasty.ru/uslugi/${slug}`,
       images: [{ url: '/api/og', width: 1200, height: 630 }],
     },
-  }
-}
-
-export async function generateStaticParams() {
-  try {
-    const payload = await getPayload({ config })
-    const result = await payload.find({
-      collection: 'services',
-      where: { status: { equals: 'published' } },
-      limit: 100,
-    })
-    return result.docs.map((s: any) => ({ slug: s.slug }))
-  } catch {
-    return []
   }
 }
 

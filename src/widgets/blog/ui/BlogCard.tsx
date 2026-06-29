@@ -27,11 +27,11 @@ export function BlogCard({ post }: BlogCardProps) {
     <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', height: '100%' }}>
       <Box
         bg="white"
-        style={{ border: '1.5px solid rgba(139,28,44,0.12)', borderRadius: '4px', overflow: 'hidden', height: '100%', transition: 'transform 0.25s, box-shadow 0.25s' }}
-        _hover={{ transform: 'translateY(-4px)', boxShadow: '0 16px 40px rgba(139,28,44,0.15)' }}
+        style={{ border: '1px solid rgba(0,0,0,0.07)', borderRadius: '24px', overflow: 'hidden', height: '100%', transition: 'transform 0.3s, box-shadow 0.3s' }}
+        _hover={{ transform: 'translateY(-6px)', boxShadow: '0 20px 60px rgba(0,0,0,0.12)' }}
         css={{ '&:hover .blog-card-img': { transform: 'scale(1.05)' } }}
       >
-        <Box position="relative" h={48} overflow="hidden" bg="#ede7d6">
+        <Box position="relative" h={48} overflow="hidden" bg="#f3f3f6">
           {post.coverImage && post.coverImage.url ? (
             <Image
               className="blog-card-img"
@@ -47,10 +47,10 @@ export function BlogCard({ post }: BlogCardProps) {
               className="blog-card-img"
               w="full"
               h="full"
-              style={{ background: 'linear-gradient(150deg, #8b1c2c, #6e1420)' }}
+              style={{ background: 'linear-gradient(135deg, #8b5cf6, #ec4899)' }}
               transition="transform 0.5s ease"
             >
-              <Text fontSize="6xl" style={{ fontFamily: 'var(--font-yeseva, serif)' }} color="rgba(245,240,230,0.25)">
+              <Text fontSize="6xl" fontWeight="900" color="rgba(255,255,255,0.85)">
                 {post.title.charAt(0)}
               </Text>
             </Center>
@@ -63,7 +63,7 @@ export function BlogCard({ post }: BlogCardProps) {
               <HStack gap={2} wrap="wrap">
                 {post.tags.slice(0, 3).map((tag, i) =>
                   tag.tag ? (
-                    <Text key={i} fontSize="xs" fontWeight="700" letterSpacing="0.06em" textTransform="uppercase" color="#b8852a">
+                    <Text key={i} fontSize="xs" fontWeight="700" letterSpacing="0.06em" textTransform="uppercase" color="#8b5cf6">
                       {tag.tag}
                     </Text>
                   ) : null,
@@ -73,10 +73,10 @@ export function BlogCard({ post }: BlogCardProps) {
 
             <Heading
               as="h3"
-              style={{ fontFamily: 'var(--font-philosopher, serif)' }}
               fontSize="xl"
-              fontWeight="700"
-              color="#1a0f0a"
+              fontWeight="800"
+              letterSpacing="-0.02em"
+              color="#111"
               lineHeight="short"
               transition="color 0.2s"
             >
@@ -85,7 +85,7 @@ export function BlogCard({ post }: BlogCardProps) {
 
             {post.excerpt && (
               <Text
-                color="#7a6050"
+                color="#666"
                 fontSize="sm"
                 lineHeight="relaxed"
                 style={{
@@ -99,14 +99,14 @@ export function BlogCard({ post }: BlogCardProps) {
               </Text>
             )}
 
-            <HStack justify="space-between" w="full" pt={3} mt="auto" style={{ borderTop: '1px solid rgba(139,28,44,0.1)' }}>
+            <HStack justify="space-between" w="full" pt={3} mt="auto" style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
               {post.publishedAt && (
-                <HStack gap={1} fontSize="xs" color="#7a6050">
+                <HStack gap={1} fontSize="xs" color="#999">
                   <Icon as={Calendar} w={3.5} h={3.5} />
                   <Text suppressHydrationWarning>{formattedDate}</Text>
                 </HStack>
               )}
-              <HStack gap={1} fontSize="sm" fontWeight="700" color="#8b1c2c">
+              <HStack gap={1} fontSize="sm" fontWeight="700" color="#8b5cf6">
                 <Text>Смотреть</Text>
                 <Icon as={ArrowRight} w={4} h={4} />
               </HStack>

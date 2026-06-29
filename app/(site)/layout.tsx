@@ -8,8 +8,7 @@ import config from '@payload-config'
 
 import { Providers } from '../providers'
 
-import { Navbar } from '@/src/widgets/navigation/ui/Navbar'
-import { SiteFooter } from '../components/SiteFooter'
+import { SiteChrome } from '../components/SiteChrome'
 
 import './globals.css'
 
@@ -33,38 +32,36 @@ const yesevaOne = Yeseva_One({
 })
 
 export const metadata: Metadata = {
-  title: 'Династия Разработчиков — Корпоративная разработка и веб-решения',
+  metadataBase: new URL('https://wdynasty.ru'),
+  title: 'WebDynasty — Корпоративная разработка и веб-решения',
   description: 'Разработка на 1С-Битрикс, Laravel, React, Next.js. Highload проекты, E-commerce, DevOps. Команда с 5+ годами опыта.',
   keywords: ['1С-Битрикс', 'Битрикс24', 'Laravel', 'React', 'Next.js', 'разработка сайтов', 'веб-разработка', 'E-commerce', 'DevOps', 'корпоративный портал'],
-  authors: [{ name: 'Династия Разработчиков' }],
-  creator: 'Династия Разработчиков',
-  publisher: 'Династия Разработчиков',
+  authors: [{ name: 'WebDynasty' }],
+  creator: 'WebDynasty',
+  publisher: 'WebDynasty',
   robots: 'index, follow',
   alternates: {
     canonical: 'https://wdynasty.ru',
-  },
-  icons: {
-    icon: '/favicon.ico',
   },
   openGraph: {
     type: 'website',
     locale: 'ru_RU',
     url: 'https://wdynasty.ru',
-    siteName: 'Династия Разработчиков',
-    title: 'Династия Разработчиков — Корпоративная разработка и веб-решения',
+    siteName: 'WebDynasty',
+    title: 'WebDynasty — Корпоративная разработка и веб-решения',
     description: 'Разработка на 1С-Битрикс, Laravel, React, Next.js. Highload проекты, E-commerce, DevOps.',
     images: [
       {
         url: '/api/og',
         width: 1200,
         height: 630,
-        alt: 'Династия Разработчиков — Корпоративная разработка',
+        alt: 'WebDynasty — Корпоративная разработка',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Династия Разработчиков — Корпоративная разработка и веб-решения',
+    title: 'WebDynasty — Корпоративная разработка и веб-решения',
     description: 'Разработка на 1С-Битрикс, Laravel, React, Next.js. Highload проекты, E-commerce, DevOps.',
     images: ['/og-image.png'],
     creator: '@webdynasty',
@@ -88,14 +85,19 @@ export default async function RootLayout({
 
   const payload = await getPayload({ config })
 
-  const [navResult, footerSettings] = await Promise.all([
+  const [navResult, footerSettings, servicesResult] = await Promise.all([
     payload.find({
       collection: 'navigation',
       sort: 'order',
       where: { isActive: { equals: true } },
     }),
     payload.findGlobal({ slug: 'footer' }).catch(() => null),
+    payload
+      .find({ collection: 'services', where: { status: { equals: 'published' } }, sort: 'order', limit: 8 })
+      .catch(() => ({ docs: [] as any[] })),
   ])
+
+  const footerServices = (servicesResult.docs as any[]).map((s) => ({ title: s.title, slug: s.slug }))
 
   return (
 
@@ -112,9 +114,9 @@ export default async function RootLayout({
           ym(109964523,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
         `}</Script>
         <Providers>
-          <Navbar items={navResult.docs as any} />
-          <main>{children}</main>
-          <SiteFooter settings={footerSettings} />
+          <SiteChrome navItems={navResult.docs as any} footerSettings={footerSettings} services={footerServices}>
+            {children}
+          </SiteChrome>
         </Providers>
       </body>
     </html>

@@ -29,6 +29,26 @@ html {
   color: #f5f0e6;
 }
 
+/* Главная — выделение в цветах нового дизайна (фиолетовый), а не кримсон */
+.wd-root ::selection {
+  background: #8b5cf6;
+  color: #fff;
+}
+.wd-root ::-moz-selection {
+  background: #8b5cf6;
+  color: #fff;
+}
+
+/* Горизонтальный слайдер — прячем скроллбар */
+.wd-slider {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-padding-inline: 4px;
+}
+.wd-slider::-webkit-scrollbar {
+  display: none;
+}
+
 html,
 body {
   padding: 0;
