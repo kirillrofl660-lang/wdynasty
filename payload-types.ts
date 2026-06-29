@@ -406,6 +406,7 @@ export interface Post {
         id?: string | null;
       }[]
     | null;
+  author?: (number | null) | User;
   publishedAt?: string | null;
   status?: ('draft' | 'published') | null;
   metaTitle?: string | null;
@@ -485,6 +486,10 @@ export interface Service {
    * например: ecommerce-1c-bitrix
    */
   slug: string;
+  /**
+   * Чем меньше число, тем выше услуга в списке на сайте
+   */
+  order?: number | null;
   /**
    * Определяет какой компонент отрендерит страницу
    */
@@ -833,6 +838,7 @@ export interface PostsSelect<T extends boolean = true> {
         tag?: T;
         id?: T;
       };
+  author?: T;
   publishedAt?: T;
   status?: T;
   metaTitle?: T;
@@ -884,6 +890,7 @@ export interface TgSubscribersSelect<T extends boolean = true> {
 export interface ServicesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  order?: T;
   template?: T;
   excerpt?: T;
   startingPrice?: T;
@@ -1086,6 +1093,26 @@ export interface HomePage {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Маленький заголовок над секцией, например «В чём разница»
+   */
+  freelancerLabel?: string | null;
+  /**
+   * Например «Почему не фрилансер»
+   */
+  freelancerHeading?: string | null;
+  freelancerPoints?:
+    | {
+        title: string;
+        desc: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Плашка над тарифами, например «Почему наша ставка ниже рынка»
+   */
+  pricingLeadTitle?: string | null;
+  pricingLeadText?: string | null;
   pricing?:
     | {
         name: string;
@@ -1220,6 +1247,17 @@ export interface HomePageSelect<T extends boolean = true> {
         desc?: T;
         id?: T;
       };
+  freelancerLabel?: T;
+  freelancerHeading?: T;
+  freelancerPoints?:
+    | T
+    | {
+        title?: T;
+        desc?: T;
+        id?: T;
+      };
+  pricingLeadTitle?: T;
+  pricingLeadText?: T;
   pricing?:
     | T
     | {
