@@ -1,14 +1,13 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { Send, CheckCircle } from 'lucide-react'
+import { Phone, CheckCircle, ShieldCheck, Clock } from 'lucide-react'
 import {
   Box,
   VStack,
   HStack,
   Text,
   Input,
-  Textarea,
   Button,
   Icon,
   Center,
@@ -17,21 +16,19 @@ import {
 interface FormState {
   name: string
   contact: string
-  message: string
-  website: string // honeypot: реальные пользователи это поле не видят
+  website: string // honeypot: скрытое поле-ловушка для ботов
 }
 
-const initialState: FormState = { name: '', contact: '', message: '', website: '' }
+const initialState: FormState = { name: '', contact: '', website: '' }
 
 export function LeadForm() {
   const [form, setForm] = useState<FormState>(initialState)
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [error, setError] = useState('')
-  // Момент монтирования формы — для time-trap на сервере
   const mountedAt = useRef<number>(Date.now())
 
   const handleChange = (field: keyof FormState) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setForm((prev) => ({ ...prev, [field]: e.target.value }))
   }
@@ -39,7 +36,7 @@ export function LeadForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!form.name.trim() || !form.contact.trim()) {
-      setError('Укажите имя и контакт для связи')
+      setError('Укажите имя и телефон/email')
       setStatus('error')
       return
     }
@@ -78,11 +75,11 @@ export function LeadForm() {
           <Center w={16} h={16} bg="green.500" borderRadius="full">
             <Icon as={CheckCircle} w={8} h={8} color="white" />
           </Center>
-          <Text fontSize="xl" fontWeight="semibold" color="white">
-            Заявка отправлена!
+          <Text fontSize="xl" fontWeight="semibold" color="white" textAlign="center">
+            Заявка принята!
           </Text>
           <Text color="gray.300" textAlign="center" maxW="sm">
-            Спасибо за обращение. Мы свяжемся с вами в ближайшее время.
+            Перезвоним в течение 10 минут в рабочее время.
           </Text>
           <Button
             variant="outline"
@@ -90,7 +87,7 @@ export function LeadForm() {
             color="brand.400"
             onClick={() => setStatus('idle')}
           >
-            Отправить ещё одну
+            Отправить ещё
           </Button>
         </VStack>
       </Center>
@@ -100,26 +97,28 @@ export function LeadForm() {
   return (
     <Box as="form" onSubmit={handleSubmit} w="full" maxW="lg" mx="auto">
       <VStack gap={4} align="stretch">
-        {/* Honeypot: скрытое поле-ловушка для ботов. Не видно людям. */}
-        <Input
+        {/* Honeypot: скрытое поле-ловушка для ботов */}
+        <input
+          type="text"
           name="website"
           value={form.website}
           onChange={handleChange('website')}
           tabIndex={-1}
           autoComplete="off"
           aria-hidden="true"
-          position="absolute"
-          left="-9999px"
-          width="1px"
-          height="1px"
-          opacity={0}
-          pointerEvents="none"
+          style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
         />
+
         <Input
+          name="name"
+          type="text"
+          autoComplete="name"
           placeholder="Ваше имя"
           value={form.name}
           onChange={handleChange('name')}
           size="lg"
+          minH="56px"
+          fontSize="md"
           bg="whiteAlpha.100"
           border="1px solid"
           borderColor="whiteAlpha.300"
@@ -127,23 +126,18 @@ export function LeadForm() {
           _placeholder={{ color: 'gray.400' }}
           _focus={{ borderColor: 'brand.400', boxShadow: 'none' }}
         />
+
         <Input
-          placeholder="Email, телефон или Telegram"
+          name="contact"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          placeholder="Телефон"
           value={form.contact}
           onChange={handleChange('contact')}
           size="lg"
-          bg="whiteAlpha.100"
-          border="1px solid"
-          borderColor="whiteAlpha.300"
-          color="white"
-          _placeholder={{ color: 'gray.400' }}
-          _focus={{ borderColor: 'brand.400', boxShadow: 'none' }}
-        />
-        <Textarea
-          placeholder="Расскажите о вашей задаче (необязательно)"
-          value={form.message}
-          onChange={handleChange('message')}
-          rows={4}
+          minH="56px"
+          fontSize="md"
           bg="whiteAlpha.100"
           border="1px solid"
           borderColor="whiteAlpha.300"
@@ -161,18 +155,34 @@ export function LeadForm() {
         <Button
           type="submit"
           size="lg"
+          minH="56px"
           colorPalette="brand"
           loading={status === 'loading'}
-          loadingText="Отправка..."
+          loadingText="Соединяем..."
         >
           <HStack gap={2}>
-            <Text>Отправить заявку</Text>
-            <Icon as={Send} w={4} h={4} />
+            <Icon as={Phone} w={5} h={5} />
+            <Text fontSize="md" fontWeight="600">Получить консультацию</Text>
           </HStack>
         </Button>
 
-        <Text color="gray.400" fontSize="xs" textAlign="center">
-          Нажимая кнопку, вы соглашаетесь на обработку данных.
+        <HStack gap={3} justify="center" wrap="wrap">
+          <HStack gap={1.5}>
+            <Icon as={ShieldCheck} w={4} h={4} color="gray.400" />
+            <Text color="gray.400" fontSize="xs">
+              Данные в безопасности
+            </Text>
+          </HStack>
+          <HStack gap={1.5}>
+            <Icon as={Clock} w={4} h={4} color="gray.400" />
+            <Text color="gray.400" fontSize="xs">
+              Перезвоним за 10 минут
+            </Text>
+          </HStack>
+        </HStack>
+
+        <Text color="gray.400" fontSize="xs" textAlign="center" lineHeight="1.6">
+          Нажимая кнопку, вы соглашаетесь на передачу и обработку персональных данных.
           Никакого спама и навязчивых продаж.
         </Text>
       </VStack>

@@ -56,7 +56,7 @@ export function V2Footer({ settings, services }: V2FooterProps) {
     ? services.map((s) => ({ label: s.title, href: `/uslugi/${s.slug}` }))
     : (settings?.servicesLinks?.length ? settings.servicesLinks : DEFAULT_SERVICES)
   const companyLinks  = settings?.companyLinks?.length  ? settings.companyLinks  : DEFAULT_COMPANY
-  const contactEmail  = settings?.contactEmail  ?? 'hello@wdynasty.ru'
+  const contactEmail  = settings?.contactEmail  ?? 'company@wdynasty.ru'
   const contactHours  = settings?.contactHours  ?? 'Пн–Пт: 9:00–19:00'
   const copyrightText = settings?.copyrightText ?? '© 2026 WebDynasty'
   const copyrightNote = settings?.copyrightNote ?? 'Политика конфиденциальности'

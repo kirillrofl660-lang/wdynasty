@@ -30,6 +30,8 @@ import { TelegramSubscribers } from './collections/TelegramSubscribers'
 
 import { Services } from './collections/Services'
 
+import { Cases } from './collections/Cases'
+
 import { TeamPageSettings } from './globals/TeamPageSettings'
 import { HomePageSettings } from './globals/HomePageSettings'
 import { FooterSettings } from './globals/FooterSettings'
@@ -56,7 +58,7 @@ export default buildConfig({
 
   },
 
-  collections: [Users, Pages, Media, Projects, Skills, Posts, Navigation, Leads, TelegramSubscribers, Services],
+  collections: [Users, Pages, Media, Projects, Skills, Posts, Navigation, Leads, TelegramSubscribers, Services, Cases],
 
   globals: [TeamPageSettings, HomePageSettings, FooterSettings],
 

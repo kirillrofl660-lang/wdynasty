@@ -77,6 +77,7 @@ export interface Config {
     leads: Lead;
     'tg-subscribers': TgSubscriber;
     services: Service;
+    cases: Case;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -94,6 +95,7 @@ export interface Config {
     leads: LeadsSelect<false> | LeadsSelect<true>;
     'tg-subscribers': TgSubscribersSelect<false> | TgSubscribersSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
+    cases: CasesSelect<false> | CasesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -581,6 +583,135 @@ export interface Service {
   createdAt: string;
 }
 /**
+ * Кейсы с ценами, факторами стоимости и SEO-ответами на вопросы клиентов
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cases".
+ */
+export interface Case {
+  id: number;
+  /**
+   * Например: «Кастомизация корзины в 1С-Битрикс»
+   */
+  title: string;
+  /**
+   * Например: kastomizaciya-korziny-bitrix
+   */
+  slug: string;
+  status?: ('draft' | 'published') | null;
+  publishedAt?: string | null;
+  /**
+   * Можно привязать кейс к нескольким услугам
+   */
+  services?: (number | Service)[] | null;
+  /**
+   * Например: «Как кастомизировать корзину в Битрикс?» — для SEO и заголовков
+   */
+  searchQuery?: string | null;
+  excerpt?: string | null;
+  coverImage?: (number | null) | Media;
+  /**
+   * Какую боль решали
+   */
+  problem?: string | null;
+  solution?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  result?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Текстовое поле для красивого вывода. Для расчётов калькулятора используйте группу ниже.
+   */
+  basePrice?: string | null;
+  /**
+   * Калькулятор будет считать стоимость по этим полям
+   */
+  calculator?: {
+    basePrice?: number | null;
+    minHours?: number | null;
+    maxHours?: number | null;
+    hourlyRate?: number | null;
+    /**
+     * Добавляйте факторы, влияющие на цену. Каждый множитель — это title и число.
+     */
+    multipliers?:
+      | {
+          title: string;
+          coefficient: number;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * Например: «Цена зависит от объёма правок и состояния текущего кода»
+   */
+  priceNote?: string | null;
+  /**
+   * Каждый фактор: что удорожает/удешевляет работу и на сколько
+   */
+  priceFactors?:
+    | {
+        title: string;
+        description?: string | null;
+        /**
+         * Например: «+10–15%», «−5%», «бесплатно при базовой настройке»
+         */
+        impact?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  faq?:
+    | {
+        question: string;
+        answer: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -643,6 +774,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'services';
         value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'cases';
+        value: number | Case;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -952,6 +1087,59 @@ export interface ServicesSelect<T extends boolean = true> {
     | T
     | {
         text?: T;
+        id?: T;
+      };
+  metaTitle?: T;
+  metaDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cases_select".
+ */
+export interface CasesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  status?: T;
+  publishedAt?: T;
+  services?: T;
+  searchQuery?: T;
+  excerpt?: T;
+  coverImage?: T;
+  problem?: T;
+  solution?: T;
+  result?: T;
+  basePrice?: T;
+  calculator?:
+    | T
+    | {
+        basePrice?: T;
+        minHours?: T;
+        maxHours?: T;
+        hourlyRate?: T;
+        multipliers?:
+          | T
+          | {
+              title?: T;
+              coefficient?: T;
+              id?: T;
+            };
+      };
+  priceNote?: T;
+  priceFactors?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        impact?: T;
+        id?: T;
+      };
+  faq?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
         id?: T;
       };
   metaTitle?: T;

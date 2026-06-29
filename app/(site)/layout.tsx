@@ -9,6 +9,7 @@ import config from '@payload-config'
 import { Providers } from '../providers'
 
 import { SiteChrome } from '../components/SiteChrome'
+import { CookieConsent } from '../components/CookieConsent'
 
 import './globals.css'
 
@@ -117,6 +118,7 @@ export default async function RootLayout({
           <SiteChrome navItems={navResult.docs as any} footerSettings={footerSettings} services={footerServices}>
             {children}
           </SiteChrome>
+          <CookieConsent />
         </Providers>
       </body>
     </html>

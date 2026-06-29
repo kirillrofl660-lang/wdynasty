@@ -45,9 +45,21 @@ export default async function ServicePage({ params }: Props) {
   const service = result.docs[0] as any
   if (!service) notFound()
 
+  const relatedCases = await payload.find({
+    collection: 'cases',
+    where: {
+      and: [
+        { services: { in: [service.id] } },
+        { status: { equals: 'published' } },
+      ],
+    },
+    sort: '-publishedAt',
+    limit: 10,
+  })
+
   switch (service.template) {
     case 'ecommerce-bitrix':
-      return <EcommerceBitrixTemplate service={service} />
+      return <EcommerceBitrixTemplate service={service} relatedCases={relatedCases.docs as any[]} />
     default:
       notFound()
   }
