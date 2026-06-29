@@ -600,7 +600,10 @@ export interface Case {
   slug: string;
   status?: ('draft' | 'published') | null;
   publishedAt?: string | null;
-  service?: (number | null) | Service;
+  /**
+   * Можно привязать кейс к нескольким услугам
+   */
+  services?: (number | Service)[] | null;
   /**
    * Например: «Как кастомизировать корзину в Битрикс?» — для SEO и заголовков
    */
@@ -1078,7 +1081,7 @@ export interface CasesSelect<T extends boolean = true> {
   slug?: T;
   status?: T;
   publishedAt?: T;
-  service?: T;
+  services?: T;
   searchQuery?: T;
   excerpt?: T;
   coverImage?: T;

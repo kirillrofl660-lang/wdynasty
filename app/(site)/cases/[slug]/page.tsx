@@ -172,8 +172,12 @@ export default async function CasePage({ params }: Props) {
                 <Heading as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="700" color="#111">
                   {c.basePrice ?? 'Цена по запросу'}
                 </Heading>
-                {c.service?.title && (
-                  <Text fontSize="sm" color="#777">{c.service.title}</Text>
+                {c.services?.length > 0 && (
+                  <HStack gap={2} wrap="wrap">
+                    {c.services.map((s: any) => (
+                      <Text key={s.id} fontSize="sm" color="#777">{s.title}</Text>
+                    ))}
+                  </HStack>
                 )}
               </HStack>
               {c.priceNote && (
@@ -236,6 +240,33 @@ export default async function CasePage({ params }: Props) {
               <Box className="prose" color="#555" lineHeight="1.7">
                 <LexicalRenderer data={c.solution} />
               </Box>
+            </Box>
+          )}
+
+          {c.services?.length > 0 && (
+            <Box bg="white" borderRadius="20px" p={6} style={{ border: '1px solid rgba(0,0,0,0.06)' }}>
+              <Heading as="h2" fontSize="lg" fontWeight="600" color="#111" mb={3}>
+                Связанные услуги
+              </Heading>
+              <HStack gap={3} wrap="wrap">
+                {c.services.map((s: any) => (
+                  <Link
+                    key={s.id}
+                    href={`/uslugi/${s.slug}`}
+                    style={{
+                      padding: '8px 16px',
+                      borderRadius: '999px',
+                      background: 'rgba(139,92,246,.08)',
+                      color: '#8b5cf6',
+                      textDecoration: 'none',
+                      fontWeight: 500,
+                      fontSize: '14px',
+                    }}
+                  >
+                    {s.title}
+                  </Link>
+                ))}
+              </HStack>
             </Box>
           )}
 

@@ -45,11 +45,12 @@ export const Cases: CollectionConfig = {
       admin: { position: 'sidebar' },
     },
     {
-      name: 'service',
+      name: 'services',
       type: 'relationship',
       relationTo: 'services',
-      label: 'Связанная услуга',
-      admin: { position: 'sidebar' },
+      hasMany: true,
+      label: 'Связанные услуги',
+      admin: { position: 'sidebar', description: 'Можно привязать кейс к нескольким услугам' },
     },
 
     // ── SEO question ──────────────────────────────────────────────────────────
@@ -97,7 +98,23 @@ export const Cases: CollectionConfig = {
     {
       name: 'basePrice',
       type: 'text',
-      label: 'Примерная стоимость (от 80 000 ₽)',
+      label: 'Примерная стоимость (от 80 000 ₽) — для отображения',
+      admin: { description: 'Текстовое поле для красивого вывода. Для расчётов калькулятора используйте группу ниже.' },
+    },
+    {
+      name: 'calculator',
+      type: 'group',
+      label: 'Данные для калькулятора (все числа)',
+      admin: { description: 'Калькулятор будет считать стоимость по этим полям' },
+      fields: [
+        { name: 'basePrice', type: 'number', label: 'Базовая цена, ₽' },
+        { name: 'minHours', type: 'number', label: 'Минимум часов' },
+        { name: 'maxHours', type: 'number', label: 'Максимум часов' },
+        { name: 'hourlyRate', type: 'number', label: 'Ставка за час, ₽' },
+        { name: 'existingSolutionMultiplier', type: 'number', label: 'Множитель за готовое решение', defaultValue: 1.1 },
+        { name: 'urgentMultiplier', type: 'number', label: 'Множитель за срочность', defaultValue: 1.2 },
+        { name: 'designMultiplier', type: 'number', label: 'Множитель за сложный дизайн', defaultValue: 1.15 },
+      ],
     },
     {
       name: 'priceNote',

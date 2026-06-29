@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import {
   Box,
   Container,
@@ -52,9 +53,10 @@ interface ServiceData {
 
 interface Props {
   service: ServiceData
+  relatedCases?: any[]
 }
 
-export function EcommerceBitrixTemplate({ service }: Props) {
+export function EcommerceBitrixTemplate({ service, relatedCases = [] }: Props) {
   const hero = service.hero ?? {}
   const features = service.features ?? []
   const workStages = service.workStages ?? []
@@ -330,6 +332,68 @@ export function EcommerceBitrixTemplate({ service }: Props) {
       )}
 
       <Separator />
+
+      {/* Похожие кейсы */}
+      {relatedCases.length > 0 && (
+        <>
+          <Box py={20} px={4}>
+            <Container maxW="6xl">
+              <ScrollReveal>
+                <VStack gap={8} align="start">
+                  <Heading as="h2" fontSize={{ base: '2xl', md: '3xl' }}>
+                    Реализованные кейсы
+                  </Heading>
+                  <Text color="gray.600" maxW="2xl">
+                    Примеры задач, которые мы уже решали в рамках этой услуги, с ценами и факторами, влияющими на стоимость.
+                  </Text>
+                  <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6} w="full">
+                    {relatedCases.map((c) => (
+                      <Link
+                        key={c.slug}
+                        href={`/cases/${c.slug}`}
+                        style={{ textDecoration: 'none', display: 'block', height: '100%' }}
+                      >
+                        <Box
+                          bg="white"
+                          borderRadius="20px"
+                          p={6}
+                          h="full"
+                          style={{ border: '1px solid rgba(0,0,0,0.06)' }}
+                          transition="transform 0.2s, box-shadow 0.2s"
+                          _hover={{ transform: 'translateY(-4px)', boxShadow: '0 20px 50px rgba(139,92,246,.12)' }}
+                        >
+                          <Heading as="h3" fontSize="lg" fontWeight="600" color="#111" mb={2} lineHeight="1.3">
+                            {c.title}
+                          </Heading>
+                          {c.searchQuery && (
+                            <Text fontSize="sm" color="#777" fontStyle="italic" mb={3}>
+                              «{c.searchQuery}»
+                            </Text>
+                          )}
+                          {c.excerpt && (
+                            <Text fontSize="sm" color="#555" lineHeight="1.6" mb={4}>
+                              {c.excerpt}
+                            </Text>
+                          )}
+                          <HStack justify="space-between" mt="auto" pt={4} style={{ borderTop: '1px solid rgba(0,0,0,0.04)' }}>
+                            <Text fontSize="sm" fontWeight="600" color="#111">
+                              {c.basePrice ?? 'Цена по запросу'}
+                            </Text>
+                            <Text fontSize="sm" color="#8b5cf6" fontWeight="500">
+                              Подробнее →
+                            </Text>
+                          </HStack>
+                        </Box>
+                      </Link>
+                    ))}
+                  </SimpleGrid>
+                </VStack>
+              </ScrollReveal>
+            </Container>
+          </Box>
+          <Separator />
+        </>
+      )}
 
       {/* Форма */}
       <Box id="contact" py={24} px={4}>
