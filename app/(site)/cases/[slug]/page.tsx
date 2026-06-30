@@ -385,9 +385,11 @@ export default async function CasePage({ params }: Props) {
 
 function SectionHeading({ icon, title }: { icon: React.ReactNode; title: string }) {
   return (
-    <HStack gap={3} mb={4}>
-      <Box style={{ color: C.purple }}>{icon}</Box>
-      <Heading as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="700" color={C.ink}>
+    <HStack gap={4} mb={5} alignItems="center">
+      <Box color={C.purple} display="flex" alignItems="center">
+        {icon}
+      </Box>
+      <Heading as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="700" color={C.ink} lineHeight={1.2}>
         {title}
       </Heading>
     </HStack>
