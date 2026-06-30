@@ -264,7 +264,6 @@ export default async function CasePage({ params }: Props) {
                   bg={C.surface}
                   borderRadius="24px"
                   p={{ base: 6, md: 8 }}
-                  h="full"
                   style={{ border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 10px 40px rgba(0,0,0,0.04)' }}
                 >
                   <Box className="prose" color={C.muted} lineHeight="1.8">
@@ -280,7 +279,6 @@ export default async function CasePage({ params }: Props) {
                   bg={C.surface}
                   borderRadius="24px"
                   p={{ base: 6, md: 8 }}
-                  h="full"
                   style={{ border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 10px 40px rgba(0,0,0,0.04)' }}
                 >
                   <Box className="prose" color={C.muted} lineHeight="1.8">
