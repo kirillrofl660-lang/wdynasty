@@ -93,6 +93,20 @@ export const Cases: CollectionConfig = {
       label: 'Результат',
       editor: lexicalEditor({}),
     },
+    {
+      name: 'context',
+      type: 'richText',
+      label: 'Что это такое в современной реальности',
+      admin: { description: 'Объясняем клиенту, что представляет собой услуга/продукт сегодня. Например: «Что такое лендинг в 2026 году».' },
+      editor: lexicalEditor({}),
+    },
+    {
+      name: 'problemSolving',
+      type: 'richText',
+      label: 'Как правильно решать эти проблемы',
+      admin: { description: 'Развёрнутый ответ: какие подходы, технологии и этапы помогают решить задачу клиента.' },
+      editor: lexicalEditor({}),
+    },
 
     // ── Pricing ───────────────────────────────────────────────────────────────
     {
