@@ -83,6 +83,10 @@ COPY --from=builder /app/collections ./collections
 
 COPY --from=builder /app/app ./app
 
+COPY --from=builder /app/docker-entrypoint.sh ./
+
+RUN chmod +x /app/docker-entrypoint.sh
+
 
 
 # Create data and media directories with proper permissions
@@ -107,5 +111,5 @@ EXPOSE 3000
 
 
 
-CMD ["node", "server.js"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 

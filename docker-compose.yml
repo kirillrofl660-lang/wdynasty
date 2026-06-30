@@ -13,6 +13,7 @@ services:
       - NODE_ENV=production
       - NEXT_PUBLIC_SERVER_URL=http://localhost:3000
       - TURSO_DATABASE_URL=file:./data/local.db
+      - REVALIDATE_SITEMAP_TOKEN=${REVALIDATE_SITEMAP_TOKEN:-change-me}
     volumes:
       - ./data:/app/data
       - ./media:/app/media
