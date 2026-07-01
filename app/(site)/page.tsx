@@ -1,8 +1,8 @@
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { HomePageV2Client } from './HomePageV2Client'
+import { HomePageV2 } from './home/HomePageV2'
 import { V2Header } from './V2Header'
 import { V2Footer } from './V2Footer'
 
@@ -27,7 +27,7 @@ export default async function Page() {
     return (
       <div className="wd-root">
         <V2Header items={navResult.docs as any} />
-        <HomePageV2Client cmsServices={servicesResult.docs as any} cmsPage={cmsPage} />
+        <HomePageV2 cmsServices={servicesResult.docs as any} cmsPage={cmsPage} />
         <V2Footer settings={footerSettings} services={(servicesResult.docs as any[]).map((s) => ({ title: s.title, slug: s.slug }))} />
       </div>
     )
@@ -35,7 +35,7 @@ export default async function Page() {
     return (
       <div className="wd-root">
         <V2Header items={[]} />
-        <HomePageV2Client />
+        <HomePageV2 />
         <V2Footer />
       </div>
     )

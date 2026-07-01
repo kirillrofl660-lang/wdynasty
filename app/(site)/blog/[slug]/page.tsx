@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 import { getPayload } from 'payload'
 
@@ -12,7 +12,7 @@ import { Metadata } from 'next'
 
 import { RefreshRouteOnSave } from './RefreshRouteOnSave'
 
-import { Box } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
 
 import { PostContent } from '@/src/widgets/post/ui/PostContent'
 

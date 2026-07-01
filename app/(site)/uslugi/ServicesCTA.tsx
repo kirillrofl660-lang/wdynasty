@@ -1,7 +1,7 @@
 'use client'
 
-import { HStack } from '@chakra-ui/react'
-import { MagneticButton } from '../../components/MagneticButton'
+import { HStack } from '@chakra-ui/react/stack'
+import { MagneticButton } from '@/src/shared/ui'
 
 export function ServicesCTA() {
   return (

@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload'
+import { revalidateSitePaths } from '../lib/revalidation'
 
 export const FooterSettings: GlobalConfig = {
   slug: 'footer',
@@ -61,4 +62,7 @@ export const FooterSettings: GlobalConfig = {
       label: 'Примечание (правый текст)',
     },
   ],
+  hooks: {
+    afterChange: [({ doc }) => { revalidateSitePaths([{ path: '/', type: 'layout' }]); return doc }],
+  },
 }

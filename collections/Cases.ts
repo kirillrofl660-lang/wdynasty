@@ -1,5 +1,13 @@
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
+import { revalidateSitePaths } from '../lib/revalidation'
+
+const revalidateCase = (doc: any) => {
+  revalidateSitePaths([
+    { path: '/cases' },
+    ...(doc?.slug ? [{ path: `/cases/${doc.slug}` }] : []),
+  ])
+}
 
 export const Cases: CollectionConfig = {
   slug: 'cases',
@@ -194,5 +202,7 @@ export const Cases: CollectionConfig = {
         return data
       },
     ],
+    afterChange: [({ doc }) => { revalidateCase(doc); return doc }],
+    afterDelete: [({ doc }) => { revalidateCase(doc); return doc }],
   },
 }

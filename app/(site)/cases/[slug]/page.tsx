@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -6,25 +6,29 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import Link from 'next/link'
 import Image from 'next/image'
-import {
-  Box, Container, Heading, Text, VStack, HStack, SimpleGrid, Badge, Flex,
-} from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { Container } from '@chakra-ui/react/container'
+import { Heading } from '@chakra-ui/react/heading'
+import { Text } from '@chakra-ui/react/text'
+import { VStack, HStack } from '@chakra-ui/react/stack'
+import { SimpleGrid } from '@chakra-ui/react/simple-grid'
+import { Badge } from '@chakra-ui/react/badge'
+import { Flex } from '@chakra-ui/react/flex'
 import {
   Lightbulb, Target, Wrench, Sparkles, CheckCircle2, ArrowLeft, TrendingUp,
 } from 'lucide-react'
-import { LexicalRenderer } from '@/app/components/LexicalRenderer'
-import { FaqAccordion } from '@/app/components/FaqAccordion'
-import { LeadForm } from '@/src/widgets/lead/ui/LeadForm'
+import { LexicalRenderer, FaqAccordion } from '@/src/shared/ui'
+import { LeadForm } from '@/src/shared/ui/LeadForm'
 
 const C = {
   bg: '#fafafa',
   surface: '#ffffff',
   ink: '#111111',
   muted: '#555555',
-  muted2: '#666666',
-  purple: '#8b5cf6',
-  pink: '#ec4899',
-  orange: '#f97316',
+  muted2: '#595959',
+  purple: '#6b21d4',
+  pink: '#be1860',
+  orange: '#c2410c',
   darkPurple: '#1a1030',
   darkPurple2: '#2a1a3a',
   white: '#ffffff',
@@ -32,10 +36,11 @@ const C = {
 
 const GRAD = `linear-gradient(90deg, ${C.purple}, ${C.pink})`
 const gradText = {
+  color: '#6b21d4',
   background: GRAD,
   WebkitBackgroundClip: 'text',
   backgroundClip: 'text',
-  color: 'transparent',
+  WebkitTextFillColor: 'transparent',
 } as const
 
 interface Props {

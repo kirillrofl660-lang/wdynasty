@@ -1,4 +1,12 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateSitePaths } from '../lib/revalidation'
+
+const revalidateTeamMember = (doc: any) => {
+  revalidateSitePaths([
+    { path: '/team' },
+    ...(doc?.slug ? [{ path: `/team/${doc.slug}` }] : []),
+  ])
+}
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -131,4 +139,8 @@ export const Users: CollectionConfig = {
       label: 'GitHub username',
     },
   ],
+  hooks: {
+    afterChange: [({ doc }) => { revalidateTeamMember(doc); return doc }],
+    afterDelete: [({ doc }) => { revalidateTeamMember(doc); return doc }],
+  },
 }

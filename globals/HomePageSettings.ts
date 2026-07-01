@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload'
+import { revalidateSitePaths } from '../lib/revalidation'
 
 export const HomePageSettings: GlobalConfig = {
   slug: 'home-page',
@@ -148,4 +149,7 @@ export const HomePageSettings: GlobalConfig = {
       label: 'CTA: описание',
     },
   ],
+  hooks: {
+    afterChange: [({ doc }) => { revalidateSitePaths([{ path: '/' }]); return doc }],
+  },
 }

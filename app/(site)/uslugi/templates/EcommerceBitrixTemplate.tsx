@@ -1,29 +1,26 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import {
-  Box,
-  Container,
-  Heading,
-  Text,
-  VStack,
-  HStack,
-  SimpleGrid,
-  Card,
-  CardBody,
-  Badge,
-  Flex,
-  Separator,
-} from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { Container } from '@chakra-ui/react/container'
+import { Heading } from '@chakra-ui/react/heading'
+import { Text } from '@chakra-ui/react/text'
+import { VStack, HStack } from '@chakra-ui/react/stack'
+import { SimpleGrid } from '@chakra-ui/react/simple-grid'
+import { Card, CardBody } from '@chakra-ui/react/card'
+import { Badge } from '@chakra-ui/react/badge'
+import { Flex } from '@chakra-ui/react/flex'
+import { Separator } from '@chakra-ui/react/separator'
 import {
   ShoppingCart, CreditCard, Truck, Package, BarChart,
   Zap, Shield, Users, Settings, Server, Code, Database,
   CheckCircle, ArrowRight,
 } from 'lucide-react'
-import { ScrollReveal } from '../../../components/ScrollReveal'
-import { MagneticButton } from '../../../components/MagneticButton'
-import { HSlider } from '../../../components/HSlider'
-import { LeadForm } from '@/src/widgets/lead/ui/LeadForm'
+import { ScrollReveal, MagneticButton } from '@/src/shared/ui'
+import { LeadForm } from '@/src/shared/ui/LeadForm'
+
+const HSlider = dynamic(() => import('@/src/shared/ui/HSlider').then((m) => m.HSlider), { ssr: false })
 
 const ICONS: Record<string, React.ElementType> = {
   ShoppingCart, CreditCard, Truck, Package, BarChart,
@@ -319,7 +316,7 @@ export function EcommerceBitrixTemplate({ service, relatedCases = [] }: Props) {
                   <SimpleGrid columns={{ base: 1, md: 2 }} gap={3} w="full" textAlign="left">
                     {included.map((item) => (
                       <HStack key={item.text} gap={3}>
-                        <CheckCircle size={18} color="#a78bfa" style={{ flexShrink: 0 }} />
+                        <CheckCircle size={18} color="var(--color-accent-500)" style={{ flexShrink: 0 }} />
                         <Text color="whiteAlpha.900">{item.text}</Text>
                       </HStack>
                     ))}
@@ -360,13 +357,13 @@ export function EcommerceBitrixTemplate({ service, relatedCases = [] }: Props) {
                           h="full"
                           style={{ border: '1px solid rgba(0,0,0,0.06)' }}
                           transition="transform 0.2s, box-shadow 0.2s"
-                          _hover={{ transform: 'translateY(-4px)', boxShadow: '0 20px 50px rgba(139,92,246,.12)' }}
+                          _hover={{ transform: 'translateY(-4px)', boxShadow: '0 20px 50px rgba(107,33,212,.12)' }}
                         >
                           <Heading as="h3" fontSize="lg" fontWeight="600" color="#111" mb={2} lineHeight="1.3">
                             {c.title}
                           </Heading>
                           {c.searchQuery && (
-                            <Text fontSize="sm" color="#777" fontStyle="italic" mb={3}>
+                            <Text fontSize="sm" color="#757575" fontStyle="italic" mb={3}>
                               «{c.searchQuery}»
                             </Text>
                           )}
@@ -379,7 +376,7 @@ export function EcommerceBitrixTemplate({ service, relatedCases = [] }: Props) {
                             <Text fontSize="sm" fontWeight="600" color="#111">
                               {c.basePrice ?? 'Цена по запросу'}
                             </Text>
-                            <Text fontSize="sm" color="#8b5cf6" fontWeight="500">
+                            <Text fontSize="sm" color="#6b21d4" fontWeight="500">
                               Подробнее →
                             </Text>
                           </HStack>

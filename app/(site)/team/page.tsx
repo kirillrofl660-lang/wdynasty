@@ -1,10 +1,17 @@
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import Link from 'next/link'
-import { Box, Container, Heading, Text, SimpleGrid, VStack, HStack, Flex, Grid, GridItem } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { Container } from '@chakra-ui/react/container'
+import { Heading } from '@chakra-ui/react/heading'
+import { Text } from '@chakra-ui/react/text'
+import { SimpleGrid } from '@chakra-ui/react/simple-grid'
+import { VStack, HStack } from '@chakra-ui/react/stack'
+import { Flex } from '@chakra-ui/react/flex'
+import { Grid, GridItem } from '@chakra-ui/react/grid'
 
 export const metadata: Metadata = {
   title: 'О компании | WebDynasty',
@@ -14,10 +21,10 @@ export const metadata: Metadata = {
 const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
 
 // ── Палитра нового дизайна ───────────────────────────────────────────────────
-const C = { bg: '#fafafa', alt: '#f3f3f6', ink: '#111', muted: '#666', muted2: '#777', p: '#8b5cf6', pink: '#ec4899' }
+const C = { bg: '#fafafa', alt: '#f3f3f6', ink: '#111', muted: '#595959', muted2: '#595959', p: '#6b21d4', pink: '#be1860' }
 const GRAD = `linear-gradient(90deg, ${C.p}, ${C.pink})`
-const GRAD3 = `linear-gradient(90deg, ${C.p}, ${C.pink}, #f97316)`
-const gradText = { background: GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' } as const
+const GRAD3 = `linear-gradient(90deg, ${C.p}, ${C.pink}, #c2410c)`
+const gradText = { color: '#6b21d4', background: GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' } as const
 
 const craftLabel: Record<string, string> = {
   dev: 'Разработка', design: 'Дизайн', devops: 'DevOps', management: 'Управление', analytics: 'Аналитика', qa: 'QA',

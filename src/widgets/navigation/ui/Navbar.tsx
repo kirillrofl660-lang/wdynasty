@@ -4,16 +4,13 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
-import {
-  Box,
-  HStack,
-  Text,
-  Button,
-  Container,
-  Icon,
-  VStack,
-  chakra,
-} from '@chakra-ui/react'
+import { chakra } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { HStack, VStack } from '@chakra-ui/react/stack'
+import { Text } from '@chakra-ui/react/text'
+import { Button } from '@chakra-ui/react/button'
+import { Container } from '@chakra-ui/react/container'
+import { Icon } from '@chakra-ui/react/icon'
 import { NavItem } from '../model/types'
 
 interface NavbarProps {

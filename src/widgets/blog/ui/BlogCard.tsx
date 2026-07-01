@@ -2,16 +2,13 @@
 
 import Link from 'next/link'
 import { ArrowRight, Calendar } from 'lucide-react'
-import {
-  Box,
-  VStack,
-  HStack,
-  Text,
-  Heading,
-  Image,
-  Icon,
-  Center,
-} from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { VStack, HStack } from '@chakra-ui/react/stack'
+import { Text } from '@chakra-ui/react/text'
+import { Heading } from '@chakra-ui/react/heading'
+import { Image } from '@chakra-ui/react/image'
+import { Icon } from '@chakra-ui/react/icon'
+import { Center } from '@chakra-ui/react/center'
 import { Post } from '@/src/entities/post/model'
 import { formatDate } from '@/src/shared/lib/formatDate'
 
@@ -47,7 +44,7 @@ export function BlogCard({ post }: BlogCardProps) {
               className="blog-card-img"
               w="full"
               h="full"
-              style={{ background: 'linear-gradient(135deg, #8b5cf6, #ec4899)' }}
+              style={{ background: 'linear-gradient(135deg, #6b21d4, #be1860)' }}
               transition="transform 0.5s ease"
             >
               <Text fontSize="6xl" fontWeight="900" color="rgba(255,255,255,0.85)">
@@ -63,7 +60,7 @@ export function BlogCard({ post }: BlogCardProps) {
               <HStack gap={2} wrap="wrap">
                 {post.tags.slice(0, 3).map((tag, i) =>
                   tag.tag ? (
-                    <Text key={i} fontSize="xs" fontWeight="700" letterSpacing="0.06em" textTransform="uppercase" color="#8b5cf6">
+                    <Text key={i} fontSize="xs" fontWeight="700" letterSpacing="0.06em" textTransform="uppercase" color="#6b21d4">
                       {tag.tag}
                     </Text>
                   ) : null,
@@ -101,12 +98,12 @@ export function BlogCard({ post }: BlogCardProps) {
 
             <HStack justify="space-between" w="full" pt={3} mt="auto" style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
               {post.publishedAt && (
-                <HStack gap={1} fontSize="xs" color="#999">
+                <HStack gap={1} fontSize="xs" color="#757575">
                   <Icon as={Calendar} w={3.5} h={3.5} />
                   <Text suppressHydrationWarning>{formattedDate}</Text>
                 </HStack>
               )}
-              <HStack gap={1} fontSize="sm" fontWeight="700" color="#8b5cf6">
+              <HStack gap={1} fontSize="sm" fontWeight="700" color="#6b21d4">
                 <Text>Смотреть</Text>
                 <Icon as={ArrowRight} w={4} h={4} />
               </HStack>

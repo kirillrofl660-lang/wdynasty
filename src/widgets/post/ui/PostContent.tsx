@@ -2,21 +2,17 @@
 
 import { Calendar, Clock, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
-import {
-  Box,
-  VStack,
-  HStack,
-  Text,
-  Heading,
-  Image,
-  Badge,
-  Icon,
-  Button,
-  Container,
-  Flex,
-  Card,
-  CardBody,
-} from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { VStack, HStack } from '@chakra-ui/react/stack'
+import { Text } from '@chakra-ui/react/text'
+import { Heading } from '@chakra-ui/react/heading'
+import { Image } from '@chakra-ui/react/image'
+import { Badge } from '@chakra-ui/react/badge'
+import { Icon } from '@chakra-ui/react/icon'
+import { Button } from '@chakra-ui/react/button'
+import { Container } from '@chakra-ui/react/container'
+import { Flex } from '@chakra-ui/react/flex'
+import { Card, CardBody } from '@chakra-ui/react/card'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { PostContentProps } from '../model/types'
 import { formatDate } from '@/src/shared/lib/formatDate'

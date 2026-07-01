@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 import { getPayload } from 'payload'
 
@@ -6,7 +6,7 @@ import config from '@payload-config'
 
 import { Metadata } from 'next'
 
-import { Box } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
 
 import { BlogGrid } from '@/src/widgets/blog/ui/BlogGrid'
 

@@ -2,16 +2,13 @@
 
 import { useState, useRef } from 'react'
 import { Phone, CheckCircle, ShieldCheck, Clock } from 'lucide-react'
-import {
-  Box,
-  VStack,
-  HStack,
-  Text,
-  Input,
-  Button,
-  Icon,
-  Center,
-} from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { VStack, HStack } from '@chakra-ui/react/stack'
+import { Text } from '@chakra-ui/react/text'
+import { Input } from '@chakra-ui/react/input'
+import { Button } from '@chakra-ui/react/button'
+import { Icon } from '@chakra-ui/react/icon'
+import { Center } from '@chakra-ui/react/center'
 
 interface FormState {
   name: string

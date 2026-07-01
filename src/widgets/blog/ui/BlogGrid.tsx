@@ -3,27 +3,33 @@
 import { useState } from 'react'
 import { Search } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
-import {
-  Box,
-  VStack,
-  HStack,
-  Text,
-  Heading,
-  Input,
-  Button,
-  SimpleGrid,
-  Container,
-  Icon,
-  Flex,
-  Center,
-} from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { VStack, HStack } from '@chakra-ui/react/stack'
+import { Text } from '@chakra-ui/react/text'
+import { Heading } from '@chakra-ui/react/heading'
+import { Input } from '@chakra-ui/react/input'
+import { Button } from '@chakra-ui/react/button'
+import { SimpleGrid } from '@chakra-ui/react/simple-grid'
+import { Container } from '@chakra-ui/react/container'
+import { Icon } from '@chakra-ui/react/icon'
+import { Flex } from '@chakra-ui/react/flex'
+import { Center } from '@chakra-ui/react/center'
 import { BlogCard } from './BlogCard'
+import { BlogQueryProvider } from './BlogQueryProvider'
 import { ScrollReveal, StaggerContainer } from '@/src/shared/ui'
 import { Post } from '@/src/entities/post/model'
 import { BlogGridProps, PostsResponse } from '../model/types'
 import { fetchPosts, fetchTags } from '../model/api'
 
-export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
+export function BlogGrid(props: BlogGridProps) {
+  return (
+    <BlogQueryProvider>
+      <BlogGridInner {...props} />
+    </BlogQueryProvider>
+  )
+}
+
+function BlogGridInner({ initialPosts, initialTotalPages }: BlogGridProps) {
   const [page, setPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedTag, setSelectedTag] = useState<string>('all')
@@ -69,7 +75,7 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
         <Container maxW="4xl">
           <ScrollReveal>
             <VStack gap={5} textAlign="center">
-              <Text fontSize="13px" fontWeight="700" letterSpacing="3px" textTransform="uppercase" color="#8b5cf6">Блог</Text>
+              <Text fontSize="13px" fontWeight="700" letterSpacing="3px" textTransform="uppercase" color="#6b21d4">Блог</Text>
               <Heading
                 as="h1"
                 fontSize={{ base: '4xl', md: '6xl' }}
@@ -79,7 +85,7 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
                 color="#111"
               >
                 Статьи и{' '}
-                <Text as="span" style={{ background: 'linear-gradient(90deg,#8b5cf6,#ec4899)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>инсайты</Text>
+                <Text as="span" style={{ color: '#6b21d4', background: 'linear-gradient(90deg,#6b21d4,#be1860)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>инсайты</Text>
               </Heading>
               <Text fontSize={{ base: 'lg', md: 'xl' }} color="#666" maxW="2xl">
                 Разбираем 1С-Битрикс, Laravel, React и DevOps. Делимся опытом
@@ -103,7 +109,7 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
               px={4}
               py={1}
               transition="border-color 0.2s"
-              _focusWithin={{ borderColor: '#8b5cf6' }}
+              _focusWithin={{ borderColor: '#6b21d4' }}
             >
               <Icon as={Search} color="gray.400" />
               <Input
@@ -123,7 +129,7 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
                 onClick={() => handleTagChange('all')}
                 size="sm"
                 borderRadius="full"
-                colorPalette="purple"
+                colorPalette="brand"
                 variant={selectedTag === 'all' ? 'solid' : 'outline'}
               >
                 Все статьи
@@ -135,7 +141,7 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
                   onClick={() => handleTagChange(tag)}
                   size="sm"
                   borderRadius="full"
-                  colorPalette="purple"
+                  colorPalette="brand"
                   variant={selectedTag === tag ? 'solid' : 'outline'}
                 >
                   {tag}
@@ -179,7 +185,7 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
               borderRadius="full"
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page <= 1}
-              colorPalette="purple"
+              colorPalette="brand"
             >
               Назад
             </Button>
@@ -189,7 +195,7 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
                 key={p}
                 size="sm"
                 borderRadius="full"
-                colorPalette="purple"
+                colorPalette="brand"
                 variant={p === page ? 'solid' : 'outline'}
                 onClick={() => setPage(p)}
               >
@@ -203,7 +209,7 @@ export function BlogGrid({ initialPosts, initialTotalPages }: BlogGridProps) {
               borderRadius="full"
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages}
-              colorPalette="purple"
+              colorPalette="brand"
             >
               Вперёд
             </Button>

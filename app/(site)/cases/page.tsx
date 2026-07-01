@@ -1,10 +1,16 @@
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import Link from 'next/link'
-import { Box, Container, Heading, Text, SimpleGrid, VStack, HStack, Badge } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { Container } from '@chakra-ui/react/container'
+import { Heading } from '@chakra-ui/react/heading'
+import { Text } from '@chakra-ui/react/text'
+import { SimpleGrid } from '@chakra-ui/react/simple-grid'
+import { VStack, HStack } from '@chakra-ui/react/stack'
+import { Badge } from '@chakra-ui/react/badge'
 
 export const metadata: Metadata = {
   title: 'Кейсы и цены | WebDynasty',
@@ -57,7 +63,7 @@ export default async function CasesPage() {
                   h="full"
                   style={{ border: '1px solid rgba(0,0,0,0.06)' }}
                   transition="transform 0.2s, box-shadow 0.2s"
-                  _hover={{ transform: 'translateY(-4px)', boxShadow: '0 20px 50px rgba(139,92,246,.12)' }}
+                  _hover={{ transform: 'translateY(-4px)', boxShadow: '0 20px 50px rgba(107,33,212,.12)' }}
                 >
                   {c.service?.title && (
                     <Badge
@@ -65,7 +71,7 @@ export default async function CasesPage() {
                       px={3}
                       py={1}
                       borderRadius="999px"
-                      style={{ background: 'rgba(139,92,246,.08)', color: '#8b5cf6' }}
+                      style={{ background: 'rgba(107,33,212,.08)', color: '#6b21d4' }}
                     >
                       {c.service.title}
                     </Badge>
@@ -87,7 +93,7 @@ export default async function CasesPage() {
                     <Text fontSize="sm" fontWeight="600" color="#111">
                       {c.basePrice ?? 'Цена по запросу'}
                     </Text>
-                    <Text fontSize="sm" color="#8b5cf6" fontWeight="500">
+                    <Text fontSize="sm" color="#6b21d4" fontWeight="500">
                       Подробнее →
                     </Text>
                   </HStack>

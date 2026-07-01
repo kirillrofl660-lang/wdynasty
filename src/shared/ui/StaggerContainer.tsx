@@ -1,11 +1,8 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Box } from '@chakra-ui/react'
-
-gsap.registerPlugin(ScrollTrigger)
+import { Children, cloneElement, isValidElement, useEffect, useRef, useState } from 'react'
+import { Box } from '@chakra-ui/react/box'
+import { useReducedMotion } from '@/src/shared/lib/useReducedMotion'
 
 interface StaggerContainerProps {
   children: React.ReactNode
@@ -21,43 +18,50 @@ export function StaggerContainer({
   className,
 }: StaggerContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const reducedMotion = useReducedMotion()
+  const [visible, setVisible] = useState(reducedMotion)
 
   useEffect(() => {
+    if (reducedMotion) {
+      setVisible(true)
+      return
+    }
+
     const container = containerRef.current
     if (!container) return
 
-    const items = container.children
-    if (items.length === 0) return
-
-    gsap.set(items, { opacity: 0, y: 30 })
-
-    const animation = gsap.to(items, {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      stagger,
-      delay,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: container,
-        start: 'top 80%',
-        toggleActions: 'play none none none',
-      },
-    })
-
-    return () => {
-      animation.kill()
-      ScrollTrigger.getAll().forEach(st => {
-        if (st.vars.trigger === container) {
-          st.kill()
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          observer.disconnect()
         }
-      })
-    }
-  }, [stagger, delay])
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -20% 0px' },
+    )
+
+    observer.observe(container)
+
+    return () => observer.disconnect()
+  }, [reducedMotion])
+
+  const items = Children.toArray(children)
 
   return (
     <Box ref={containerRef} className={className}>
-      {children}
+      {items.map((child, i) => {
+        if (!isValidElement(child)) return child
+        const style = (child.props as any).style || {}
+        return cloneElement(child as React.ReactElement<any>, {
+          style: {
+            ...style,
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translate3d(0, 0, 0)' : 'translate3d(0, 30px, 0)',
+            transition: reducedMotion ? 'none' : `opacity 0.6s ease ${delay + i * stagger}s, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay + i * stagger}s`,
+            willChange: reducedMotion ? 'auto' : 'opacity, transform',
+          },
+        })
+      })}
     </Box>
   )
 }
