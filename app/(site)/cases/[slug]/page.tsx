@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -6,26 +6,42 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import Link from 'next/link'
 import Image from 'next/image'
-import {
-  Box, Container, Heading, Text, VStack, HStack, SimpleGrid, Badge, Flex,
-} from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { Container } from '@chakra-ui/react/container'
+import { Heading } from '@chakra-ui/react/heading'
+import { Text } from '@chakra-ui/react/text'
+import { VStack, HStack } from '@chakra-ui/react/stack'
+import { SimpleGrid } from '@chakra-ui/react/simple-grid'
+import { Badge } from '@chakra-ui/react/badge'
+import { Flex } from '@chakra-ui/react/flex'
 import {
   Lightbulb, Target, Wrench, Sparkles, CheckCircle2, ArrowLeft, TrendingUp,
 } from 'lucide-react'
-import { LexicalRenderer } from '@/app/components/LexicalRenderer'
-import { FaqAccordion } from '@/app/components/FaqAccordion'
-import { LeadForm } from '@/src/widgets/lead/ui/LeadForm'
+import { LexicalRenderer, FaqAccordion } from '@/src/shared/ui'
+import { LeadForm } from '@/src/shared/ui/LeadForm'
 
 const C = {
-  cream: '#f5f0e6',
-  creamDark: '#ede7d6',
-  crimson: '#8b1c2c',
-  crimsonDark: '#6e1420',
-  gold: '#b8852a',
-  ink: '#1a0f0a',
-  muted: '#7a6050',
+  bg: '#fafafa',
+  surface: '#ffffff',
+  ink: '#111111',
+  muted: '#555555',
+  muted2: '#595959',
+  purple: '#6b21d4',
+  pink: '#be1860',
+  orange: '#c2410c',
+  darkPurple: '#1a1030',
+  darkPurple2: '#2a1a3a',
   white: '#ffffff',
 }
+
+const GRAD = `linear-gradient(90deg, ${C.purple}, ${C.pink})`
+const gradText = {
+  color: '#6b21d4',
+  background: GRAD,
+  WebkitBackgroundClip: 'text',
+  backgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+} as const
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -80,116 +96,128 @@ export default async function CasePage({ params }: Props) {
   const coverUrl = c.coverImage?.url ?? c.coverImage?.sizes?.medium?.url ?? c.coverImage?.sizes?.small?.url
 
   return (
-    <Box className="wd-root" bg={C.cream} minH="100vh" pb={20}>
-      {/* Decorative top bar */}
-      <Box h="6px" w="full" bg={`linear-gradient(90deg, ${C.crimson}, ${C.gold})`} />
-
-      {/* Hero */}
-      <Box pt={{ base: 14, md: 20 }} pb={{ base: 10, md: 14 }} px={{ base: 4, md: 8 }}>
-        <Container maxW="6xl">
-          <Link
-            href="/cases"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              color: C.muted,
-              fontSize: '14px',
-              textDecoration: 'none',
-              fontWeight: 500,
-              marginBottom: '24px',
-            }}
+    <Box className="wd-root" bg={C.bg} minH="100vh" pb={20}>
+      {/* Hero with background cover */}
+      <Box
+        position="relative"
+        color="white"
+        pt={{ base: 24, md: 32 }}
+        pb={{ base: 16, md: 24 }}
+        px={{ base: 4, md: 8 }}
+        overflow="hidden"
+      >
+        {coverUrl && (
+          <Box
+            position="absolute"
+            top={0}
+            left={0}
+            right={0}
+            bottom={0}
+            zIndex={0}
           >
-            <ArrowLeft size={16} />
+            <Image
+              src={coverUrl}
+              alt={c.title}
+              fill
+              style={{ objectFit: 'cover' }}
+              priority
+            />
+            <Box
+              position="absolute"
+              top={0}
+              left={0}
+              right={0}
+              bottom={0}
+              style={{ background: `linear-gradient(135deg, rgba(26,16,48,.92) 0%, rgba(42,26,58,.86) 60%, rgba(26,16,48,.78) 100%)` }}
+            />
+          </Box>
+        )}
+        {!coverUrl && (
+          <Box
+            position="absolute"
+            top={0}
+            left={0}
+            right={0}
+            bottom={0}
+            zIndex={0}
+            style={{ background: `linear-gradient(135deg, ${C.darkPurple}, ${C.darkPurple2})` }}
+          />
+        )}
+
+        <Box
+          position="absolute"
+          top={0}
+          left={0}
+          right={0}
+          bottom={0}
+          zIndex={0}
+          style={{ background: 'radial-gradient(circle at 20% 80%, rgba(139,92,246,.20), transparent 40%)', pointerEvents: 'none' }}
+        />
+
+        <Container maxW="4xl" position="relative" zIndex={1}>
+          <Link href="/cases" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', textDecoration: 'none', fontWeight: 500 }}>
+            <ArrowLeft size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 6 }} />
             Все кейсы
           </Link>
-
-          <SimpleGrid columns={{ base: 1, lg: 2 }} gap={{ base: 8, lg: 12 }} alignItems="center">
-            <VStack gap={5} align="start">
-              {c.searchQuery && (
-                <Badge
-                  px={4}
-                  py={1.5}
-                  borderRadius="999px"
-                  fontSize="13px"
-                  fontWeight={500}
-                  style={{ background: 'rgba(139,28,44,0.08)', color: C.crimson, border: `1px solid rgba(139,28,44,0.14)` }}
+          <Heading
+            as="h1"
+            fontSize={{ base: '2xl', md: '4xl', lg: '5xl' }}
+            fontWeight="700"
+            lineHeight="1.2"
+            mt={3}
+            mb={3}
+            maxW="900px"
+            style={{ textShadow: '0 2px 20px rgba(0,0,0,.25)' }}
+          >
+            {c.title}
+          </Heading>
+          {c.searchQuery && (
+            <Text fontSize="md" color="rgba(255,255,255,0.85)" fontStyle="italic" mb={3}>
+              Вопрос клиента: «{c.searchQuery}»
+            </Text>
+          )}
+          {c.excerpt && (
+            <Text fontSize={{ base: 'md', md: 'lg' }} color="rgba(255,255,255,0.9)" lineHeight="1.7" maxW="720px">
+              {c.excerpt}
+            </Text>
+          )}
+          {c.services?.length > 0 && (
+            <HStack gap={3} wrap="wrap" mt={5}>
+              {c.services.map((s: any) => (
+                <Link
+                  key={s.id}
+                  href={`/uslugi/${s.slug}`}
+                  style={{
+                    padding: '8px 16px',
+                    borderRadius: '999px',
+                    background: 'rgba(255,255,255,.10)',
+                    color: '#fff',
+                    textDecoration: 'none',
+                    fontWeight: 500,
+                    fontSize: '14px',
+                    border: '1px solid rgba(255,255,255,.15)',
+                  }}
                 >
-                  Вопрос клиента: «{c.searchQuery}»
-                </Badge>
-              )}
-              <Heading
-                as="h1"
-                fontSize={{ base: '32px', md: '44px', lg: '52px' }}
-                fontWeight="700"
-                lineHeight="1.15"
-                color={C.ink}
-                style={{ fontFamily: 'var(--font-philosopher, "Philosopher", serif)' }}
-              >
-                {c.title}
-              </Heading>
-              {c.excerpt && (
-                <Text fontSize={{ base: 'md', md: 'lg' }} color={C.muted} lineHeight="1.7" maxW="600px">
-                  {c.excerpt}
-                </Text>
-              )}
-              {c.services?.length > 0 && (
-                <HStack gap={2} wrap="wrap">
-                  {c.services.map((s: any) => (
-                    <Link
-                      key={s.id}
-                      href={`/uslugi/${s.slug}`}
-                      style={{
-                        padding: '6px 14px',
-                        borderRadius: '999px',
-                        background: C.white,
-                        color: C.crimson,
-                        textDecoration: 'none',
-                        fontWeight: 500,
-                        fontSize: '13px',
-                        border: `1px solid rgba(139,28,44,0.14)`,
-                      }}
-                    >
-                      {s.title}
-                    </Link>
-                  ))}
-                </HStack>
-              )}
-            </VStack>
-
-            {coverUrl && (
-              <Box
-                borderRadius="24px"
-                overflow="hidden"
-                style={{ boxShadow: '0 30px 80px rgba(26,15,10,0.12)', border: `8px solid ${C.white}` }}
-              >
-                <Image
-                  src={coverUrl}
-                  alt={c.title}
-                  width={1200}
-                  height={630}
-                  style={{ width: '100%', height: 'auto', objectFit: 'cover', display: 'block' }}
-                  priority
-                />
-              </Box>
-            )}
-          </SimpleGrid>
+                  {s.title}
+                </Link>
+              ))}
+            </HStack>
+          )}
         </Container>
       </Box>
 
-      {/* Main content */}
-      <Container maxW="6xl" px={{ base: 4, md: 8 }}>
-        <VStack gap={{ base: 12, md: 16 }} align="stretch">
+      <Container maxW="4xl" px={{ base: 4, md: 8 }} pt={{ base: 10, md: 14 }}>
+        <VStack gap={10} align="stretch">
 
           {/* Context: what is it in modern reality */}
           {c.context && (
             <Box>
               <SectionHeading icon={<Lightbulb size={22} />} title="Что это такое в современной реальности" />
               <Box
-                bg={C.white}
+                bg={C.surface}
                 borderRadius="24px"
                 p={{ base: 6, md: 8 }}
-                style={{ border: `1px solid rgba(139,28,44,0.08)`, boxShadow: '0 10px 40px rgba(26,15,10,0.04)' }}
+                style={{ border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 10px 40px rgba(0,0,0,0.04)' }}
               >
                 <Box className="prose" color={C.muted} lineHeight="1.8" fontSize={{ base: 'md', md: 'lg' }}>
                   <LexicalRenderer data={c.context} />
@@ -203,10 +231,10 @@ export default async function CasePage({ params }: Props) {
             <Box>
               <SectionHeading icon={<Target size={22} />} title="Проблема клиента" />
               <Box
-                bg={C.white}
+                bg={C.surface}
                 borderRadius="24px"
                 p={{ base: 6, md: 8 }}
-                style={{ border: `1px solid rgba(139,28,44,0.08)`, boxShadow: '0 10px 40px rgba(26,15,10,0.04)' }}
+                style={{ border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 10px 40px rgba(0,0,0,0.04)' }}
               >
                 <Text color={C.muted} lineHeight="1.8" fontSize={{ base: 'md', md: 'lg' }}>
                   {c.problem}
@@ -220,10 +248,10 @@ export default async function CasePage({ params }: Props) {
             <Box>
               <SectionHeading icon={<Wrench size={22} />} title="Как правильно решать эти проблемы" />
               <Box
-                bg={C.white}
+                bg={C.surface}
                 borderRadius="24px"
                 p={{ base: 6, md: 8 }}
-                style={{ border: `1px solid rgba(139,28,44,0.08)`, boxShadow: '0 10px 40px rgba(26,15,10,0.04)' }}
+                style={{ border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 10px 40px rgba(0,0,0,0.04)' }}
               >
                 <Box className="prose" color={C.muted} lineHeight="1.8" fontSize={{ base: 'md', md: 'lg' }}>
                   <LexicalRenderer data={c.problemSolving} />
@@ -238,11 +266,10 @@ export default async function CasePage({ params }: Props) {
               <Box>
                 <SectionHeading icon={<Sparkles size={22} />} title="Решение" />
                 <Box
-                  bg={C.white}
+                  bg={C.surface}
                   borderRadius="24px"
                   p={{ base: 6, md: 8 }}
-                  h="full"
-                  style={{ border: `1px solid rgba(139,28,44,0.08)`, boxShadow: '0 10px 40px rgba(26,15,10,0.04)' }}
+                  style={{ border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 10px 40px rgba(0,0,0,0.04)' }}
                 >
                   <Box className="prose" color={C.muted} lineHeight="1.8">
                     <LexicalRenderer data={c.solution} />
@@ -254,11 +281,10 @@ export default async function CasePage({ params }: Props) {
               <Box>
                 <SectionHeading icon={<TrendingUp size={22} />} title="Результат" />
                 <Box
-                  bg={C.white}
+                  bg={C.surface}
                   borderRadius="24px"
                   p={{ base: 6, md: 8 }}
-                  h="full"
-                  style={{ border: `1px solid rgba(139,28,44,0.08)`, boxShadow: '0 10px 40px rgba(26,15,10,0.04)' }}
+                  style={{ border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 10px 40px rgba(0,0,0,0.04)' }}
                 >
                   <Box className="prose" color={C.muted} lineHeight="1.8">
                     <LexicalRenderer data={c.result} />
@@ -272,62 +298,45 @@ export default async function CasePage({ params }: Props) {
           <Box>
             <SectionHeading icon={<CheckCircle2 size={22} />} title="Стоимость и факторы" />
             <Box
-              bg={C.white}
+              bg={C.surface}
               borderRadius="24px"
-              p={{ base: 6, md: 8 }}
-              style={{ border: `1px solid rgba(139,28,44,0.08)`, boxShadow: '0 10px 40px rgba(26,15,10,0.04)' }}
+              p={{ base: 5, md: 7 }}
+              style={{ border: '1px solid rgba(0,0,0,0.06)' }}
             >
-              <VStack gap={6} align="start">
+              <VStack gap={5} align="start">
                 <HStack gap={3} align="baseline" wrap="wrap">
-                  <Heading as="h2" fontSize={{ base: '28px', md: '36px' }} fontWeight="700" color={C.crimson} style={{ fontFamily: 'var(--font-philosopher, "Philosopher", serif)' }}>
+                  <Heading as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="700" style={gradText}>
                     {c.basePrice ?? 'Цена по запросу'}
                   </Heading>
-                  <Text fontSize="sm" color={C.muted} fontWeight={500}>
+                  <Text fontSize="sm" color={C.muted2} fontWeight={500}>
                     базовая стоимость
                   </Text>
                 </HStack>
                 {c.priceNote && (
-                  <Text color={C.muted} lineHeight="1.7" fontSize={{ base: 'md', md: 'lg' }}>
+                  <Text color={C.muted} lineHeight="1.7">
                     {c.priceNote}
                   </Text>
                 )}
                 {factors.length > 0 && (
                   <Box w="full">
-                    <Text fontSize="sm" fontWeight={700} color={C.ink} mb={4} textTransform="uppercase" letterSpacing="0.05em">
-                      Что влияет на цену
+                    <Text fontSize="sm" fontWeight={600} color={C.ink} mb={3}>
+                      Что может повлиять на цену:
                     </Text>
-                    <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
+                    <VStack gap={3} align="stretch">
                       {factors.map((f, i) => (
-                        <Flex
-                          key={i}
-                          gap={4}
-                          align="start"
-                          p={4}
-                          borderRadius="16px"
-                          bg={C.cream}
-                          style={{ border: `1px solid rgba(139,28,44,0.06)` }}
-                        >
-                          <Box
-                            flexShrink={0}
-                            px={3}
-                            py={1}
-                            borderRadius="8px"
-                            bg={C.crimson}
-                            color={C.white}
-                            fontSize="12px"
-                            fontWeight={700}
-                          >
+                        <HStack key={i} gap={3} align="start" p={3} borderRadius="12px" bg="rgba(0,0,0,0.02)">
+                          <Box flexShrink={0} px={2} py={1} borderRadius="6px" style={{ background: 'rgba(139,92,246,.10)', color: C.purple }} fontSize="xs" fontWeight={700}>
                             {f.impact ?? 'фактор'}
                           </Box>
                           <Box>
-                            <Text fontWeight={600} color={C.ink} fontSize="sm" mb={1}>{f.title}</Text>
+                            <Text fontWeight="600" color={C.ink} fontSize="sm">{f.title}</Text>
                             {f.description && (
                               <Text color={C.muted} fontSize="sm" lineHeight="1.6">{f.description}</Text>
                             )}
                           </Box>
-                        </Flex>
+                        </HStack>
                       ))}
-                    </SimpleGrid>
+                    </VStack>
                   </Box>
                 )}
               </VStack>
@@ -353,24 +362,19 @@ export default async function CasePage({ params }: Props) {
 
           {/* CTA form */}
           <Box
+            mt={6}
             borderRadius="28px"
-            p={{ base: 8, md: 12 }}
-            style={{ background: `linear-gradient(135deg, ${C.crimson}, ${C.crimsonDark})`, boxShadow: '0 30px 80px rgba(139,28,44,0.25)' }}
+            p={{ base: 6, md: 10 }}
+            style={{ background: `linear-gradient(135deg, ${C.darkPurple}, ${C.darkPurple2})`, boxShadow: '0 30px 80px rgba(139,92,246,.25)' }}
           >
-            <VStack gap={6} textAlign="center" maxW="640px" mx="auto">
-              <Heading
-                as="h2"
-                fontSize={{ base: 'xl', md: '3xl' }}
-                fontWeight="700"
-                color={C.white}
-                style={{ fontFamily: 'var(--font-philosopher, "Philosopher", serif)' }}
-              >
-                Нужен похожий результат?
+            <VStack gap={6} textAlign="center" maxW="520px" mx="auto">
+              <Heading as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="700" color="white">
+                Нужно такое же решение?
               </Heading>
-              <Text color="rgba(245,240,230,0.85)" fontSize={{ base: 'md', md: 'lg' }} lineHeight="1.7">
-                Оставьте заявку — мы перезвоним, обсудим детали и рассчитаем стоимость под ваш проект.
+              <Text color="rgba(255,255,255,0.75)" lineHeight="1.7">
+                Оставьте заявку — мы перезвоним, уточним детали и рассчитаем стоимость под ваш проект.
               </Text>
-              <Box w="full" pt={2}>
+              <Box w="full">
                 <LeadForm />
               </Box>
             </VStack>
@@ -384,15 +388,11 @@ export default async function CasePage({ params }: Props) {
 
 function SectionHeading({ icon, title }: { icon: React.ReactNode; title: string }) {
   return (
-    <HStack gap={3} mb={4}>
-      <Box color={C.crimson}>{icon}</Box>
-      <Heading
-        as="h2"
-        fontSize={{ base: 'xl', md: '2xl' }}
-        fontWeight="700"
-        color={C.ink}
-        style={{ fontFamily: 'var(--font-philosopher, "Philosopher", serif)' }}
-      >
+    <HStack gap={4} mb={5} alignItems="center">
+      <Box color={C.purple} display="flex" alignItems="center">
+        {icon}
+      </Box>
+      <Heading as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="700" color={C.ink} lineHeight={1.2}>
         {title}
       </Heading>
     </HStack>

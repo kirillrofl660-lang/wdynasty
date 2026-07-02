@@ -1,7 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { Box, Text, VStack } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { Text } from '@chakra-ui/react/text'
+import { VStack } from '@chakra-ui/react/stack'
 
 interface FaqItem {
   question: string
@@ -9,7 +11,7 @@ interface FaqItem {
 }
 
 const C = {
-  p: '#8b5cf6',
+  p: '#6b21d4',
   muted: '#555',
 }
 

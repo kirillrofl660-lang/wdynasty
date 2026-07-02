@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   output: 'standalone',
   serverExternalPackages: ['@libsql/client', 'libsql', '@payloadcms/db-sqlite'],
+  experimental: {
+    optimizeCss: true,
+  },
   images: {
     remotePatterns: [
       {

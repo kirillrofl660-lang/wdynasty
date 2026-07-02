@@ -4,33 +4,32 @@ const customConfig = defineConfig({
   theme: {
     tokens: {
       colors: {
-        // Crimson — основной бренд (глубокий тёмно-красный #8b1c2c)
         brand: {
-          50:  { value: '#f5f3ff' },
-          100: { value: '#ede9fe' },
-          200: { value: '#ddd6fe' },
-          300: { value: '#c4b5fd' },
-          400: { value: '#a78bfa' },
-          500: { value: '#8b5cf6' }, // PRIMARY — фиолетовый бренда сайта
-          600: { value: '#7c3aed' },
-          700: { value: '#6d28d9' },
-          800: { value: '#3a2a5c' },
-          900: { value: '#2a1a3a' },
-          950: { value: '#1a1030' }, // тёмные секции — тёмно-сливовый, как на главной (CTA)
+          50:  { value: '#faf0f1' },
+          100: { value: '#f5dde1' },
+          200: { value: '#e8b8c0' },
+          300: { value: '#d88b98' },
+          400: { value: '#b83c50' },
+          500: { value: '#8b1c2c' }, // PRIMARY — кримсон, основной бренд
+          600: { value: '#7a1827' },
+          700: { value: '#6e1420' },
+          800: { value: '#4a0e16' },
+          900: { value: '#2a080d' },
+          950: { value: '#1a0508' },
         },
-        // Gold — дополнительный акцент (#b8852a)
+        // Gold — дополнительный акцент. Для текста используйте 600+.
         accent: {
           50:  { value: '#fdf8f0' },
           100: { value: '#faefd8' },
           200: { value: '#f4dcac' },
           300: { value: '#eac479' },
           400: { value: '#dea94a' },
-          500: { value: '#b8852a' }, // PRIMARY — золото, ромбы
-          600: { value: '#9c6f20' },
-          700: { value: '#7e5818' },
-          800: { value: '#674612' },
-          900: { value: '#4e330d' },
-          950: { value: '#2a1a05' },
+          500: { value: '#b8852a' }, // декоративный золото — на крупный текст и иконки
+          600: { value: '#8a6a1a' }, // для текста на светлом фоне
+          700: { value: '#6e5410' },
+          800: { value: '#4a3708' },
+          900: { value: '#2a1a05' },
+          950: { value: '#1a0f02' },
         },
         // Cream — фоновые цвета
         cream: {

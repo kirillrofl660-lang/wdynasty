@@ -1,0 +1,9 @@
+# Modern browsers only. Next.js will skip polyfills for baseline JS features.
+# See https://browsersl.ist/ for query validation.
+
+> 0.5%
+last 2 versions
+not dead
+not IE 11
+not IE_Mob 11
+not op_mini all

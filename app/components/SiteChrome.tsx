@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { Box } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
 import { V2Header } from '../(site)/V2Header'
 import { V2Footer } from '../(site)/V2Footer'
 import type { NavItem } from '@/src/widgets/navigation/model/types'

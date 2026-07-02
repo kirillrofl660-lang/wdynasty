@@ -1,23 +1,19 @@
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import {
-  Box,
-  Container,
-  Heading,
-  Text,
-  VStack,
-  HStack,
-  SimpleGrid,
-  Card,
-  CardBody,
-  Badge,
-} from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { Container } from '@chakra-ui/react/container'
+import { Heading } from '@chakra-ui/react/heading'
+import { Text } from '@chakra-ui/react/text'
+import { VStack, HStack } from '@chakra-ui/react/stack'
+import { SimpleGrid } from '@chakra-ui/react/simple-grid'
+import { Card, CardBody } from '@chakra-ui/react/card'
+import { Badge } from '@chakra-ui/react/badge'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import { ScrollReveal } from '../../components/ScrollReveal'
+import { ScrollReveal } from '@/src/shared/ui'
 import { ServicesCTA } from './ServicesCTA'
 
 export const metadata: Metadata = {
@@ -32,15 +28,23 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function ServicesPage() {
-  const payload = await getPayload({ config })
-  const result = await payload.find({
-    collection: 'services',
-    where: { status: { equals: 'published' } },
-    limit: 50,
-  })
+async function fetchServices() {
+  try {
+    const payload = await getPayload({ config })
+    const result = await payload.find({
+      collection: 'services',
+      where: { status: { equals: 'published' } },
+      limit: 50,
+    })
+    return result.docs as any[]
+  } catch (err) {
+    console.warn('[ServicesPage] DB unavailable during build, returning empty:', err)
+    return []
+  }
+}
 
-  const services = result.docs as any[]
+export default async function ServicesPage() {
+  const services = await fetchServices()
 
   return (
     <>

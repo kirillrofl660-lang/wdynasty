@@ -1,2 +1,7 @@
 export { ScrollReveal } from './ScrollReveal'
 export { StaggerContainer } from './StaggerContainer'
+export { FaqAccordion } from './FaqAccordion'
+export { HSlider } from './HSlider'
+export { MagneticButton } from './MagneticButton'
+export { CountUp } from './CountUp'
+export { LexicalRenderer } from './LexicalRenderer'

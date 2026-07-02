@@ -2,16 +2,20 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Box, HStack, Text, VStack, chakra } from '@chakra-ui/react'
+import { chakra } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { HStack, VStack } from '@chakra-ui/react/stack'
+import { Text } from '@chakra-ui/react/text'
 import { Menu, X } from 'lucide-react'
 import type { NavItem } from '@/src/widgets/navigation/model/types'
 
-const GRAD = 'linear-gradient(90deg, #8b5cf6, #ec4899)'
+const GRAD = 'linear-gradient(90deg, #6b21d4, #be1860)'
 const gradText = {
+  color: '#6b21d4',
   background: GRAD,
   WebkitBackgroundClip: 'text',
   backgroundClip: 'text',
-  color: 'transparent',
+  WebkitTextFillColor: 'transparent',
 } as const
 
 export function V2Header({ items }: { items: NavItem[] }) {
@@ -72,7 +76,7 @@ export function V2Header({ items }: { items: NavItem[] }) {
       }}
     >
       {/* Логотип */}
-      <Link href="/" style={{ textDecoration: 'none' }}>
+      <Link href="/" aria-label="WebDynasty — на главную" style={{ textDecoration: 'none' }}>
         <Text fontWeight="900" fontSize="22px" letterSpacing="-1px" style={gradText}>
           WebDynasty
         </Text>

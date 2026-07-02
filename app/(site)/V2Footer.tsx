@@ -1,14 +1,17 @@
-'use client'
+import { Box } from '@chakra-ui/react/box'
+import { Container } from '@chakra-ui/react/container'
+import { SimpleGrid } from '@chakra-ui/react/simple-grid'
+import { VStack, HStack } from '@chakra-ui/react/stack'
+import { Text } from '@chakra-ui/react/text'
+import Link from 'next/link'
 
-import { Box, Container, SimpleGrid, VStack, HStack, Text } from '@chakra-ui/react'
-import NextLink from 'next/link'
-
-const GRAD = 'linear-gradient(90deg, #8b5cf6, #ec4899)'
+const GRAD = 'linear-gradient(90deg, #6b21d4, #be1860)'
 const gradText = {
+  color: '#6b21d4',
   background: GRAD,
   WebkitBackgroundClip: 'text',
   backgroundClip: 'text',
-  color: 'transparent',
+  WebkitTextFillColor: 'transparent',
 } as const
 
 type FooterLink = { label: string; href: string }
@@ -43,7 +46,7 @@ const DEFAULT_COMPANY: FooterLink[] = [
 
 const linkStyle = {
   fontSize: '14px',
-  color: '#666',
+  color: '#999',
   textDecoration: 'none',
   transition: 'color .2s',
   _hover: { color: '#fff' },
@@ -62,15 +65,17 @@ export function V2Footer({ settings, services }: V2FooterProps) {
   const copyrightNote = settings?.copyrightNote ?? 'Политика конфиденциальности'
 
   return (
-    <Box as="footer" bg="#111" color="#777" px="5%" pt="70px" pb="40px" style={{ fontFamily: 'var(--font-manrope, Manrope, sans-serif)' }}>
+    <Box as="footer" bg="#111" color="#a0a0a0" px="5%" pt="70px" pb="40px" style={{ fontFamily: 'var(--font-manrope, Manrope, sans-serif)' }}>
       <Container maxW="1320px" px={0}>
         <SimpleGrid columns={{ base: 1, sm: 2, lg: 4 }} gap={{ base: 10, lg: 12 }} mb="60px">
           {/* Brand */}
           <VStack align="start" gap={3}>
-            <Text fontSize="24px" fontWeight="900" letterSpacing="-1px" style={gradText}>
-              WebDynasty
-            </Text>
-            <Text fontSize="14px" lineHeight="1.7" color="#666" whiteSpace="pre-line">
+            <Link href="/" aria-label="WebDynasty — на главную" style={{ textDecoration: 'none' }}>
+              <Text fontSize="24px" fontWeight="900" letterSpacing="-1px" style={gradText}>
+                WebDynasty
+              </Text>
+            </Link>
+            <Text fontSize="14px" lineHeight="1.7" color="#999" whiteSpace="pre-line">
               {brandDescription}
             </Text>
           </VStack>
@@ -79,9 +84,9 @@ export function V2Footer({ settings, services }: V2FooterProps) {
           <VStack align="start" gap={2.5}>
             <Text fontSize="14px" fontWeight="700" color="#fff" letterSpacing="1px" textTransform="uppercase" mb={2}>Услуги</Text>
             {servicesLinks.map((l) => (
-              <NextLink key={l.label} href={l.href} style={{ textDecoration: 'none' }}>
+              <Link key={l.label} href={l.href} style={{ textDecoration: 'none' }}>
                 <Box {...linkStyle}>{l.label}</Box>
-              </NextLink>
+              </Link>
             ))}
           </VStack>
 
@@ -89,25 +94,25 @@ export function V2Footer({ settings, services }: V2FooterProps) {
           <VStack align="start" gap={2.5}>
             <Text fontSize="14px" fontWeight="700" color="#fff" letterSpacing="1px" textTransform="uppercase" mb={2}>Компания</Text>
             {companyLinks.map((l) => (
-              <NextLink key={l.label} href={l.href} style={{ textDecoration: 'none' }}>
+              <Link key={l.label} href={l.href} style={{ textDecoration: 'none' }}>
                 <Box {...linkStyle}>{l.label}</Box>
-              </NextLink>
+              </Link>
             ))}
           </VStack>
 
           {/* Contacts */}
           <VStack align="start" gap={2.5}>
             <Text fontSize="14px" fontWeight="700" color="#fff" letterSpacing="1px" textTransform="uppercase" mb={2}>Контакты</Text>
-            <NextLink href={`mailto:${contactEmail}`} style={{ textDecoration: 'none' }}>
+            <Link href={`mailto:${contactEmail}`} style={{ textDecoration: 'none' }}>
               <Box {...linkStyle}>{contactEmail}</Box>
-            </NextLink>
-            <Text fontSize="13px" color="#555" lineHeight="1.6">{contactHours}</Text>
+            </Link>
+            <Text fontSize="13px" color="#999" lineHeight="1.6">{contactHours}</Text>
           </VStack>
         </SimpleGrid>
 
         <HStack justify="space-between" wrap="wrap" gap={2} pt="30px" style={{ borderTop: '1px solid #222' }}>
-          <Text fontSize="13px" color="#666">{copyrightText}</Text>
-          <Text fontSize="13px" color="#666">{copyrightNote}</Text>
+          <Text fontSize="13px" color="#999">{copyrightText}</Text>
+          <Text fontSize="13px" color="#999">{copyrightNote}</Text>
         </HStack>
       </Container>
     </Box>

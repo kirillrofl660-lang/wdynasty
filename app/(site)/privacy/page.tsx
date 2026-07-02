@@ -1,5 +1,9 @@
 import type { Metadata } from 'next'
-import { Box, Container, Heading, Text, VStack } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { Container } from '@chakra-ui/react/container'
+import { Heading } from '@chakra-ui/react/heading'
+import { Text } from '@chakra-ui/react/text'
+import { VStack } from '@chakra-ui/react/stack'
 
 export const metadata: Metadata = {
   title: 'Политика конфиденциальности | WebDynasty',

@@ -16,6 +16,10 @@
 
     "start": "next start",
 
+    "start:standalone": "node .next/standalone/server.js",
+
+    "warm:cache": "bash scripts/warm-cache.sh",
+
     "lint": "next lint",
 
     "payload": "payload",
@@ -50,6 +54,14 @@
 
   "type": "module",
 
+  "browserslist": [
+    "chrome >= 90",
+    "edge >= 90",
+    "firefox >= 88",
+    "safari >= 14",
+    "ios_saf >= 14"
+  ],
+
   "dependencies": {
 
     "@chakra-ui/next-js": "^2.4.2",
@@ -59,8 +71,6 @@
     "@emotion/react": "^11.14.0",
 
     "@emotion/styled": "^11.14.1",
-
-    "@gsap/react": "^2.1.2",
 
     "@payloadcms/db-mongodb": "^3.85.1",
 
@@ -74,9 +84,7 @@
 
     "@tanstack/react-query": "^5.101.0",
 
-    "framer-motion": "^12.40.0",
-
-    "gsap": "^3.15.0",
+    "critters": "^0.0.25",
 
     "lucide-react": "^1.18.0",
 

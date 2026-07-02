@@ -1,5 +1,13 @@
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
+import { revalidateSitePaths } from '../lib/revalidation'
+
+const revalidatePost = (doc: any) => {
+  revalidateSitePaths([
+    { path: '/blog' },
+    ...(doc?.slug ? [{ path: `/blog/${doc.slug}` }] : []),
+  ])
+}
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -152,5 +160,7 @@ export const Posts: CollectionConfig = {
         return data
       },
     ],
+    afterChange: [({ doc }) => { revalidatePost(doc); return doc }],
+    afterDelete: [({ doc }) => { revalidatePost(doc); return doc }],
   },
 }

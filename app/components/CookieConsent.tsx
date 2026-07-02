@@ -1,17 +1,20 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Box, Container, HStack, Text, Button } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
+import { Container } from '@chakra-ui/react/container'
+import { HStack } from '@chakra-ui/react/stack'
+import { Text } from '@chakra-ui/react/text'
+import { Button } from '@chakra-ui/react/button'
 import { Cookie } from 'lucide-react'
-
-const STORAGE_KEY = 'wd-cookie-consent'
+import { setCookieConsent } from '@/src/shared/lib/cookieConsent'
 
 export function CookieConsent() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY)
+      const saved = localStorage.getItem('wd-cookie-consent')
       if (!saved) setVisible(true)
     } catch {
       // localStorage недоступен — показываем
@@ -20,11 +23,12 @@ export function CookieConsent() {
   }, [])
 
   const accept = () => {
-    try {
-      localStorage.setItem(STORAGE_KEY, 'accepted')
-    } catch {
-      // ignore
-    }
+    setCookieConsent('accepted')
+    setVisible(false)
+  }
+
+  const decline = () => {
+    setCookieConsent('declined')
     setVisible(false)
   }
 
@@ -72,21 +76,31 @@ export function CookieConsent() {
             </Text>
           </HStack>
 
-          <Button
-            onClick={accept}
-            size="md"
-            flexShrink={0}
-            style={{
-              background: 'linear-gradient(90deg, #8b5cf6, #ec4899)',
-              color: 'white',
-              fontWeight: 600,
-              borderRadius: '999px',
-              padding: '0 24px',
-            }}
-            _hover={{ opacity: 0.9 }}
-          >
-            Хорошо
-          </Button>
+          <HStack gap={3} flexShrink={0} wrap={{ base: 'wrap', md: 'nowrap' }}>
+            <Button
+              onClick={decline}
+              size="md"
+              variant="ghost"
+              color="white"
+              _hover={{ bg: 'rgba(255,255,255,0.1)' }}
+            >
+              Отклонить
+            </Button>
+            <Button
+              onClick={accept}
+              size="md"
+              style={{
+                background: 'linear-gradient(90deg, #8b5cf6, #ec4899)',
+                color: 'white',
+                fontWeight: 600,
+                borderRadius: '999px',
+                padding: '0 24px',
+              }}
+              _hover={{ opacity: 0.9 }}
+            >
+              Хорошо
+            </Button>
+          </HStack>
         </HStack>
       </Container>
     </Box>

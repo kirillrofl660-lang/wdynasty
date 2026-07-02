@@ -1,4 +1,13 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateSitePaths } from '../lib/revalidation'
+
+const revalidateService = (doc: any) => {
+  revalidateSitePaths([
+    { path: '/' },
+    { path: '/uslugi' },
+    ...(doc?.slug ? [{ path: `/uslugi/${doc.slug}` }] : []),
+  ])
+}
 
 export const Services: CollectionConfig = {
   slug: 'services',
@@ -179,4 +188,8 @@ export const Services: CollectionConfig = {
       label: 'Meta Description',
     },
   ],
+  hooks: {
+    afterChange: [({ doc }) => { revalidateService(doc); return doc }],
+    afterDelete: [({ doc }) => { revalidateService(doc); return doc }],
+  },
 }

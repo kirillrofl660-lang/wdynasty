@@ -1,4 +1,9 @@
 import { CollectionConfig } from 'payload'
+import { revalidateSitePaths } from '../lib/revalidation'
+
+const revalidateNavigation = () => {
+  revalidateSitePaths([{ path: '/', type: 'layout' }])
+}
 
 export const Navigation: CollectionConfig = {
   slug: 'navigation',
@@ -57,4 +62,8 @@ export const Navigation: CollectionConfig = {
       defaultValue: true,
     },
   ],
+  hooks: {
+    afterChange: [({ doc }) => { revalidateNavigation(); return doc }],
+    afterDelete: [({ doc }) => { revalidateNavigation(); return doc }],
+  },
 }

@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload'
+import { revalidateSitePaths } from '../lib/revalidation'
 
 export const TeamPageSettings: GlobalConfig = {
   slug: 'team-page',
@@ -108,4 +109,7 @@ export const TeamPageSettings: GlobalConfig = {
       label: 'CTA: email для кнопки «Написать нам»',
     },
   ],
+  hooks: {
+    afterChange: [({ doc }) => { revalidateSitePaths([{ path: '/team' }]); return doc }],
+  },
 }

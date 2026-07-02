@@ -1,10 +1,10 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react'
-import { Box } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react/box'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
-const P = '#8b5cf6'
+const P = '#6b21d4'
 
 /**
  * Бесконечный горизонтальный слайдер со стрелками по бокам.
