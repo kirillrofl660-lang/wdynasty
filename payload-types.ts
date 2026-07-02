@@ -645,6 +645,42 @@ export interface Case {
     [k: string]: unknown;
   } | null;
   /**
+   * Объясняем клиенту, что представляет собой услуга/продукт сегодня. Например: «Что такое лендинг в 2026 году».
+   */
+  context?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Развёрнутый ответ: какие подходы, технологии и этапы помогают решить задачу клиента.
+   */
+  problemSolving?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
    * Текстовое поле для красивого вывода. Для расчётов калькулятора используйте группу ниже.
    */
   basePrice?: string | null;
@@ -1110,6 +1146,8 @@ export interface CasesSelect<T extends boolean = true> {
   problem?: T;
   solution?: T;
   result?: T;
+  context?: T;
+  problemSolving?: T;
   basePrice?: T;
   calculator?:
     | T
