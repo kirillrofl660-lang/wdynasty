@@ -16,6 +16,10 @@
 
     "start": "next start",
 
+    "start:standalone": "node .next/standalone/server.js",
+
+    "warm:cache": "bash scripts/warm-cache.sh",
+
     "lint": "next lint",
 
     "payload": "payload",
