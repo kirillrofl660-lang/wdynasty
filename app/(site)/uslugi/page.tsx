@@ -17,15 +17,23 @@ import { ScrollReveal } from '@/src/shared/ui'
 import { ServicesCTA } from './ServicesCTA'
 
 const C = {
-  cream: '#f5f0e6',
-  creamDark: '#ede7d6',
-  brand: '#8b1c2c',
-  brandHover: '#6e1420',
-  gold: '#b8852a',
-  text: '#1a0f0a',
-  muted: '#5a4a3a',
-  line: '#d8cfb8',
+  bg: '#fafafa',
+  alt: '#f3f3f6',
+  ink: '#111',
+  muted: '#595959',
+  p: '#6b21d4',
+  pink: '#be1860',
   white: '#ffffff',
+  line: '#e5e7eb',
+} as const
+
+const GRAD = `linear-gradient(90deg, ${C.p}, ${C.pink})`
+const gradText = {
+  color: C.p,
+  background: GRAD,
+  WebkitBackgroundClip: 'text',
+  backgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
 } as const
 
 const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
@@ -33,9 +41,9 @@ const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
 function Ornament() {
   return (
     <HStack gap={3} aria-hidden="true" w="220px" mx="auto">
-      <Box flex={1} h="1px" style={{ background: `linear-gradient(90deg, transparent, ${C.gold})` }} />
-      <Box w="8px" h="8px" flexShrink={0} style={{ background: C.gold, transform: 'rotate(45deg)', borderRadius: '1px' }} />
-      <Box flex={1} h="1px" style={{ background: `linear-gradient(90deg, ${C.gold}, transparent)` }} />
+      <Box flex={1} h="1px" style={{ background: `linear-gradient(90deg, transparent, ${C.p})` }} />
+      <Box w="8px" h="8px" flexShrink={0} style={{ background: GRAD, transform: 'rotate(45deg)', borderRadius: '1px' }} />
+      <Box flex={1} h="1px" style={{ background: `linear-gradient(90deg, ${C.pink}, transparent)` }} />
     </HStack>
   )
 }
@@ -73,10 +81,10 @@ export default async function ServicesPage() {
   return (
     <>
       {/* Hero */}
-      <Box bg={C.cream} color={C.text} py={{ base: 20, md: 28 }} px={4} position="relative" overflow="hidden" style={{ borderBottom: `1px solid ${C.line}` }}>
+      <Box bg={C.bg} color={C.ink} py={{ base: 20, md: 28 }} px={4} position="relative" overflow="hidden" style={{ borderBottom: `1px solid ${C.line}` }}>
         <Container maxW="6xl" position="relative">
           <VStack gap={5} textAlign="center">
-            <Text fontSize="12px" fontWeight="700" letterSpacing="3px" textTransform="uppercase" color={C.gold} mb={1}>
+            <Text fontSize="12px" fontWeight="700" letterSpacing="3px" textTransform="uppercase" color={C.p} mb={1}>
               Что мы делаем
             </Text>
             <Heading
@@ -87,7 +95,7 @@ export default async function ServicesPage() {
               style={{ fontFamily: 'var(--font-philosopher, Philosopher, Georgia, serif)' }}
             >
               Наши{' '}
-              <Text as="span" color={C.brand} style={{ fontFamily: 'var(--font-yeseva, Yeseva One, Georgia, serif)' }}>
+              <Text as="span" style={{ ...gradText, fontFamily: 'var(--font-yeseva, Yeseva One, Georgia, serif)' }}>
                 услуги
               </Text>
             </Heading>
@@ -101,7 +109,7 @@ export default async function ServicesPage() {
 
       {/* Список услуг из CMS */}
       {services.length > 0 && (
-        <Box py={{ base: 16, md: 24 }} px={4} bg={C.creamDark}>
+        <Box py={{ base: 16, md: 24 }} px={4} bg={C.alt}>
           <Container maxW="6xl">
             <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: 6, md: 8 }}>
               {services.map((s, i) => (
@@ -114,21 +122,21 @@ export default async function ServicesPage() {
                       border="1px solid"
                       borderColor={C.line}
                       cursor="pointer"
-                      _hover={{ borderColor: C.gold, shadow: 'md', transform: 'translateY(-4px)' }}
+                      _hover={{ borderColor: C.p, shadow: 'md', transform: 'translateY(-4px)' }}
                       transition="all 0.25s"
-                      style={{ boxShadow: '0 4px 20px rgba(26,15,10,0.04)' }}
+                      style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.04)' }}
                     >
                       <CardBody p={{ base: 6, md: 8 }}>
                         <VStack align="start" gap={4} h="full">
                           <HStack gap={3} w="full" pb={3} style={{ borderBottom: `1px solid ${C.line}` }}>
-                            <Text fontSize="2xl" fontWeight="700" color={C.gold} style={{ fontFamily: 'var(--font-yeseva, Yeseva One, Georgia, serif)' }}>
+                            <Text fontSize="2xl" fontWeight="700" style={{ ...gradText, fontFamily: 'var(--font-yeseva, Yeseva One, Georgia, serif)' }}>
                               {ROMAN[i] ?? String(i + 1)}
                             </Text>
-                            <Badge colorPalette="brand" size="sm" bg="transparent" color={C.brand} border="1px solid" borderColor={C.line} borderRadius="full" px={3}>
+                            <Badge colorPalette="brand" size="sm" bg="transparent" color={C.p} border="1px solid" borderColor={C.line} borderRadius="full" px={3}>
                               {s.hero?.badge ?? 'Услуга'}
                             </Badge>
                           </HStack>
-                          <Heading as="h2" fontSize={{ base: 'lg', md: 'xl' }} fontWeight="700" color={C.text} style={{ fontFamily: 'var(--font-philosopher, Philosopher, Georgia, serif)' }}>
+                          <Heading as="h2" fontSize={{ base: 'lg', md: 'xl' }} fontWeight="700" color={C.ink} style={{ fontFamily: 'var(--font-philosopher, Philosopher, Georgia, serif)' }}>
                             {s.title}
                           </Heading>
                           {s.excerpt && (
@@ -136,7 +144,7 @@ export default async function ServicesPage() {
                               {s.excerpt}
                             </Text>
                           )}
-                          <HStack mt="auto" pt={4} color={C.brand} fontWeight="600" fontSize="sm">
+                          <HStack mt="auto" pt={4} color={C.p} fontWeight="600" fontSize="sm">
                             <Text>Подробнее</Text>
                             <ArrowRight size={16} />
                           </HStack>
@@ -153,7 +161,7 @@ export default async function ServicesPage() {
 
       {/* Если услуг нет — заглушка */}
       {services.length === 0 && (
-        <Box py={32} px={4} textAlign="center" bg={C.creamDark}>
+        <Box py={32} px={4} textAlign="center" bg={C.alt}>
           <Container maxW="xl">
             <VStack gap={4}>
               <Text fontSize="xl" color={C.muted}>Услуги скоро появятся</Text>
@@ -164,13 +172,13 @@ export default async function ServicesPage() {
       )}
 
       {/* CTA */}
-      <Box py={{ base: 16, md: 24 }} px={4} bg={C.cream} style={{ borderTop: `1px solid ${C.line}` }}>
+      <Box py={{ base: 16, md: 24 }} px={4} bg={C.bg} style={{ borderTop: `1px solid ${C.line}` }}>
         <Container maxW="4xl">
           <ScrollReveal>
             <VStack gap={6} textAlign="center">
               <Heading
                 fontSize={{ base: '2xl', md: '3xl' }}
-                color={C.text}
+                color={C.ink}
                 style={{ fontFamily: 'var(--font-philosopher, Philosopher, Georgia, serif)' }}
               >
                 Не нашли нужную услугу?
