@@ -71,15 +71,22 @@ const DEFAULT_PARAGRAPHS = [
   'Берёмся за то, в чём уверены, и доводим до результата — от корпоративных сайтов до интеграций и сложных веб-сервисов.',
 ]
 
+async function fetchTeamData() {
+  try {
+    const payload = await getPayload({ config })
+    const [result, page] = await Promise.all([
+      payload.find({ collection: 'users', where: { isPublic: { equals: true } }, depth: 1, limit: 50, sort: 'name' }),
+      payload.findGlobal({ slug: 'team-page' }).catch(() => null),
+    ])
+    return { members: result.docs, page }
+  } catch (err) {
+    console.warn('[TeamPage] DB unavailable during build, returning defaults:', err)
+    return { members: [], page: null }
+  }
+}
+
 export default async function TeamPage() {
-  const payload = await getPayload({ config })
-
-  const [result, page] = await Promise.all([
-    payload.find({ collection: 'users', where: { isPublic: { equals: true } }, depth: 1, limit: 50, sort: 'name' }),
-    payload.findGlobal({ slug: 'team-page' }).catch(() => null),
-  ])
-
-  const members = result.docs
+  const { members, page } = await fetchTeamData()
 
   const heroHeading     = page?.heroHeading        ?? 'Студию строят'
   const heroAccent      = page?.heroHeadingAccent  ?? 'инженеры, а не менеджеры'

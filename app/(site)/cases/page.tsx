@@ -17,15 +17,24 @@ export const metadata: Metadata = {
   description: 'Реальные кейсы по разработке: что делали, сколько стоит и какие факторы влияют на цену. Ответы на вопросы, которые вы ищете в Google.',
 }
 
+async function fetchCases() {
+  try {
+    const payload = await getPayload({ config })
+    const result = await payload.find({
+      collection: 'cases',
+      where: { status: { equals: 'published' } },
+      sort: '-publishedAt',
+      limit: 100,
+    })
+    return result.docs as any[]
+  } catch (err) {
+    console.warn('[CasesPage] DB unavailable during build, returning empty:', err)
+    return []
+  }
+}
+
 export default async function CasesPage() {
-  const payload = await getPayload({ config })
-  const result = await payload.find({
-    collection: 'cases',
-    where: { status: { equals: 'published' } },
-    sort: '-publishedAt',
-    limit: 100,
-  })
-  const cases = result.docs as any[]
+  const cases = await fetchCases()
 
   return (
     <Box className="wd-root" bg="#fafafa" minH="100vh" py={{ base: 16, md: 24 }}>

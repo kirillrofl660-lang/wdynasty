@@ -28,15 +28,23 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function ServicesPage() {
-  const payload = await getPayload({ config })
-  const result = await payload.find({
-    collection: 'services',
-    where: { status: { equals: 'published' } },
-    limit: 50,
-  })
+async function fetchServices() {
+  try {
+    const payload = await getPayload({ config })
+    const result = await payload.find({
+      collection: 'services',
+      where: { status: { equals: 'published' } },
+      limit: 50,
+    })
+    return result.docs as any[]
+  } catch (err) {
+    console.warn('[ServicesPage] DB unavailable during build, returning empty:', err)
+    return []
+  }
+}
 
-  const services = result.docs as any[]
+export default async function ServicesPage() {
+  const services = await fetchServices()
 
   return (
     <>

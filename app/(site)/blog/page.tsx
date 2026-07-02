@@ -22,45 +22,30 @@ export const metadata: Metadata = {
 
 
 
+async function fetchPosts() {
+  try {
+    const payload = await getPayload({ config })
+    const result = await payload.find({
+      collection: 'posts',
+      where: { status: { equals: 'published' } },
+      limit: 9,
+      page: 1,
+      sort: '-publishedAt',
+    })
+    return { docs: result.docs, totalPages: result.totalPages }
+  } catch (err) {
+    console.warn('[BlogPage] DB unavailable during build, returning empty:', err)
+    return { docs: [], totalPages: 1 }
+  }
+}
+
 export default async function BlogPage() {
-
-  const payload = await getPayload({ config })
-
-
-
-  const result = await payload.find({
-
-    collection: 'posts',
-
-    where: {
-
-      status: {
-
-        equals: 'published',
-
-      },
-
-    },
-
-    limit: 9,
-
-    page: 1,
-
-    sort: '-publishedAt',
-
-  })
-
-
+  const { docs, totalPages } = await fetchPosts()
 
   return (
-
     <Box minH="100vh" bg="#fafafa">
-
-      <BlogGrid initialPosts={result.docs} initialTotalPages={result.totalPages} />
-
+      <BlogGrid initialPosts={docs} initialTotalPages={totalPages} />
     </Box>
-
   )
-
 }
 

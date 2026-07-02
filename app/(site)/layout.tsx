@@ -87,19 +87,29 @@ export default async function RootLayout({
 
 }) {
 
-  const payload = await getPayload({ config })
+  let navResult: any = { docs: [] }
+  let footerSettings: any = null
+  let servicesResult: { docs: any[] } = { docs: [] }
 
-  const [navResult, footerSettings, servicesResult] = await Promise.all([
-    payload.find({
-      collection: 'navigation',
-      sort: 'order',
-      where: { isActive: { equals: true } },
-    }),
-    payload.findGlobal({ slug: 'footer' }).catch(() => null),
-    payload
-      .find({ collection: 'services', where: { status: { equals: 'published' } }, sort: 'order', limit: 8 })
-      .catch(() => ({ docs: [] as any[] })),
-  ])
+  try {
+    const payload = await getPayload({ config })
+    const [nav, footer, services] = await Promise.all([
+      payload.find({
+        collection: 'navigation',
+        sort: 'order',
+        where: { isActive: { equals: true } },
+      }),
+      payload.findGlobal({ slug: 'footer' }).catch(() => null),
+      payload
+        .find({ collection: 'services', where: { status: { equals: 'published' } }, sort: 'order', limit: 8 })
+        .catch(() => ({ docs: [] as any[] })),
+    ])
+    navResult = nav
+    footerSettings = footer
+    servicesResult = services
+  } catch (err) {
+    console.warn('[RootLayout] DB unavailable during build, using defaults:', err)
+  }
 
   const footerServices = (servicesResult.docs as any[]).map((s) => ({ title: s.title, slug: s.slug }))
 
